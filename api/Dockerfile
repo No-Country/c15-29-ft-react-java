@@ -7,6 +7,6 @@ RUN mvn clean package -DskipTests
 # Etapa 2: Crea la imagen final de la aplicación
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY --from=build /app/target/spring-postgress-0.0.1-SNAPSHOT.jar /app/spring-postgress.jar
+COPY --from=build /app/target/pets-0.0.1-SNAPSHOT.jar /app/pets.jar
 EXPOSE 8080
-CMD ["java", "-jar", "spring-postgress.jar"]
+CMD ["java", "-jar", "pets.jar"]
