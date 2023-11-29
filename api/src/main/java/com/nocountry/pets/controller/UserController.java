@@ -64,7 +64,7 @@ public class UserController {
             return ResponseEntity.status(404).body(String.format("User %d not found",userId));
         } catch (Error e) {
             // Manejar otros errores internos
-            return ResponseEntity.status(500).body("Servel internal error");
+            return ResponseEntity.status(500).body("Server internal error");
         }
     }
 }
