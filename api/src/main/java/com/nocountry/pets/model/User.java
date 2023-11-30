@@ -1,7 +1,9 @@
 package com.nocountry.pets.model;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String email;
     private String lastName;
     private Date dateOfBirth;
     private String nationality;
@@ -24,3 +27,5 @@ public class User {
     private String avatar;
 
 }
+
+
