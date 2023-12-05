@@ -1,5 +1,10 @@
+import NavbarApp from "@/components/NavbarApp";
+
 export default function LoginPage() {
-    return (
-      <div className="text-white">LoginPage</div>
-    )
-  }
+  return (
+    <>
+      <NavbarApp />
+      <div>LoginPage</div>
+    </>
+  );
+}
