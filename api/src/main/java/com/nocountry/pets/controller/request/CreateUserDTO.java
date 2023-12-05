@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -23,4 +24,12 @@ public class CreateUserDTO {
     @NotBlank
     private String password;
     private Set<String> roles;
+
+    private String name;
+    private String lastName;
+    private Date dateOfBirth;
+    private String nationality;
+    private String address;
+    private String avatar;
+    private String status;
 }

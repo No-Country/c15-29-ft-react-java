@@ -42,7 +42,7 @@ public class UserEntityController {
     public ResponseEntity<?> deleteUser(@PathVariable String email) {
         try {
             userEntityService.deleteUserEntity(email);
-            return ResponseEntity.ok("The was ");
+            return ResponseEntity.ok("deleted");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {

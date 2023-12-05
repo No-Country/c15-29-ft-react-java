@@ -42,11 +42,20 @@ public class UserEntityService {
                         .orElseGet(() -> RoleEntity.builder().name(ERole.valueOf(roleName)).build()))
                 .collect(Collectors.toSet());
 
+
+        //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
-                .username(email)
+                .username(createUserDTO.getUsername())
                 .password(passwordEncoder.encode(createUserDTO.getPassword()))
                 .email(createUserDTO.getEmail())
                 .roles(roles)
+                .name(createUserDTO.getName())
+                .lastName(createUserDTO.getLastName())
+                .dateOfBirth(createUserDTO.getDateOfBirth())
+                .avatar(createUserDTO.getAvatar())
+                .status(createUserDTO.getStatus())
+                .nationality(createUserDTO.getNationality())
+                .address(createUserDTO.getAddress())
                 .build();
 
         userRepository.save(userEntity);
