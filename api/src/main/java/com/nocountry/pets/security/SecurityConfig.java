@@ -38,6 +38,7 @@ public class SecurityConfig {
         jwtAuthenticationFilter.setFilterProcessesUrl("/api/user/login");
 
         return httpSecurity
+                .cors().and()
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v3/**","/swagger-ui/**").permitAll();
