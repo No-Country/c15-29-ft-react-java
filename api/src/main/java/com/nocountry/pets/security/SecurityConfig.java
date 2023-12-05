@@ -40,10 +40,9 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/v3/**","/swagger-ui/**").permitAll();
                     auth.requestMatchers("/test/hello").permitAll();
-                    auth.requestMatchers("/api/userEntity").permitAll();
 //                    auth.requestMatchers("/api/userEntity/*").permitAll();
-//                    auth.requestMatchers("/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
