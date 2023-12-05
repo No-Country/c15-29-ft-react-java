@@ -1,6 +1,6 @@
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-import {AcmeLogo} from "./AcmeLogo.jsx";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
+import { AcmeLogo } from "./AcmeLogo.jsx";
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
 
-      <NavbarContent className="hidden sm:flex md:flex gap-4" justify="center">
+      <NavbarContent className="hidden bg-dark sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
             Features
