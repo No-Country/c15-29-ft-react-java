@@ -1,19 +1,30 @@
 import { useState } from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Modal, ModalContent, ModalHeader, ModalBody, Input, Checkbox, ModalFooter, useDisclosure} from "@nextui-org/react";
-import {AcmeLogo} from "./AcmeLogo.jsx";
-import { MailIcon } from "./login/Mailicon.jsx";
-import { LockIcon } from "./login/LockIcon.jsx";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Input,
+  Checkbox,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+import { AcmeLogo } from "./AcmeLogo.jsx";
+import LoginModal from "./login/LoginModal.jsx";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
-  const menuItems = [
-    "Home",
-    "About Us",
-    "Pet browser",
-    "How to adopt",
-  ];
+  const menuItems = ["Home", "About Us", "Pet browser", "How to adopt"];
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -47,76 +58,18 @@ export default function App() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden md:flex">
-          <Link href="#" onPress={onOpen}>Login</Link>
+          <LoginModal />
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="primary" href="#" variant="flat">
             Sign Up
           </Button>
-          <Modal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange}
-        placement="top-center"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  endContent={
-                    <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Email"
-                  placeholder="Enter your email"
-                  variant="bordered"
-                />
-                <Input
-                  endContent={
-                    <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                  >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign in
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={"foreground"}
-              className="w-full"
-              href="#"
-              size="lg"
-            >
+            <Link color={"foreground"} className="w-full" href="#" size="lg">
               {item}
             </Link>
           </NavbarMenuItem>
