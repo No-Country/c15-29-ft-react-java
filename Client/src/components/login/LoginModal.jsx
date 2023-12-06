@@ -14,26 +14,30 @@ import {
 import React, { useState } from "react";
 import { MailIcon } from "./Mailicon";
 import { LockIcon } from "./LockIcon";
+import axios from "axios";
 
 export default function LoginModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [credentials, setCredentials] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
   };
 
-  const handleChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const showUsers = async () => {
+    const response = await axios.get('https://pets-adopt-api.onrender.com/api/userEntity', {
+      headers: {
+        'Content-Type':'application/json',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      }
+    })
+    console.log(response);
+  }
   return (
     <>
       <Link onPress={onOpen}>Login</Link>
@@ -47,19 +51,19 @@ export default function LoginModal() {
                 </ModalHeader>
                 <ModalBody>
                   <Input
-                    type="email"
+                    type="text"
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        email: e.target.value,
+                        username: e.target.value,
                       })
                     }
                     autoFocus
                     endContent={
                       <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="Email"
-                    placeholder="Enter your email"
+                    label="Username"
+                    placeholder="Enter your username"
                     variant="bordered"
                   />
                   <Input
@@ -85,7 +89,7 @@ export default function LoginModal() {
                     >
                       Remember me
                     </Checkbox>
-                    <Link color="primary" href="#" size="sm">
+                    <Link onClick={showUsers} color="primary" href="#" size="sm">
                       Forgot password?
                     </Link>
                   </div>
