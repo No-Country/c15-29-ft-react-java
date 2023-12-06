@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api/userEntity")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserEntityController {
 
 
