@@ -10,6 +10,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("https://pawdevelopment.vercel.app")
 //                .allowedOrigins("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
