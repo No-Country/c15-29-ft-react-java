@@ -19,6 +19,11 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity owner;
+
     private String name;
     //private String type; //if its decided to place different animals(example: cats, dogs, parrots,etc.)
     private String breed;
@@ -28,8 +33,9 @@ public class Pet {
     private Double weight;
     private Double height;
     private List<String> images;
+    private Boolean sterilized;
+    private Boolean adopted;
+    private String behavior;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity owner;
+
 }
