@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Providers } from "./providers";
+import { Providers } from "@/app/providers";
 
 export const metadata = {
   title: "Next.js",

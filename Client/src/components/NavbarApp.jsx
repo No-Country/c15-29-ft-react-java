@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Modal, ModalContent, ModalHeader, ModalBody, Input, Checkbox, ModalFooter, useDisclosure} from "@nextui-org/react";
-import {AcmeLogo} from "./AcmeLogo.jsx";
-import { MailIcon } from "./login/Mailicon.jsx";
-import { LockIcon } from "./login/LockIcon.jsx";
+import {AcmeLogo} from "@/components/acmelogo.jsx";
+import { MailIcon } from "@/components/login/Mailicon";
+import { LockIcon } from "@/components/login/LockIcon.jsx";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
