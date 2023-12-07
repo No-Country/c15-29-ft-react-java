@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, Image, Skeleton } from "@nextui-org/react";
 
-export default function App({ age = "not Specified", species = "petSpecies", name = "petName" }) {
+export default function App({ age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
     const [srcImg, setSrcImg] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
@@ -13,10 +13,22 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         return res.url;
     }
 
+    const postTest = async () => {
+        fetch("https://pets-adopt-api.onrender.com/api/user/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "username": "josuetheblackma2ge",
+                "password": "josue"
+            })
+        });
+    }
+
     useEffect(() => {
         // setTimeout placeholder to simulate loading, remove this in production
-        setTimeout(() => fetchImage(270, 270), 1000);
+        fetchImage(270, 270);
     }, []);
+
 
     return (
         <Card className="py-4 min-w-72 w-[300px] max-w-xs">
@@ -49,10 +61,11 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                 ) : (
                     <Image
                         alt="Card background"
-                        className="object-cover rounded-xl"
+                        className="object-cover rounded-xl select-none"
                         src={srcImg}
                         width="276px"
                         height="276px"
+                        draggable={false}
                     />
                 )}
             </CardBody>
