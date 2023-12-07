@@ -23,8 +23,14 @@ export default function Dashboard() {
           }});
     setUser(profile.data);
   };
+  
 
   function getCookieValue(cookieName) {
+
+    if (typeof document === 'undefined') {
+      return null;
+    }
+
     const name = `${cookieName}=`;
     const decodedCookie = decodeURIComponent(document.cookie);
     const cookiePairs = decodedCookie.split(';');
