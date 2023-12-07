@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,6 +23,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
     private Long id;
 
 //    VER SI SE PUEDE HACER QUE EL EMAIL SEA EL PRINCIPAL
@@ -48,8 +50,9 @@ public class UserEntity {
     private String avatar;
     private String status;
 
-
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Pet> pets;
 }

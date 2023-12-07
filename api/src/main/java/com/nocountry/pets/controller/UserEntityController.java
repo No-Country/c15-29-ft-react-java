@@ -3,6 +3,7 @@ package com.nocountry.pets.controller;
 import com.nocountry.pets.controller.request.CreateUserDTO;
 import com.nocountry.pets.models.UserEntity;
 import com.nocountry.pets.service.UserEntityService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,13 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api/userEntity")
+
+//esta etiqueta es necesaria?
 @CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserEntityController {
 
 
-    @Autowired UserEntityService userEntityService;
+    @Autowired private UserEntityService userEntityService;
 
     @GetMapping()
     public ResponseEntity<List<UserEntity>> getAllUsers() {
@@ -25,7 +28,17 @@ public class UserEntityController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping()
+    @GetMapping("/{username}")
+    public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
+        try {
+            UserEntity user = userEntityService.getUserForUsername(username);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/register")
     public ResponseEntity<?> createUserEntity(@Valid @RequestBody CreateUserDTO createUserDTO){
 
         try {
