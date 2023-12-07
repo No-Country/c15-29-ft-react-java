@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Modal, ModalContent, ModalHeader, ModalBody, Input, Checkbox, ModalFooter, useDisclosure} from "@nextui-org/react";
 import {AcmeLogo} from "./AcmeLogo.jsx";
