@@ -17,9 +17,9 @@ export default function Dashboard() {
 
   const getProfile = async () => {
     console.log(token);
-    const test = await axios.get(`${url}/test/hello`,{headers: {
+    const test = await axios.get(`${url}/test/helloSecured`,{headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer : ${token}`
+          'Authorization': `Bearer ${token}`
           }});
     console.log(test);;
   };
@@ -28,9 +28,9 @@ export default function Dashboard() {
     console.log(token);
     const users = await axios.get(`${url}/userEntity`,{headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer : ${token}`
+          'Authorization':`Bearer ${token}`
           }});
-    console.log();(users);
+    console.log(users);
   };
   
   
