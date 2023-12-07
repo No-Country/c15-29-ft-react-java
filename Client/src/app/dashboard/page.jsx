@@ -13,18 +13,34 @@ export default function Dashboard() {
 
   const token = getCookieValue('AuthToken')
   const router = useRouter();
-  const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
+  const url = "https://pets-adopt-api.onrender.com/api"
 
   const getProfile = async () => {
     console.log(token);
-    const profile = await axios.get(`${url}/test/helloSecured/`,{headers: {
+    const test = await axios.get(`${url}/test/helloSecured`,{headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer : ${token}`
+          'Authorization': `Bearer ${token}`
           }});
-    setUser(profile.data);
+    console.log(test);;
   };
+  
+  const getUsers = async () => {
+    console.log(token);
+    const users = await axios.get(`${url}/userEntity`,{headers: {
+          'Content-Type': 'application/json',
+          'Authorization':`Bearer ${token}`
+          }});
+    console.log(users);
+  };
+  
+  
 
   function getCookieValue(cookieName) {
+
+    if (typeof document === 'undefined') {
+      return null;
+    }
+
     const name = `${cookieName}=`;
     const decodedCookie = decodeURIComponent(document.cookie);
     const cookiePairs = decodedCookie.split(';');
@@ -59,6 +75,7 @@ export default function Dashboard() {
     <div className="flex gap-6 flex-col w-48"> 
       {JSON.stringify(user)}
       <Button onClick={() => getProfile()}>profile</Button>
+      <Button onClick={() => getUsers()}>profile</Button>
       <Button onClick={() => handleLogout()}>Logout</Button>
     </div>
   );
