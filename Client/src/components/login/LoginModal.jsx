@@ -8,13 +8,14 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  NavbarItem,
   useDisclosure,
 } from "@nextui-org/react";
+import { parse, serialize } from 'cookie';
 import React, { useState } from "react";
 import { MailIcon } from "./Mailicon";
 import { LockIcon } from "./LockIcon";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function LoginModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,20 +25,61 @@ export default function LoginModal() {
     password: "",
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const url = process.env.NEXT_PUBLIC_SWAGGER_URL
+  const router = useRouter();
+
+  const data = {
+    email: "seba@gmail.com",
+    username: "sebaNoel",
+    password: "sebaTheBoss",
+    roles: ["INVITED"],
+    name: "seba",
   };
 
-  const showUsers = async () => {
-    const response = await axios.get('https://pets-adopt-api.onrender.com/api/userEntity', {
-      headers: {
-        'Content-Type':'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+  //Enviar datos login
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        `${url}/user/login`,
+        credentials,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Basic ' + btoa(`${credentials.username}:${credentials.password}`)
+          },
+        }
+      );
+  
+      if (res.status === 200) {
+        console.log("logueado correctamente");
+        console.log(res);
+
+
+        const cookies = parse(document.cookie);
+
+      const updatedCookies = {
+        ...cookies,
+        token: res.data.token
+      };
+
+      document.cookie = serialize('AuthToken', updatedCookies.token, {
+        maxAge: 30 * 24 * 60 * 60, 
+        path: '/',
+      });
+   
+      onOpenChange(false)
+      router.push("/dashboard");
+
+      } else {
+        console.error("Error al login. Estado de respuesta:", res.status);
       }
-    })
-    console.log(response);
-  }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+    }
+  };
+
   return (
     <>
       <Link onPress={onOpen}>Login</Link>
@@ -89,7 +131,11 @@ export default function LoginModal() {
                     >
                       Remember me
                     </Checkbox>
-                    <Link onClick={showUsers} color="primary" href="#" size="sm">
+                    <Link
+                      color="primary"
+                      href="#"
+                      size="sm"
+                    >
                       Forgot password?
                     </Link>
                   </div>
@@ -98,9 +144,9 @@ export default function LoginModal() {
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                   </Button>
-                  <Button type="submit" color="primary">
-                    Sign in
-                  </Button>
+                    <Button type="submit" color="primary">
+                      Sign in
+                    </Button>
                 </ModalFooter>
               </form>
             </>
