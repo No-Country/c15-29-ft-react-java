@@ -17,7 +17,7 @@ export default function Carousel() {
       >
         <source src="./doggy1.mp4" type="video/mp4" />
       </video>
-      <div className="  pt-80">
+      <div className="  pt-72">
         <SimpleCarousel />
       </div>
     </div>
