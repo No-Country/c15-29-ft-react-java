@@ -12,8 +12,8 @@ import {
 } from "@nextui-org/react";
 import { parse, serialize } from 'cookie';
 import React, { useState } from "react";
-import { MailIcon } from "./Mailicon";
-import { LockIcon } from "./LockIcon";
+import { MailIcon } from "@/components/login/Mailicon";
+import { LockIcon } from "@/components/login/LockIcon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 

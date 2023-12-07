@@ -11,17 +11,9 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  Input,
-  Checkbox,
-  ModalFooter,
-  useDisclosure,
 } from "@nextui-org/react";
-import { AcmeLogo } from "./AcmeLogo.jsx";
-import LoginModal from "./login/LoginModal.jsx";
+import { AcmeLogo } from "@/components/acmelogo.jsx";
+import LoginModal from "@/components/login/LoginModal";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
