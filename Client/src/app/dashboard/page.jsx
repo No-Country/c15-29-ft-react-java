@@ -28,7 +28,7 @@ export default function Dashboard() {
     console.log(token);
     const users = await axios.get(`${url}/userEntity`,{headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer : ${token}`
+          'Authorization': `Bearer : ${token}`
           }});
     console.log();(users);
   };
