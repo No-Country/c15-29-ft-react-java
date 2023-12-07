@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   const token = getCookieValue('AuthToken')
   const router = useRouter();
-  const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
+  const url = "https://pets-adopt-api.onrender.com/api"
 
   const getProfile = async () => {
     console.log(token);
