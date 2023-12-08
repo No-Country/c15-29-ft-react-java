@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Providers } from "./providers";
+import { Providers } from "@/app/providers";
 
 export const metadata = {
   title: "Next.js",
@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" class="dark">
+    <html lang="en" className="dark">
       <body>
         <Providers>
           {children}

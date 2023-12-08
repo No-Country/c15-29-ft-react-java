@@ -1,12 +1,11 @@
-'use client'
-
-import Carousel from '@/components/carousel/page'
+import Navbar from '@/components/Navbar'
 import React from 'react'
 
 export default function HomePage() {
   return (
     <>
-      <Carousel />    
+      <Navbar/>
+      <div>HomePage</div>
     </>
   )
 }
