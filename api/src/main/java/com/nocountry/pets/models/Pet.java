@@ -22,7 +22,7 @@ public class Pet {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity owner;
+    private UserEntity user_id;
 
     private String name;
     //private String type; //if its decided to place different animals(example: cats, dogs, parrots,etc.)

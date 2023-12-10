@@ -34,6 +34,7 @@ public class PetsApplication {
 	@Autowired
 	RoleRepository roleRepository;
 
+
 	/*If roles not exists , roles and defaults users will be generated */
 	@Bean
 	CommandLineRunner init(){
