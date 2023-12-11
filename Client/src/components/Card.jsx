@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Divider } from "@nextui-org/react";
 
 export default function App({ age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
     const [srcImg, setSrcImg] = useState("");
@@ -20,6 +20,9 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         const data = await res.json().catch(err => console.log(err));
 
         return data;
+    }
+
+    const adoptPost = async () => {
     }
 
     useEffect(() => {
@@ -46,7 +49,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                     <Skeleton isLoaded={isLoaded} className="rounded-lg">
                         <Image
                             alt="Card background"
-                            className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer"
+                            className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                             src={srcImg}
                             draggable={false}
                             onClick={onOpen}
@@ -66,21 +69,36 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                 </CardBody>
             </Card >
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-                <ModalContent>
+                <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
-                            <ModalBody>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Nullam pulvinar risus non risus hendrerit venenatis.
-                                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Nullam pulvinar risus non risus hendrerit venenatis.
-                                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                                </p>
+                            <ModalBody className="flex flex-col gap-2 items-center py-8">
+                                <Image
+                                    alt="Card background"
+                                    // make image bigger
+                                    className="object-cover rounded-xl select-none h-auto w-[400px]"
+                                    src={srcImg}
+                                    draggable={false}
+                                    onClick={onOpen}
+                                />
+                                <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
+                                    {tags.length > 0 ? tags.map((tag, index) => (
+                                        <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""} px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
+                                    )) : <span className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}>No tags available</span>
+                                    }
+                                </div>
+                                <div className="flex flex-row gap-2">
+                                    {/* {tags.map((tag, index) => (
+                                        <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
+                                    ))} */}
+                                </div>
+                                <Divider orientation="horizontal" className="my-1" />
+                                <h3 className="font-bold text-xl bold">{name}</h3>
+                                <div className="flex flex-row gap-2">
+                                    <p className="text-medium uppercase font-bold">{age}</p>
+                                    <Divider orientation="vertical" className="h-auto max-h-full" />
+                                    <small className="text-default-500 text-medium">{species}</small>
+                                </div>
                                 <p>
                                     Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
                                     dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
@@ -91,16 +109,17 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
+                                    Keep searching
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Action
+                                <Button color="primary" onPress={adoptPost}>
+                                    Adopt!
                                 </Button>
                             </ModalFooter>
                         </>
-                    )}
-                </ModalContent>
-            </Modal>
+                    )
+                    }
+                </ModalContent >
+            </Modal >
         </>
     );
 }
