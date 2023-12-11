@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/components/acmelogo.jsx";
 import LoginModal from "@/components/login/LoginModal";
+import RegisterModal from "./register/RegisterModal";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,7 +57,7 @@ export default function App() {
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
+            <RegisterModal />
           </Button>
         </NavbarItem>
       </NavbarContent>
