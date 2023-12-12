@@ -54,10 +54,10 @@ public class UserEntityService {
 
 //        bucket/username/nameFile
 
+        String username = createUserDTO.getUsername();
+        String filename = createUserDTO.getAvatar().getOriginalFilename();
 
-        String avatarLink = String.format("nocountry-pawfinder/s%/s%",
-                createUserDTO.getUsername(),
-                createUserDTO.getAvatar().getOriginalFilename());
+        String avatarLink = String.format("nocountry-pawfinder/%s/%s", username, filename);
 
         //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
