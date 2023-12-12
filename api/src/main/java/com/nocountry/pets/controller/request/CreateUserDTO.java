@@ -5,14 +5,16 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserDTO {
+public class CreateUserDTO implements Serializable {
 
     @Email
     @NotBlank
@@ -30,6 +32,6 @@ public class CreateUserDTO {
     private Date dateOfBirth;
     private String nationality;
     private String address;
-    private String avatar;
+    private MultipartFile avatar;
     private String status;
 }

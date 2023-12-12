@@ -28,6 +28,7 @@ public class UserEntityController {
         return ResponseEntity.ok(users);
     }
 
+
     @GetMapping("/{username}")
     public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
         try {
@@ -39,8 +40,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUserEntity(@Valid @RequestBody CreateUserDTO createUserDTO){
-
+    public ResponseEntity<?> createUserEntity(@Valid @ModelAttribute CreateUserDTO createUserDTO){
         try {
             UserEntity newUser = userEntityService.createUserEntity(createUserDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
