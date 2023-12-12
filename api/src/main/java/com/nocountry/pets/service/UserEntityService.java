@@ -9,6 +9,7 @@ import com.nocountry.pets.repositories.RoleRepository;
 import com.nocountry.pets.repositories.UserRepository;
 import com.nocountry.pets.service.impl.S3ServiceImpl;
 import com.nocountry.pets.utils.ResizeImage;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -109,14 +110,19 @@ public class UserEntityService {
 
     @Transactional
     public UserEntity updateUserEntity(String email, CreateUserDTO createUserDTO) {
-        UserEntity user = userRepository.findByUsername(email)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("user not founded"));
 
         return userRepository.save(user);
     }
 
     public List<UserEntity> getAllUsers() {
         return (List<UserEntity>) userRepository.findAll();
+    }
+
+    public UserEntity getUserForUsername(String username){
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("user not founded"));
     }
 
 }

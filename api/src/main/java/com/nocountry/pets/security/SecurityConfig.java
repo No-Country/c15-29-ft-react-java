@@ -43,7 +43,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v3/**","/swagger-ui/**").permitAll();
                     auth.requestMatchers("/api/test/hello").permitAll();
-                    auth.requestMatchers("/api/userEntity").permitAll();
+                    auth.requestMatchers("/api/userEntity/register").permitAll();
+                    auth.requestMatchers("/api/pet/getAll").permitAll();
+                    auth.requestMatchers("/api/pet/getAllByAdopt/{adopted}").permitAll();
+                    auth.requestMatchers("/api/pet/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
