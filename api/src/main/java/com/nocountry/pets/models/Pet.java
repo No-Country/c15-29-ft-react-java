@@ -32,12 +32,12 @@ public class Pet {
     private String breed;
     private Integer age;
     private String colour;
-    private Boolean vaccinated;
+    private Boolean vaccinated = false;
     private Double weight;
     private Double height;
     private List<String> images;
-    private Boolean sterilized;
-    private Boolean adopted;
+    private Boolean sterilized = false;
+    private Boolean adopted = false;
     private String behavior;
 
 

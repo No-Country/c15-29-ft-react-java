@@ -37,19 +37,46 @@ public class AdoptionService {
                         .newOwner(newOwner)
                         .realOwner(realOwner)
                         .pet(pet)
+                        .newOwnerConfirm(false)
+                        .realOwnerConfirm(false)
                         .build();
                 return adoptionRepository.save(adoption);
         }
 
-        public void confirmAdopcion(Long id_userConfirm, Long id_adoption){
+        public void confirmAdoption(Long id_userConfirm, Long id_adoption){
                 UserEntity userEntity = userRepository.getByIdOrThrow(id_userConfirm);
+                AdoptionEntity adoptionInProcess = adoptionRepository.getByIdOrThrow(id_adoption);
+                //
+                if(adoptionInProcess.getNewOwner().getId() == userEntity.getId()){
+                      adoptionInProcess.setNewOwnerConfirm(true);
+                      adoptionRepository.save(adoptionInProcess);
 
+                }
+                if(adoptionInProcess.getRealOwner().getId() == userEntity.getId()){
+                        adoptionInProcess.setRealOwnerConfirm(true);
+                        adoptionRepository.save(adoptionInProcess);
+                }
+                if(adoptionInProcess.getNewOwnerConfirm() && adoptionInProcess.getRealOwnerConfirm()){
+                        //save date and status "complete"
+                        adoptionInProcess.setDateCompleted(LocalDateTime.now());
+                        adoptionInProcess.setAdoptionCompleted(true);
+                        adoptionRepository.save(adoptionInProcess);
+                        //
+                        Pet petInProgress = petRepository.getByIdOrThrow(adoptionInProcess.getPet().getId());
+                        petInProgress.setUser_id(adoptionInProcess.getNewOwner());
+                        petRepository.save(petInProgress);
+                        System.out.println("CONGRATS COMPLETED ADOPTION" + petInProgress.getUser_id());
 
+                } else {
+                        System.out.println("todavia no esta listo" + adoptionInProcess.get);
+                }
         }
 
         public List<AdoptionEntity> getAllAdoptions() {
                 return (List<AdoptionEntity>) adoptionRepository.findAll();
         }
+
+
 
 
 }

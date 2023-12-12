@@ -41,7 +41,8 @@ public class AdoptionEntity {
     LocalDateTime dateStarted;
     LocalDateTime dateCompleted;
 
-    private Boolean newOwnerConfirm;
-    private Boolean realOwnerConfirm;
+    private Boolean newOwnerConfirm = false;
+    private Boolean realOwnerConfirm = false;
+    private Boolean adoptionCompleted = false;
 
 }

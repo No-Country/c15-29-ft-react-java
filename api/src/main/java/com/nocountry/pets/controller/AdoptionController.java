@@ -27,7 +27,14 @@ public class AdoptionController {
                 adoption.getId_pet()));
     }
 
-    @PutMapping()
+
+    @PutMapping("/confirm/{id_userConfirm}/{id_adoption}")
+    public void confirmAdoption(
+            @PathVariable Long id_userConfirm,
+            @PathVariable Long id_adoption
+    ) {
+        adoptionService.confirmAdoption(id_userConfirm, id_adoption);
+    }
 
 
     @GetMapping("/getAll")
