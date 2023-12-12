@@ -7,7 +7,7 @@ export default function AdoptPage() {
   return (
     <>
       <div>AdoptPage</div>
-      <Card />
+      <Card id={1} />
     </>
   )
 }

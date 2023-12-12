@@ -3,8 +3,9 @@ import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, Modal
 import axios from "axios";
 import { useAuth } from "@/Api/AuthContext";
 
-export default function App({ age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
+export default function App({ id, age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
     const [srcImg, setSrcImg] = useState("");
+    const [petData, setPetData] = useState({ id, age, species, name, tags, });
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { setAuthToken, setErrorNotification, clearNotification } = useAuth();
@@ -43,8 +44,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                 },
             });
 
-        console.log(res.data);
-        return res
+        return res.data
     }
 
     useEffect(() => {
@@ -58,7 +58,15 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         //         setSrcImg(data.image);
         //     setIsLoaded(true);
         // });
-        fetchTest()
+        fetchTest().then(res => {
+            const data = res.filter((pet) => pet.id === id);
+            console.log(data[0], petData);
+            setPetData(data[0]);
+        });
+        // console.log(res, res[id], res[id].images)
+        // setSrcImg(res[id].images);
+        // setIsLoaded(true);
+        // setPetData(res[id]);
     }, []);
 
     const handleCardClick = () => {
