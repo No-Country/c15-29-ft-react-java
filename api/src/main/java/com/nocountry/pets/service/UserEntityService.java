@@ -7,11 +7,19 @@ import com.nocountry.pets.models.RoleEntity;
 import com.nocountry.pets.models.UserEntity;
 import com.nocountry.pets.repositories.RoleRepository;
 import com.nocountry.pets.repositories.UserRepository;
+import com.nocountry.pets.service.impl.S3ServiceImpl;
+import com.nocountry.pets.utils.ResizeImage;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +33,8 @@ public class UserEntityService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private S3ServiceImpl s3Service;
 
 
     //"transactional" causes all tasks in the function to be completed or none to be done
@@ -42,6 +52,12 @@ public class UserEntityService {
                         .orElseGet(() -> RoleEntity.builder().name(ERole.valueOf(roleName)).build()))
                 .collect(Collectors.toSet());
 
+//        bucket/username/nameFile
+
+
+        String avatarLink = String.format("nocountry-pawfinder/s%/s%",
+                createUserDTO.getUsername(),
+                createUserDTO.getAvatar().getOriginalFilename());
 
         //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
@@ -52,15 +68,35 @@ public class UserEntityService {
                 .name(createUserDTO.getName())
                 .lastName(createUserDTO.getLastName())
                 .dateOfBirth(createUserDTO.getDateOfBirth())
-                .avatar(createUserDTO.getAvatar())
+                .avatar(avatarLink)
                 .status(createUserDTO.getStatus())
                 .nationality(createUserDTO.getNationality())
                 .address(createUserDTO.getAddress())
                 .build();
 
+        uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername());
         userRepository.save(userEntity);
-
         return userEntity;
+    }
+
+    public void uploadAvatar(MultipartFile multipartFile, String usernName){
+        BufferedImage resizedImage = null;
+        try{
+            BufferedImage img = ImageIO.read(multipartFile.getInputStream());
+            resizedImage = ResizeImage.thumbnailAvatar(img);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try{
+            ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "jpg", baos1);
+            byte[] bytes = baos1.toByteArray();
+            s3Service.uploadFile(bytes, "thumbnail");
+            s3Service.uploadFile(multipartFile.getBytes(),"original");
+        }catch (IOException exception) {
+            throw new RuntimeException("Error subiendo avatar");
+        }
     }
 
     @Transactional

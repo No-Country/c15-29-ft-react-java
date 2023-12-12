@@ -26,7 +26,7 @@ public class UserEntityController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createUserEntity(@Valid @RequestBody CreateUserDTO createUserDTO){
+    public ResponseEntity<?> createUserEntity(@Valid @ModelAttribute CreateUserDTO createUserDTO){
 
         try {
             UserEntity newUser = userEntityService.createUserEntity(createUserDTO);
