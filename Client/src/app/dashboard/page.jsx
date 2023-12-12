@@ -25,7 +25,7 @@ export default function Dashboard() {
         <div className="flex gap-6 flex-col w-48">
           <Button onClick={handleLogout}>Logout</Button>
         </div>
-          <Toaster position="bottom-right" richColors closeButton />
+        <Toaster position="bottom-right" richColors closeButton />
       </div>
     </>
   );
