@@ -7,6 +7,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
     const [srcImg, setSrcImg] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    // starts as null, when it changes to a number, the modal opens, and later on becomes null again
     const [openModalId, setOpenModalId] = useState(null);
     const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
 
@@ -106,7 +107,11 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                     className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                                     src={srcImg}
                                     draggable={false}
-                                    onClick={() => { onOpen(); showPetDetails(pet.id); setOpenModalId(pet.id); }}
+                                    onClick={() => {
+                                        onOpen();
+                                        showPetDetails(pet.id);
+                                        setOpenModalId(pet.id);
+                                    }}
                                 />
                             </Skeleton>
                         </CardHeader>
