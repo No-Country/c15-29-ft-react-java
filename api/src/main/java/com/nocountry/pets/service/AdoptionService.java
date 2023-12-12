@@ -68,7 +68,7 @@ public class AdoptionService {
                         System.out.println("CONGRATS COMPLETED ADOPTION" + petInProgress.getUser_id());
 
                 } else {
-                        System.out.println("todavia no esta listo" + adoptionInProcess.get);
+                        System.out.println("todavia no esta listo" + adoptionInProcess);
                 }
         }
 
