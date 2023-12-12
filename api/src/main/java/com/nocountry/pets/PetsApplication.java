@@ -75,8 +75,10 @@ public class PetsApplication {
 				userRepository.save(userEntity2);
 				userRepository.save(userEntity3);
 			};
-		}else
-		{return  null;}
+		}else {
+			return  null;}
+
+
 
 	}
 

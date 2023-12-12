@@ -1,6 +1,8 @@
 package com.nocountry.pets.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +22,7 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_id;
@@ -36,6 +39,26 @@ public class Pet {
     private Boolean sterilized;
     private Boolean adopted;
     private String behavior;
+
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", user=" + (user_id != null ? user_id.getId() : null) +
+                ", name='" + name + '\'' +
+                ", breed='" + breed + '\'' +
+                ", age=" + age +
+                ", colour='" + colour + '\'' +
+                ", vaccinated=" + vaccinated +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", images=" + images +
+                ", sterilized=" + sterilized +
+                ", adopted=" + adopted +
+                ", behavior='" + behavior + '\'' +
+                '}';
+    }
 
 
 }

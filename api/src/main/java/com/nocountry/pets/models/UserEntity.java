@@ -1,5 +1,6 @@
 package com.nocountry.pets.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,13 +28,11 @@ public class UserEntity {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-
     //private List<Adoption> adoptions;
-
-
 //    VER SI SE PUEDE HACER QUE EL EMAIL SEA EL PRINCIPAL
     @Email
     @NotBlank
@@ -57,6 +56,23 @@ public class UserEntity {
     private String address;
     private String avatar;
     private String status;
+
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", nationality='" + nationality + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 
 
 }

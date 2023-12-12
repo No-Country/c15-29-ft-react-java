@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,25 +49,6 @@ public class PetController {
         return pet.map(value -> ResponseEntity.ok(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        System.out.println("USERNAME : " + username );
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-
-        pet.setUser_id(user);
-
-        System.out.println("Datos del usuario : " + user.getId());
-        System.out.println("MASCOTA" + pet.toString());
-
-        Pet createdPet = petService.createPet(pet);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet updatedPet) {
         Optional<Pet> pet = petService.updatePet(id, updatedPet);
@@ -78,4 +60,31 @@ public class PetController {
         boolean success = petService.deletePet(id);
         return success ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+        @PostMapping()
+    public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
+        try {
+            Pet createdPet = petService.createPet(pet);
+            System.out.println(createdPet.toString());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+
+    @GetMapping("/helloSecured")
+    public void helloSecured(){
+        String authUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("USERNAME : " + authUsername );
+        UserEntity user = userRepository.findByUsername(authUsername)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        System.out.println("Datos del usuario : " + user.toString());
+
+    }
+
 }
