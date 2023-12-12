@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Divider } from "@nextui-org/react";
+import axios from "axios";
+import { useAuth } from "@/Api/AuthContext";
 
 export default function App({ age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
     const [srcImg, setSrcImg] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { setAuthToken, setErrorNotification, clearNotification } = useAuth();
 
     const fetchImage = async (width, height) => {
         const customURL = `https://placekitten.com/${width}/${height}`;
@@ -25,6 +28,25 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
     const adoptPost = async () => {
     }
 
+    const [credentials, setCredentials] = useState({
+        username: "",
+        password: "",
+    });
+
+    const fetchTest = async () => {
+        const res = await axios.get("https://pets-adopt-api.onrender.com/api/pet/getAll",
+            credentials,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + btoa(`${credentials.username}:${credentials.password}`)
+                },
+            });
+
+        console.log(res.data);
+        return res
+    }
+
     useEffect(() => {
         // setTimeout placeholder to simulate loading, remove this in production
         fetchImage(270, 270);
@@ -36,6 +58,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         //         setSrcImg(data.image);
         //     setIsLoaded(true);
         // });
+        fetchTest()
     }, []);
 
     const handleCardClick = () => {
