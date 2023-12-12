@@ -7,6 +7,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
     const [srcImg, setSrcImg] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [openModalId, setOpenModalId] = useState(null);
     const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
 
     const token = getCookieValue("AuthToken")
@@ -31,14 +32,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         if (res.ok)
             setIsLoaded(true);
         return res.url;
-    }
-
-    const fetchData = async (id) => {
-        const res = await fetch(`https://pets-adopt-api.onrender.com/api/pet/${id}`);
-        const data = await res.json().catch(err => console.log(err));
-
-        return data;
-    }
+    };
 
     const getPet = async () => {
         try {
@@ -112,7 +106,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                     className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                                     src={srcImg}
                                     draggable={false}
-                                    onClick={() => { onOpen(); showPetDetails(pet.id); }}
+                                    onClick={() => { onOpen(); showPetDetails(pet.id); setOpenModalId(pet.id); }}
                                 />
                             </Skeleton>
                         </CardHeader>
@@ -132,7 +126,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
             </div>
 
             {onlyPet.map((petDetail) => (
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange} key={petDetail.id}>
+                <Modal isOpen={openModalId === petDetail.id} onOpenChange={() => setOpenModalId(null)} key={petDetail.id}>
                     <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
                         {(onClose) => (
                             <>
@@ -152,8 +146,8 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                         }
                                     </div>
                                     <div className="flex flex-row gap-2">
-                                        {/* {tags.map((tag, index) => (
-                                     <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
+                                        {/* {tags.map((tag, index) => ( 
+                                            <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
                                  ))} */}
                                     </div>
                                     <Divider orientation="horizontal" className="my-1" />
@@ -175,7 +169,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                     <Button color="danger" variant="light" onPress={onClose}>
                                         Keep searching
                                     </Button>
-                                    <Button color="primary" onPress={getPet}>
+                                    <Button color="primary" onPress={adoptPost}>
                                         Adopt!
                                     </Button>
                                 </ModalFooter>
