@@ -1,7 +1,7 @@
 import React from "react";
 export const MailIcon = (props) => (
   <svg
-    aria-hidden="true"
+    ariaHidden="true"
     fill="none"
     focusable="false"
     height="1em"

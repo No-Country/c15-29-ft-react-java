@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Input,
   Link,
   Modal,
@@ -10,21 +9,33 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-
 import React, { useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { UserIcon } from "./CredentialIcon";
+import { CredentialIcon } from "./UserIcon";
 
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [credentials, setCredentials] = useState({
+    username: "",
     name: "",
     lastName: "",
     email: "",
     password: "",
+    roles: [
+      "Invited"
+    ],
+    lastName: "ocando",
+    nationality: "argentina",
+    address: "Las flores",
+    avatar: "123",
+    status: "Online"
+
+
   });
 
   const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
@@ -33,19 +44,24 @@ export default function RegisterModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${url}/register/userEntity`, credentials, {
+      const res = await axios.post(`${url}/userEntity/register`, credentials, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
       });
 
       if (res.status === 200) {
+        console.log("Registrado correctamente");
+        console.log(res);
+
         onOpenChange(false);
         router.push("/panel");
       } else {
-        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+        console.log(credentials);
+        console.error("Error al login. Estado de respuesta:", res.status);
       }
     } catch (error) {
+      // console.log(credentials);
       console.error("Error en la solicitud:", error.message);
     }
   };
@@ -67,14 +83,30 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
+                        username: e.target.value,
+                      })
+                    }
+                    autoFocus
+                    endContent={
+                      <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="Username"
+                    placeholder="Enter your username"
+                    variant="bordered"
+                  />
+                  <Input
+                    type="text"
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
                         name: e.target.value,
                       })
                     }
                     autoFocus
                     endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <CredentialIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="name"
+                    label="Name"
                     placeholder="Enter your Name"
                     variant="bordered"
                   />
@@ -99,7 +131,7 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        name: e.target.value,
+                        email: e.target.value,
                       })
                     }
                     autoFocus

@@ -56,7 +56,7 @@ export default function App() {
           <LoginModal />
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button color="primary" variant="flat">
             <RegisterModal />
           </Button>
         </NavbarItem>
