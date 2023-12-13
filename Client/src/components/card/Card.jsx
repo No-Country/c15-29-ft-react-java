@@ -85,10 +85,11 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
 
         fetchTest()
     }, []);
+    console.log(pets)
 
     return (
         <>
-            <div className="flex gap-12">
+            <div className="flex gap-12 flex-wrap justify-center items-center">
                 {pets.map((pet) => (
                     <Card className="py-4 min-w-72 w-[300px] max-w-xs active:scale-90 transition-all duration-300 ease-in-out hover:scale-105" key={pet.id} onClick={() => {
                         onOpen();
@@ -119,61 +120,60 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                     </Card>
                 ))}
             </div >
-            {
-                onlyPet.map((petDetail) => (
-                    <Modal isOpen={openModalId === petDetail.id} onOpenChange={() => setOpenModalId(null)} key={petDetail.id}>
-                        <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
-                            {(onClose) => (
-                                <>
-                                    <ModalBody className="flex flex-col gap-2 items-center py-8">
-                                        <Image
-                                            alt="Card background"
-                                            // make image bigger
-                                            className="object-cover rounded-xl select-none h-auto w-[400px]"
-                                            src={srcImg}
-                                            draggable={false}
-                                            onClick={onOpen}
-                                        />
-                                        <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
-                                            {tags.length > 0 ? tags.map((tag, index) => (
-                                                <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""} px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
-                                            )) : <span className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}>No tags available</span>
-                                            }
-                                        </div>
-                                        <div className="flex flex-row gap-2">
-                                            {/* {tags.map((tag, index) => ( 
+            {pets.map((pet) => (
+                <Modal isOpen={openModalId === pet.id} onOpenChange={() => setOpenModalId(null)} key={pet.id}>
+                    <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
+                        {(onClose) => (
+                            <>
+                                <ModalBody className="flex flex-col gap-2 items-center py-8">
+                                    <Image
+                                        alt="Card background"
+                                        // make image bigger
+                                        className="object-cover rounded-xl select-none h-auto w-[400px]"
+                                        src={srcImg}
+                                        draggable={false}
+                                        onClick={onOpen}
+                                    />
+                                    <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
+                                        {tags.length > 0 ? tags.map((tag, index) => (
+                                            <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""} px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
+                                        )) : <span className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}>No tags available</span>
+                                        }
+                                    </div>
+                                    <div className="flex flex-row gap-2">
+                                        {/* {tags.map((tag, index) => ( 
                                             <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
                                  ))} */}
-                                        </div>
-                                        <Divider orientation="horizontal" className="my-1" />
-                                        <h3 className="font-bold text-xl bold">{petDetail.name}</h3>
-                                        <div className="flex flex-row gap-2">
-                                            <p className="text-medium uppercase font-bold">{age}</p>
-                                            <Divider orientation="vertical" className="h-auto max-h-full" />
-                                            <small className="text-default-500 text-medium">{species}</small>
-                                        </div>
-                                        <p>
-                                            Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                                            dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
-                                            Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod.
-                                            Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur
-                                            proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                                        </p>
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="danger" variant="light" onPress={onClose}>
-                                            Keep searching
-                                        </Button>
-                                        <Button color="primary" onPress={adoptPost}>
-                                            Adopt!
-                                        </Button>
-                                    </ModalFooter>
-                                </>
-                            )
-                            }
-                        </ModalContent >
-                    </Modal >
-                ))
+                                    </div>
+                                    <Divider orientation="horizontal" className="my-1" />
+                                    <h3 className="font-bold text-xl bold">{pet.name}</h3>
+                                    <div className="flex flex-row gap-2">
+                                        <p className="text-medium uppercase font-bold">{age}</p>
+                                        <Divider orientation="vertical" className="h-auto max-h-full" />
+                                        <small className="text-default-500 text-medium">{species}</small>
+                                    </div>
+                                    <p>
+                                        Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
+                                        dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
+                                        Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod.
+                                        Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur
+                                        proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
+                                    </p>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="danger" variant="light" onPress={onClose}>
+                                        Keep searching
+                                    </Button>
+                                    <Button color="primary" onPress={adoptPost}>
+                                        Adopt!
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )
+                        }
+                    </ModalContent >
+                </Modal >
+            ))
             }
         </>
     );
