@@ -6,7 +6,10 @@ import com.nocountry.pets.models.ERole;
 import com.nocountry.pets.models.RoleEntity;
 import com.nocountry.pets.models.UserEntity;
 import com.nocountry.pets.repositories.RoleRepository;
+import com.nocountry.pets.repositories.UserPasswordRepository;
 import com.nocountry.pets.repositories.UserRepository;
+import com.nocountry.pets.util.EmailUtil;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,10 @@ public class UserEntityService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private EmailUtil emailUtil;
+    @Autowired
+    private UserPasswordRepository userPasswordRepository;
 
 
     //"transactional" causes all tasks in the function to be completed or none to be done
@@ -89,4 +96,27 @@ public class UserEntityService {
                 .orElseThrow(() -> new EntityNotFoundException("user not founded"));
     }
 
+
+    public String forgotPassword(String email){
+        UserEntity user = userPasswordRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new RuntimeException("User not found with this email: " + email));
+        try {
+            emailUtil.sendSetPasswordEmail(email);
+        } catch (MessagingException e){
+            throw new RuntimeException("Unable to send set password, please try again");
+        }
+        return "Please check yor email to set new password to your account";
+
+
+    }
+
+    public String setPassword(String email, String newPassword) {
+        UserEntity user = userPasswordRepository.findByEmail(email)
+                .orElseThrow(
+                        () -> new RuntimeException("User not found with this email: " + email));
+        user.setPassword(newPassword);
+        userRepository.save(user);
+        return "New password set successfully longin with new password";
+    }
 }
