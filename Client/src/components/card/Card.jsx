@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Divider } from "@nextui-org/react";
 import axios from "axios";
@@ -63,7 +65,6 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         password: "",
     });
 
-
     const fetchTest = async () => {
         try {
             const response = await axios.get('https://pets-adopt-api.onrender.com/api/pet/getAll', credentials,
@@ -89,7 +90,11 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
         <>
             <div className="flex gap-12">
                 {pets.map((pet) => (
-                    <Card className="py-4 min-w-72 w-[300px] max-w-xs active:scale-90 transition-all duration-300 ease-in-out hover:scale-105" key={pet.id} >
+                    <Card className="py-4 min-w-72 w-[300px] max-w-xs active:scale-90 transition-all duration-300 ease-in-out hover:scale-105" key={pet.id} onClick={() => {
+                        onOpen();
+                        showPetDetails(pet.id);
+                        setOpenModalId(pet.id);
+                    }} isPressable={true} isHoverable={true}>
                         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start w-full">
                             <Skeleton isLoaded={isLoaded} className="rounded-lg">
                                 <Image
@@ -97,11 +102,6 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                     className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                                     src={srcImg}
                                     draggable={false}
-                                    onClick={() => {
-                                        onOpen();
-                                        showPetDetails(pet.id);
-                                        setOpenModalId(pet.id);
-                                    }}
                                 />
                             </Skeleton>
                         </CardHeader>
@@ -119,8 +119,8 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                     </Card>
                 ))}
             </div >
-            {onlyPet.map((petDetail) => (
-                <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
+            {
+                onlyPet.map((petDetail) => (
                     <Modal isOpen={openModalId === petDetail.id} onOpenChange={() => setOpenModalId(null)} key={petDetail.id}>
                         <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
                             {(onClose) => (
@@ -173,10 +173,8 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                             }
                         </ModalContent >
                     </Modal >
-                </Skeleton>
-            ))
+                ))
             }
-
         </>
     );
 }
