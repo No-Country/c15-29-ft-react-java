@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { UserIcon } from "./CredentialIcon";
 import { CredentialIcon } from "./UserIcon";
 
+
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
