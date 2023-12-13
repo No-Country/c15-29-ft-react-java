@@ -7,7 +7,7 @@ export const UserIcon = (props) => {
       height="1.05em"
       role="presentation"
       focusable="false"
-      ariaHidden="true"
+      aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

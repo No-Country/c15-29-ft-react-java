@@ -26,16 +26,9 @@ export default function RegisterModal() {
     lastName: "",
     email: "",
     password: "",
-    roles: [
-      "Invited"
-    ],
-    lastName: "ocando",
-    nationality: "argentina",
-    address: "Las flores",
-    avatar: "123",
-    status: "Online"
-
-
+    // roles: [
+    //   "Invited"
+    // ],
   });
 
   const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
@@ -61,7 +54,7 @@ export default function RegisterModal() {
         console.error("Error al login. Estado de respuesta:", res.status);
       }
     } catch (error) {
-      // console.log(credentials);
+      console.log(credentials);
       console.error("Error en la solicitud:", error.message);
     }
   };
@@ -108,22 +101,6 @@ export default function RegisterModal() {
                     }
                     label="Name"
                     placeholder="Enter your Name"
-                    variant="bordered"
-                  />
-                  <Input
-                    type="text"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
-                        lastName: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="lastName"
-                    placeholder="Enter your Lastname"
                     variant="bordered"
                   />
                   <Input
