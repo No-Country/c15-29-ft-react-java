@@ -20,4 +20,17 @@ public class RoleEntity {
 
     @Enumerated(EnumType.STRING)
     private ERole name;
+
+
+    @Override
+    public String toString() {
+        return "RoleEntity{" +
+                "id=" + id +
+                ", name=" + name +
+                '}';
+    }
+
+
 }
+
+
