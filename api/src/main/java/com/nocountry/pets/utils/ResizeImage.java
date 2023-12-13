@@ -7,6 +7,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ResizeImage {
@@ -30,6 +31,7 @@ public class ResizeImage {
                     .size(width, height)
                     .toFile(new File("temp.jpeg"));
             encoded = Files.readAllBytes(Paths.get("temp.jpeg"));
+            Files.delete(Paths.get("temp.jpeg"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
