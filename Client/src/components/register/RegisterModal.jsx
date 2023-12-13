@@ -23,6 +23,7 @@ export default function RegisterModal() {
   const [credentials, setCredentials] = useState({
     username: "",
     name: "",
+    lastName: "",
     email: "",
     password: "",
     roles: [
@@ -54,7 +55,7 @@ export default function RegisterModal() {
         console.log(res);
 
         onOpenChange(false);
-        router.push("/dashboard");
+        router.push("/panel");
       } else {
         console.log(credentials);
         console.error("Error al login. Estado de respuesta:", res.status);
@@ -110,6 +111,22 @@ export default function RegisterModal() {
                     variant="bordered"
                   />
                   <Input
+                    type="text"
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        lastName: e.target.value,
+                      })
+                    }
+                    autoFocus
+                    endContent={
+                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="lastName"
+                    placeholder="Enter your Lastname"
+                    variant="bordered"
+                  />
+                  <Input
                     type="email"
                     onChange={(e) =>
                       setCredentials({
@@ -121,7 +138,7 @@ export default function RegisterModal() {
                     endContent={
                       <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="Email"
+                    label="email"
                     placeholder="Enter your Email"
                     variant="bordered"
                   />
@@ -136,8 +153,8 @@ export default function RegisterModal() {
                     endContent={
                       <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="Password"
-                    placeholder="Enter your password"
+                    label="password"
+                    placeholder="Enter your Password"
                     type="password"
                     variant="bordered"
                   />
