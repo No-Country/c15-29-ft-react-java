@@ -22,6 +22,7 @@ export default function RegisterModal() {
 
   const [credentials, setCredentials] = useState({
     name: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -35,13 +36,10 @@ export default function RegisterModal() {
       const res = await axios.post(`${url}/register/userEntity`, credentials, {
         headers: {
           "Content-Type": "application/json",
-          
         },
       });
 
       if (res.status === 200) {
-      
-
         onOpenChange(false);
         router.push("/panel");
       } else {
@@ -69,22 +67,6 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        username: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Username"
-                    placeholder="Enter your username"
-                    variant="bordered"
-                  />
-                  <Input
-                    type="text"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
                         name: e.target.value,
                       })
                     }
@@ -94,6 +76,22 @@ export default function RegisterModal() {
                     }
                     label="name"
                     placeholder="Enter your Name"
+                    variant="bordered"
+                  />
+                  <Input
+                    type="text"
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        lastName: e.target.value,
+                      })
+                    }
+                    autoFocus
+                    endContent={
+                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="lastName"
+                    placeholder="Enter your Lastname"
                     variant="bordered"
                   />
                   <Input
@@ -108,7 +106,7 @@ export default function RegisterModal() {
                     endContent={
                       <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="Email"
+                    label="email"
                     placeholder="Enter your Email"
                     variant="bordered"
                   />
@@ -123,12 +121,11 @@ export default function RegisterModal() {
                     endContent={
                       <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="Password"
-                    placeholder="Enter your password"
+                    label="password"
+                    placeholder="Enter your Password"
                     type="password"
                     variant="bordered"
                   />
-                 
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={onClose}>
