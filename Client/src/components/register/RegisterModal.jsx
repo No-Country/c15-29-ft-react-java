@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   Input,
   Link,
   Modal,
@@ -10,20 +9,32 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import { parse, serialize } from "cookie";
 import React, { useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { UserIcon } from "./CredentialIcon";
+import { CredentialIcon } from "./UserIcon";
 
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [credentials, setCredentials] = useState({
+    username: "",
     name: "",
     email: "",
     password: "",
+    roles: [
+      "Invited"
+    ],
+    lastName: "ocando",
+    nationality: "argentina",
+    address: "Las flores",
+    avatar: "123",
+    status: "Online"
+
+
   });
 
   const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
@@ -32,11 +43,9 @@ export default function RegisterModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${url}/user/register`, credentials, {
+      const res = await axios.post(`${url}/userEntity/register`, credentials, {
         headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Basic " + btoa(`${credentials.username}:${credentials.password}`),
+          "Content-Type": "application/json"
         },
       });
 
@@ -44,24 +53,14 @@ export default function RegisterModal() {
         console.log("Registrado correctamente");
         console.log(res);
 
-        const cookies = parse(document.cookie);
-
-        const updatedCookies = {
-          ...cookies,
-          token: res.data.token,
-        };
-
-        document.cookie = serialize("AuthToken", updatedCookies.token, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: "/",
-        });
-
         onOpenChange(false);
         router.push("/dashboard");
       } else {
+        console.log(credentials);
         console.error("Error al login. Estado de respuesta:", res.status);
       }
     } catch (error) {
+      // console.log(credentials);
       console.error("Error en la solicitud:", error.message);
     }
   };
@@ -88,7 +87,7 @@ export default function RegisterModal() {
                     }
                     autoFocus
                     endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
                     label="Username"
                     placeholder="Enter your username"
@@ -104,9 +103,9 @@ export default function RegisterModal() {
                     }
                     autoFocus
                     endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <CredentialIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     }
-                    label="name"
+                    label="Name"
                     placeholder="Enter your Name"
                     variant="bordered"
                   />
@@ -115,7 +114,7 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        name: e.target.value,
+                        email: e.target.value,
                       })
                     }
                     autoFocus
@@ -142,25 +141,13 @@ export default function RegisterModal() {
                     type="password"
                     variant="bordered"
                   />
-                  <div className="flex py-2 px-1 justify-between">
-                    <Checkbox
-                      classNames={{
-                        label: "text-small",
-                      }}
-                    >
-                      Remember me
-                    </Checkbox>
-                    <Link color="primary" href="#" size="sm">
-                      Forgot password?
-                    </Link>
-                  </div>
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                   </Button>
                   <Button type="submit" color="primary">
-                    Sign in
+                    Sign up
                   </Button>
                 </ModalFooter>
               </form>
