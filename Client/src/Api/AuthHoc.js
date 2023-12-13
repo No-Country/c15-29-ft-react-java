@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "@/Api/AuthContext";
 
-const AuthHoc = (WrappedComponent) => {
+export const AuthHoc = (WrappedComponent) => {
   const AuthHoc = (props) => {
     const { token, loading } = useAuth();
     const router = useRouter();
@@ -10,7 +10,7 @@ const AuthHoc = (WrappedComponent) => {
     useEffect(() => {
       // Si el token no está presente, redirige al login
       if (!token && !loading) {
-        router.push('/login');
+        router.push('/');
       }
     }, [token, loading, router]);
 
@@ -34,4 +34,5 @@ function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-export default AuthHoc;
+
+
