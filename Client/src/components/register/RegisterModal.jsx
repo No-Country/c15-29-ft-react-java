@@ -10,7 +10,7 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import { parse, serialize } from "cookie";
+
 import React, { useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
@@ -32,34 +32,20 @@ export default function RegisterModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${url}/user/register`, credentials, {
+      const res = await axios.post(`${url}/register/userEntity`, credentials, {
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Basic " + btoa(`${credentials.username}:${credentials.password}`),
+          
         },
       });
 
       if (res.status === 200) {
-        console.log("Registrado correctamente");
-        console.log(res);
-
-        const cookies = parse(document.cookie);
-
-        const updatedCookies = {
-          ...cookies,
-          token: res.data.token,
-        };
-
-        document.cookie = serialize("AuthToken", updatedCookies.token, {
-          maxAge: 30 * 24 * 60 * 60,
-          path: "/",
-        });
+      
 
         onOpenChange(false);
-        router.push("/dashboard");
+        router.push("/panel");
       } else {
-        console.error("Error al login. Estado de respuesta:", res.status);
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
       }
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
@@ -142,25 +128,14 @@ export default function RegisterModal() {
                     type="password"
                     variant="bordered"
                   />
-                  <div className="flex py-2 px-1 justify-between">
-                    <Checkbox
-                      classNames={{
-                        label: "text-small",
-                      }}
-                    >
-                      Remember me
-                    </Checkbox>
-                    <Link color="primary" href="#" size="sm">
-                      Forgot password?
-                    </Link>
-                  </div>
+                 
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                   </Button>
                   <Button type="submit" color="primary">
-                    Sign in
+                    Sign up
                   </Button>
                 </ModalFooter>
               </form>
