@@ -12,7 +12,7 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
-import { AcmeLogo } from "@/components/acmelogo.jsx";
+import { AcmeLogo } from "@/components/navbar/acmelogo.jsx";
 import LoginModal from "@/components/login/LoginModal";
 import RegisterModal from "./register/RegisterModal";
 

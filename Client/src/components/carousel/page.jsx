@@ -1,4 +1,4 @@
-import SimpleCarousel from "@/components/SimpleCarousel";
+import SimpleCarousel from "@/components/carousel/SimpleCarousel";
 import React from "react";
 
 export default function Carousel() {

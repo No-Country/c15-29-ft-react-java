@@ -11,14 +11,16 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { parse, serialize } from 'cookie';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/Api/AuthContext";
 
 export default function LoginModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { setAuthToken, setErrorNotification, clearNotification  } = useAuth();
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -26,14 +28,6 @@ export default function LoginModal() {
   });
   const url = "https://pets-adopt-api.onrender.com/api"
   const router = useRouter();
-
-  const data = {
-    email: "seba@gmail.com",
-    username: "sebaNoel",
-    password: "sebaTheBoss",
-    roles: ["INVITED"],
-    name: "seba",
-  };
 
   //Enviar datos login
 
@@ -52,9 +46,6 @@ export default function LoginModal() {
       );
   
       if (res.status === 200) {
-        console.log("logueado correctamente");
-        console.log(res);
-
 
         const cookies = parse(document.cookie);
 
@@ -67,18 +58,30 @@ export default function LoginModal() {
         maxAge: 30 * 24 * 60 * 60, 
         path: '/',
       });
+
+      setAuthToken(updatedCookies.token)
    
       onOpenChange(false)
       router.push("/dashboard");
 
       } else {
         console.error("Error al login. Estado de respuesta:", res.status);
+        setErrorNotification('Error during login. Please try again.'); // Error: muestra un mensaje de error usando el contexto
+
       }
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
+      setErrorNotification('Error during login. Please try again.'); // Error: muestra un mensaje de error usando el contexto
     }
+    
   };
 
+    useEffect(() => {
+    return () => {
+      // Limpiar la notificación cuando el componente se desmonte
+      clearNotification();
+    };
+  }, [clearNotification]);
   return (
     <>
       <Link onPress={onOpen}>Login</Link>

@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/userEntity")
 
 //esta etiqueta es necesaria?
-@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+//@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserEntityController {
 
 
@@ -27,6 +27,7 @@ public class UserEntityController {
         List<UserEntity> users = userEntityService.getAllUsers();
         return ResponseEntity.ok(users);
     }
+
 
     @GetMapping("/{username}")
     public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
@@ -39,8 +40,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUserEntity(@Valid @RequestBody CreateUserDTO createUserDTO){
-
+    public ResponseEntity<?> createUserEntity(@Valid @ModelAttribute CreateUserDTO createUserDTO){
         try {
             UserEntity newUser = userEntityService.createUserEntity(createUserDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
