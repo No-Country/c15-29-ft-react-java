@@ -90,6 +90,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async (username, token) => {
+    try {
+      const res = await axios.post(`${url}/userEntity/${username}`, credentials, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ',
+        },
+      });
+
+      if (res.status === 200) {
+        setAuthToken(res.data.token);
+        UserInfo(res.data.user);
+        console.log(res);
+        router.push('/dashboard');
+      } else {
+        console.error('Error al login. Estado de respuesta:', res.status);
+        setErrorNotification('Error during login. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error.message);
+      setErrorNotification('Error during login. Please try again.');
+    }
+  };
+
   const UserInfo = (data) => {
     setUserInfo(data);
   };
