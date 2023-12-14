@@ -49,7 +49,7 @@ export default function RegisterModal() {
         router.push("/panel");
       } else {
         console.log(credentials);
-        console.error("Error al login. Estado de respuesta:", res.status);
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
       }
     } catch (error) {
       // console.log(credentials);
