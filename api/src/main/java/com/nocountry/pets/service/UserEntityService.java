@@ -53,12 +53,9 @@ public class UserEntityService {
                         .orElseGet(() -> RoleEntity.builder().name(ERole.valueOf(roleName)).build()))
                 .collect(Collectors.toSet());
 
-//        bucket/username/nameFile
-
         String username = createUserDTO.getUsername();
-        String filename = createUserDTO.getAvatar().getOriginalFilename();
 
-        String avatarLink = String.format("nocountry-pawfinder/%s/%s", username, filename);
+        String avatarLink = String.format("nocountry-pawfinder/%s/image/%s", username, "thumbnail");
 
         //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
@@ -80,8 +77,8 @@ public class UserEntityService {
         return userEntity;
     }
 
-    public void uploadAvatar(MultipartFile multipartFile, String usernName){
-        BufferedImage resizedImage = null;
+    public void uploadAvatar(MultipartFile multipartFile, String userName){
+        byte[] resizedImage = new byte[0];
         try{
             BufferedImage img = ImageIO.read(multipartFile.getInputStream());
             resizedImage = ResizeImage.thumbnailAvatar(img);
@@ -90,11 +87,8 @@ public class UserEntityService {
         }
 
         try{
-            ByteArrayOutputStream baos1 = new ByteArrayOutputStream();
-            ImageIO.write(resizedImage, "jpg", baos1);
-            byte[] bytes = baos1.toByteArray();
-            s3Service.uploadFile(bytes, "thumbnail");
-            s3Service.uploadFile(multipartFile.getBytes(),"original");
+            s3Service.uploadFile(resizedImage, String.format("%s/image/%s", userName, "thumbnail"));
+            s3Service.uploadFile(multipartFile.getBytes(),String.format("%s/image/original",userName));
         }catch (IOException exception) {
             throw new RuntimeException("Error subiendo avatar");
         }
