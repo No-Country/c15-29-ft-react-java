@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -16,10 +16,10 @@ import { useAuth } from "@/Api/AuthContext.jsx";
 
 export default function UserNavbar() {
 
-  const { userInfo } = useAuth();
+  const { userInfo, loading } = useAuth();
 
-  const handleInfo = () => {
-    console.log(userInfo);
+  if (loading) {
+    return <p>Cargando...</p>;
   }
 
   return (
@@ -49,22 +49,21 @@ export default function UserNavbar() {
 
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
-          <DropdownTrigger>
+        <DropdownTrigger>
             <Avatar
               isBordered
               as="button"
               className="transition-transform"
               color="secondary"
-              name="Jason Hughes"
+              name={userInfo ? userInfo.username : "Guest"}
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-              onClick={handleInfo}
+              src={userInfo ? userInfo.profileImage : "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{userInfo ? userInfo.email : "Guest"}</p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="team_settings">Team Settings</DropdownItem>
