@@ -18,9 +18,11 @@ import {
   
   export default function RegisterModal() {
     const [credentials, setCredentials] = useState({
-      name: "",
-      email: "",
-      password: "",
+      userName: "",
+      dateOfBirth: "",
+      nationality: "",
+      adress:"",
+      status:""
     });
   
     const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
