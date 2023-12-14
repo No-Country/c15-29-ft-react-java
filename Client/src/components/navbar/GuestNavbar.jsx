@@ -16,7 +16,7 @@ import { AcmeLogo } from "@/components/navbar/acmelogo.jsx";
 import LoginModal from "@/components/login/LoginModal";
 import RegisterModal from "../register/RegisterModal";
 
-export default function App() {
+export default function GuestNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = ["Home", "About Us", "Pet browser", "How to adopt"];
