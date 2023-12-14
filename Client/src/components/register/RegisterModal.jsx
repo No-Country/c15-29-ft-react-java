@@ -17,26 +17,16 @@ import { useRouter } from "next/navigation";
 import { UserIcon } from "./CredentialIcon";
 import { CredentialIcon } from "./UserIcon";
 
-
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [credentials, setCredentials] = useState({
-    username: "",
-    name: "",
-    lastName: "",
     email: "",
+    username: "",
+
     password: "",
-    roles: [
-      "Invited"
-    ],
-    lastName: "ocando",
-    nationality: "argentina",
-    address: "Las flores",
-    avatar: "123",
-    status: "Online"
-
-
+    avatar: "",
+    roles: ["Invited"],
   });
 
   const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
@@ -47,7 +37,7 @@ export default function RegisterModal() {
     try {
       const res = await axios.post(`${url}/userEntity/register`, credentials, {
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
       });
 
@@ -95,38 +85,7 @@ export default function RegisterModal() {
                     placeholder="Enter your username"
                     variant="bordered"
                   />
-                  <Input
-                    type="text"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
-                        name: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <CredentialIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Name"
-                    placeholder="Enter your Name"
-                    variant="bordered"
-                  />
-                  <Input
-                    type="text"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
-                        lastName: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="lastName"
-                    placeholder="Enter your Lastname"
-                    variant="bordered"
-                  />
+
                   <Input
                     type="email"
                     onChange={(e) =>
@@ -157,6 +116,21 @@ export default function RegisterModal() {
                     label="password"
                     placeholder="Enter your Password"
                     type="password"
+                    variant="bordered"
+                  />
+                  <Input
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        avatar: e.target.avatar,
+                      })
+                    }
+                    endContent={
+                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="avatar"
+                    placeholder="Enter your Picture"
+                    type="string"
                     variant="bordered"
                   />
                 </ModalBody>
