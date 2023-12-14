@@ -101,7 +101,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                 <Image
                                     alt="Card background"
                                     className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
-                                    src={srcImg}
+                                    src={pet.images ? pet.images[0] : srcImg}
                                     draggable={false}
                                 />
                             </Skeleton>
@@ -130,7 +130,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                         alt="Card background"
                                         // make image bigger
                                         className="object-cover rounded-xl select-none h-auto w-[400px]"
-                                        src={srcImg}
+                                        src={pet.images ? pet.images[0] : srcImg}
                                         draggable={false}
                                         onClick={onOpen}
                                     />
@@ -148,7 +148,7 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                     <Divider orientation="horizontal" className="my-1" />
                                     <h3 className="font-bold text-xl bold">{pet.name}</h3>
                                     <div className="flex flex-row gap-2">
-                                        <p className="text-medium uppercase font-bold">{age}</p>
+                                        <p className="text-medium uppercase font-bold">{pet.age}</p>
                                         <Divider orientation="vertical" className="h-auto max-h-full" />
                                         <small className="text-default-500 text-medium">{species}</small>
                                     </div>
