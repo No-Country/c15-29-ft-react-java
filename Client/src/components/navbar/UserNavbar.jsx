@@ -11,7 +11,7 @@ import {
   DropdownMenu,
   Avatar,
 } from "@nextui-org/react";
-import { AcmeLogo } from "./AcmeLogo.jsx";
+import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
 
 export default function UserNavbar() {
@@ -80,3 +80,4 @@ export default function UserNavbar() {
     </Navbar>
   );
 }
+ 
