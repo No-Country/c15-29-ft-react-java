@@ -30,8 +30,8 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
 
     // test placeholder till we get images from backend, delete later on
     const fetchImage = async (width, height) => {
-        const customURL = `https://placekitten.com/${width}/${height}`;
-        const res = await fetch(customURL);
+        const customURL = `https://picsum.photos/${width}/${height}`;
+        const res = await fetch(customURL)
         setSrcImg(res.url);
         if (res.ok)
             setIsLoaded(true);
@@ -113,8 +113,8 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                             <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
                                 <small className="text-default-500">{species}</small>
                             </Skeleton>
-                            <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg">
-                                <h4 className="font-bold text-large">{pet.name}</h4>
+                            <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full">
+                                <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">{pet.name}</h4>
                             </Skeleton>
                         </CardBody>
                     </Card>

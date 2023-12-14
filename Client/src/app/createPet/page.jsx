@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
-import React from "react"
-import createPet from "@/components/createPet/CreatePet"
+import React from 'react';
+import CreatePet from '@/components/createPet/CreatePet';
 
 export default function CreatePetPage() {
     return (
         <>
             <div>CreatePetPage</div>
-            <createPet />
         </>
     )
 }
