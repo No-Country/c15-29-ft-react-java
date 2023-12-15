@@ -33,11 +33,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!--mail-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
 		<!--Database-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,12 +55,19 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+<!--		<dependency>-->
+<!--		   <groupId>com.mysql</groupId>-->
+<!--		   <artifactId>mysql-connector-j</artifactId>-->
+<!--		    <scope>runtime</scope>-->
+<!--	   </dependency>-->
+
 		<!--Lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<!--Swagger-->
 		<dependency>
 			<groupId>org.springdoc</groupId>

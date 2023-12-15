@@ -76,6 +76,10 @@ public class UserEntityController {
         }
     }
 
+//    @GetMapping("/forgot-password")
+//    public ResponseEntity<String> forgotPassword(@PathVariable String email){
+//        return new ResponseEntity<>(userEntityService.forgotPassword(email), HttpStatus.OK);
+//    }
     @PutMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email){
         return new ResponseEntity<>(userEntityService.forgotPassword(email), HttpStatus.OK);
