@@ -36,17 +36,18 @@ export default function App() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
-            Home
+            <b class="text-purple-500">Home</b>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link href="#" aria-current="page">
-            Pet Browser
+          <b class="text-purple-500">Home</b>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            About Us
+          <b class="text-purple-500">About Us</b>
+          
           </Link>
         </NavbarItem>
       </NavbarContent>
