@@ -38,11 +38,14 @@ public class SecurityConfig {
         jwtAuthenticationFilter.setFilterProcessesUrl("/api/user/login");
 
         return httpSecurity
+                .cors().and()
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/v3/**","/swagger-ui/**").permitAll();
                     auth.requestMatchers("/api/test/hello").permitAll();
-                    auth.requestMatchers("/api/userEntity").permitAll();
+                    auth.requestMatchers("/api/userEntity/register").permitAll();
+                    auth.requestMatchers("/api/pet/getAll").permitAll();
+                    auth.requestMatchers("/api/pet/getAllByAdopt/{adopted}").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
