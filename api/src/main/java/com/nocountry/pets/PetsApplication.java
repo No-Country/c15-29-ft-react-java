@@ -34,6 +34,7 @@ public class PetsApplication {
 	@Autowired
 	RoleRepository roleRepository;
 
+
 	/*If roles not exists , roles and defaults users will be generated */
 	@Bean
 	CommandLineRunner init(){
@@ -74,8 +75,10 @@ public class PetsApplication {
 				userRepository.save(userEntity2);
 				userRepository.save(userEntity3);
 			};
-		}else
-		{return  null;}
+		}else {
+			return  null;}
+
+
 
 	}
 
