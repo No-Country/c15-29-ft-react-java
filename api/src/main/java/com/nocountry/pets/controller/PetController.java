@@ -25,11 +25,6 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    @Autowired
-    private PetRepository petRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Pet>> getAllPets() {
@@ -72,19 +67,6 @@ public class PetController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-
-
-    @GetMapping("/helloSecured")
-    public void helloSecured(){
-        String authUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("USERNAME : " + authUsername );
-        UserEntity user = userRepository.findByUsername(authUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        System.out.println("Datos del usuario : " + user.toString());
-
     }
 
 }

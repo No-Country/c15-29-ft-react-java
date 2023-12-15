@@ -67,7 +67,6 @@ public class UserEntityService {
                 .lastName(createUserDTO.getLastName())
                 .dateOfBirth(createUserDTO.getDateOfBirth())
                 .avatar(avatarLink)
-                .status(createUserDTO.getStatus())
                 .nationality(createUserDTO.getNationality())
                 .address(createUserDTO.getAddress())
                 .build();
