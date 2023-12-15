@@ -20,7 +20,7 @@ export default function form() {
         healthStatus: "",
         behavior: "",
         location: "",
-        description: "",
+        generalDescription: "",
     });
 
     const sendForm = async (data) => {
@@ -42,6 +42,8 @@ export default function form() {
             }
         } catch (error) {
             console.log(token);
+            console.log(data);
+            console.log(petData);
             console.error('Error al obtener detalles de la mascota', error);
         }
     }
@@ -96,9 +98,12 @@ export default function form() {
                         </Select>
                     </div>
                     <Input type="text" label="Health Status" placeholder="Health status" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='healthStatus' />
-                    <Input type="text" label="Behavior" placeholder="Behavior" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} />
-                    <Input type="text" label="Location" placeholder="Location" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} />
-                    <Input type="text" label="Description" placeholder="Description" variant='underlined' labelPlacement="outside" isRequired={true} isClearable value={inputInfo} onClear={() => setInputInfo("")} onChange={(e) => setInputInfo(e.target.value)} name='description' />
+                    <Input type="text" label="Behavior" placeholder="Behavior" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='behavior' />
+                    <Input type="text" label="Location" placeholder="Location" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='location' />
+                    <Input type="text" label="Description" placeholder="Description" variant='underlined' labelPlacement="outside" isRequired={true} isClearable value={inputInfo} onClear={() => setInputInfo("")} onChange={(e) => {
+                        setInputInfo(e.target.value)
+                        handleInputChange(e)
+                    }} name='generalDescription' />
                     <Button color="secondary" variant='ghost' onClick={() => sendForm()}>
                         Post
                     </Button>
