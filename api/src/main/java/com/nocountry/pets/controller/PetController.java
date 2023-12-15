@@ -69,16 +69,16 @@ public class PetController {
         }
     }
 
-    @GetMapping("/pet/getPetByUserId/{id_user}")
-    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long id_user) {
-        List<Pet> petsById = petService.getPetByUserId(id_user);
-
-        if (petsById.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(petsById, HttpStatus.OK);
-        }
-    }
+//    @GetMapping("/pet/getPetByUserId/{id_user}")
+//    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long id_user) {
+//        List<Pet> petsById = petService.getPetByUserId(id_user);
+//
+//        if (petsById.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(petsById, HttpStatus.OK);
+//        }
+//    }
 
 
 }

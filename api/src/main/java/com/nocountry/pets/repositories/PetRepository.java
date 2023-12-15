@@ -18,7 +18,7 @@ public interface PetRepository extends CrudRepository<Pet, Long> {
                 .orElseThrow(() -> new NoSuchElementException("The id searched not exist : " + id));
     }
 
-    List<Pet> findByUserId(Long userId);
+//    List<Pet> findByUserId(Long userId);
 
 
 }

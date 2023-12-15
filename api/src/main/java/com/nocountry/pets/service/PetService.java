@@ -69,9 +69,9 @@ public class PetService {
         }
     }
 
-    public List<Pet> getPetByUserId (Long id_user) {
-        return petRepository.findByUserId(id_user);
-    }
+//    public List<Pet> getPetByUserId (Long id_user) {
+//        return petRepository.findByUserId(id_user);
+//    }
 
 
 }
