@@ -33,7 +33,7 @@ export default function form() {
                     },
                 });
 
-            if (res.status === 200) {
+            if (res.status === 201) {
                 console.log("Pet created successfully");
                 console.log(res.data);
             } else {
@@ -53,7 +53,9 @@ export default function form() {
             ...petData,
             [e.target.name]: e.target.value
         })
+        console.log(petData)
     }
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
@@ -68,11 +70,14 @@ export default function form() {
 
         const data = Object.fromEntries(formData);
 
-        sendForm(data);
+        console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
+        sendForm(petData);
     }
-    // useEffect(() => {
-    //     sendForm();
-    // }, []);
+    useEffect(() => {
+        // sendForm();
+        // console.log("this is the token: ", token)
+        // console.log("this is the petData: ", petData)
+    }, []);
 
 
 
@@ -104,7 +109,7 @@ export default function form() {
                         setInputInfo(e.target.value)
                         handleInputChange(e)
                     }} name='generalDescription' />
-                    <Button color="secondary" variant='ghost' onClick={() => sendForm()}>
+                    <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
                         Post
                     </Button>
                 </form>
