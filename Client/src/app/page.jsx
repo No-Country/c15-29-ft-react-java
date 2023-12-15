@@ -9,7 +9,10 @@ export default function HomePage() {
     <>
 
 
+
      <LadingPage />
+
+
 
 
 
