@@ -21,7 +21,8 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       getUserDataFromLocalStorage();
     }
-    setLoading(false); // Ahora se establece como false después de intentar recuperar el token
+    setLoading(false);
+  // Ahora se establece como false después de intentar recuperar el token
   }, []);
 
   const getUserDataFromLocalStorage = () => {
@@ -109,7 +110,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (res.status === 200) {
-        setUserInfo(res.data)
+        setUserInfoAndLocalStorage(res.data)
       } else {
         console.error(
           "Error al traer datos del usuario. Estado de respuesta:",
@@ -147,6 +148,7 @@ export const AuthProvider = ({ children }) => {
         handleLogin,
         userInfo,
         setUserInfo: setUserInfoAndLocalStorage,
+        getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
       }}
