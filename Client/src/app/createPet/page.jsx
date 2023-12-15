@@ -7,6 +7,7 @@ export default function CreatePetPage() {
     return (
         <>
             <div>CreatePetPage</div>
+            <CreatePet />
         </>
     )
 }
