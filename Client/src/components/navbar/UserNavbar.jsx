@@ -16,7 +16,14 @@ import { useAuth } from "@/Api/AuthContext.jsx";
 
 export default function UserNavbar() {
 
-  const { userInfo, loading } = useAuth();
+  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage } = useAuth();
+
+  useEffect(() => {
+    const storedToken = getCookieValue("AuthToken");
+    if (storedToken) {
+      getUserDataFromLocalStorage();
+    }
+  }, [getCookieValue, getUserDataFromLocalStorage]);
 
   if (loading) {
     return <p>Cargando...</p>;
