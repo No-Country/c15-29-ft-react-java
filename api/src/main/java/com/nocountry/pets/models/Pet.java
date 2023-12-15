@@ -40,11 +40,15 @@ public class Pet {
 
     private List<String> images;
 
-    @Size(min= 15,max = 150, message = "generalDescription cannot exceed 150 characters.")
+    @Size(min= 15,max = 150, message = "generalDescription must be between 2 and 20 characters.")
     private String generalDescription;
 
-    @Size(min= 15,max = 150, message = "Behavior cannot exceed 150 characters.")
+    @Size(min= 4,max = 150, message = "Behavior must be between 5 and 150 characters.")
     private String behavior;
+    @Size(min= 4,max = 150, message = "healthStatus must be between 4 and 150 characters.")
+    private String healthStatus;
+    @Size(min= 4,max = 40, message = "location must be between 4 and 40 characters.")
+    private String location;
 
     private Boolean vaccinated = false;
 

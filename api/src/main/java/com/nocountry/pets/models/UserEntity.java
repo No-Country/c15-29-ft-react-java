@@ -34,8 +34,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-
-    //private List<Adoption> adoptions;
     @Email
     @NotBlank
     @Column(unique = true)
@@ -72,6 +70,7 @@ public class UserEntity {
                 ", nationality='" + nationality + '\'' +
                 ", address='" + address + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", avatar='" + whatsappNumber + '\'' +
                 '}';
     }
 
