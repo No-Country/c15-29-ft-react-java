@@ -20,7 +20,7 @@ export default function form() {
                     <Input type="" label="Size" placeholder="Size" variant='underlined' labelPlacement="outside" isRequired />
                     <div className="flex w-full flex-wrap md:flex-nowrap gap-4" >
                         <Select
-                            label="Select animal size"
+                            label="Select pet size"
                             placeholder="Size"
                             className="max-w-xs"
                             variant='underlined' isRequired>
