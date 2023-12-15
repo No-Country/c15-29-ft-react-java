@@ -16,7 +16,7 @@ import { useAuth } from "@/Api/AuthContext.jsx";
 
 export default function UserNavbar() {
 
-  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage } = useAuth();
+  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout } = useAuth();
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -78,7 +78,7 @@ export default function UserNavbar() {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
