@@ -10,23 +10,28 @@ import {
     useDisclosure,
   } from "@nextui-org/react";
   import React, { useState } from "react";
-  import { MailIcon } from "@/components/login/Mailicon";
-  import { LockIcon } from "@/components/login/LockIcon";
+ 
   import axios from "axios";
   import { useRouter } from "next/navigation";
- 
+
   import { useAuth } from "@/Api/AuthContext";
   
   
- export const UserPannel =()=> {
+ export const UserPannel=()=> {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
   
     const [credentials, setCredentials] = useState({
-      email: "",
+      name:"",
+      lastName:"",
+  dateOfBirth:"",
       username: "",
+      email: "",
+      nationality:"",
+      adress:"",
       password: "",
       avatar: "",
       roles: ["INVITED"],
+      whatsappNumber:""
     });
   
     const url = "https://pets-adopt-api.onrender.com/api";
@@ -36,15 +41,21 @@ import {
       e.preventDefault();
   
       const formData = new FormData();
-      formData.append("email", credentials.email);
+      formData.append("name", credentials.name);
+      formData.append("lastName", credentials.lastName);
+      formData.append("dateOfBirth", credentials.dateOfBirth);
       formData.append("username", credentials.username);
+      formData.append("email", credentials.email);
+      formData.append("nationality", credentials.nationality);
+      formData.append("adress", credentials.adress);
       formData.append("password", credentials.password);
       formData.append("avatar", credentials.avatar);
       formData.append("roles", credentials.roles);
+      formData.append("whatsappNumber", credentials.whatsappNumber);
   
       try {
         const res = await axios.post(
-          `${url}/userEntity/register`,
+          `${url}/userEntity`,
           Object.fromEntries(formData),
           {
             headers: {
@@ -70,14 +81,14 @@ import {
   
     return (
       <>
-        <Link onPress={onOpen}>panel</Link>
+        <Link onPress={onOpen}>userPanel</Link>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
           <ModalContent>
             {(onClose) => (
               <>
                 <form onSubmit={handleSubmit}>
                   <ModalHeader className="flex flex-col gap-1">
-                    pannel
+                    userPanel
                   </ModalHeader>
                   <ModalBody>
                     <Input
@@ -85,15 +96,13 @@ import {
                       onChange={(e) =>
                         setCredentials({
                           ...credentials,
-                          username: e.target.value,
+                          name: e.target.value,
                         })
                       }
                       autoFocus
-                   /*    endContent={
-                        <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      } */
-                      label="Username"
-                      placeholder="Enter your username"
+                     
+                      label="name"
+                      placeholder="Enter your name"
                       variant="bordered"
                     />
   
@@ -102,15 +111,49 @@ import {
                       onChange={(e) =>
                         setCredentials({
                           ...credentials,
-                          email: e.target.value,
+                          lastName: e.target.value,
                         })
                       }
                       autoFocus
-                      endContent={
-                        <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    
+                      label="lastName"
+                      placeholder="Enter your lastname"
+                      variant="bordered"
+                    />
+  
+ 
+  
+  
+  
+  
+  
+  <Input
+                      onChange={(e) =>
+                        setCredentials({
+                          ...credentials,
+                         nationality: e.target.value,
+                        })
                       }
-                      label="email"
-                      placeholder="Enter your Email"
+                    
+                      label="nationality"
+                      placeholder="Enter your nationality"
+                      type="nationality"
+                      variant="bordered"
+                    />
+  
+  
+  
+  <Input
+                      onChange={(e) =>
+                        setCredentials({
+                          ...credentials,
+                         adress: e.target.value,
+                        })
+                      }
+                    
+                      label="adress"
+                      placeholder="Enter your adress"
+                      type="text"
                       variant="bordered"
                     />
   
@@ -121,9 +164,7 @@ import {
                           password: e.target.value,
                         })
                       }
-                      endContent={
-                        <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
+                    
                       label="password"
                       placeholder="Enter your Password"
                       type="password"
@@ -137,12 +178,26 @@ import {
                           avatar: e.target.files[0],
                         })
                       }
-                      endContent={
-                        <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
+                      
                       label="avatar"
                       placeholder="Enter your Picture"
                       type="file"
+                      variant="bordered"
+                    />
+  
+                    
+  
+  <Input
+                      onChange={(e) =>
+                        setCredentials({
+                          ...credentials,
+                      whatsappNumber: e.target.value,
+                        })
+                      }
+                    
+                      label="whatsappNumber"
+                      placeholder="Enter your date of whatsapp Number"
+                      type="number"
                       variant="bordered"
                     />
                   </ModalBody>

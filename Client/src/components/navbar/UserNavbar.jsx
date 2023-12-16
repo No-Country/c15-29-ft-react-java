@@ -14,6 +14,7 @@ import {
 import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
 import {UserPannel} from "@/components/UserPannel/UserPannel"
+
 export default function UserNavbar() {
 
   const { userInfo, loading } = useAuth();
@@ -76,6 +77,8 @@ export default function UserNavbar() {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback"><UserPannel/></DropdownItem>
+           
+
             <DropdownItem key="logout" color="danger">
               Log Out
             </DropdownItem>
