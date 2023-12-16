@@ -2,7 +2,7 @@
 
 import Carousel from '@/components/carousel/page'
 import React from 'react'
-import LadingPage from '@/components/landingPage/ladingPage'
+import LandingPage from '@/components/landingPage/landingPage'
 
 export default function HomePage() {
   return (
@@ -10,7 +10,7 @@ export default function HomePage() {
 
 
 
-     <LadingPage />
+     <LandingPage />
 
 
 
