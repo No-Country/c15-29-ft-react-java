@@ -25,11 +25,6 @@ public class PetController {
     @Autowired
     private PetService petService;
 
-    @Autowired
-    private PetRepository petRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Pet>> getAllPets() {
@@ -74,17 +69,16 @@ public class PetController {
         }
     }
 
+//    @GetMapping("/pet/getPetByUserId/{id_user}")
+//    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long id_user) {
+//        List<Pet> petsById = petService.getPetByUserId(id_user);
+//
+//        if (petsById.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(petsById, HttpStatus.OK);
+//        }
+//    }
 
-
-    @GetMapping("/helloSecured")
-    public void helloSecured(){
-        String authUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("USERNAME : " + authUsername );
-        UserEntity user = userRepository.findByUsername(authUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        System.out.println("Datos del usuario : " + user.toString());
-
-    }
 
 }
