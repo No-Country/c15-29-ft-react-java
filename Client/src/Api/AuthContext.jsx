@@ -100,6 +100,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getUserPhoto = async () => {
+    try {
+      const res = await axios.get(`${url}/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        console.log(res);
+      } else {
+        console.error(
+          "Error al traer datos del usuario. Estado de respuesta:",
+          res.status
+        );
+        setErrorNotification("Error during get data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      setErrorNotification("Error during get data. Please try again.");
+    }
+  };
+
+  
+
   const getUserData = async (username, token) => {
     try {
       const res = await axios.get(`${url}/userEntity/${username}`, {
@@ -151,6 +177,7 @@ export const AuthProvider = ({ children }) => {
         getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
+        getUserPhoto
       }}
     >
       {children}
