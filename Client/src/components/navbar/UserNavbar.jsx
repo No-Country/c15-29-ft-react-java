@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
-
+import {UserPannel} from "@/components/UserPannel/UserPannel"
 export default function UserNavbar() {
 
   const { userInfo, loading } = useAuth();
@@ -38,6 +38,11 @@ export default function UserNavbar() {
         <NavbarItem isActive>
           <Link href="#" aria-current="page" color="secondary">
             Customers
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="#">
+          <UserPannel/>
           </Link>
         </NavbarItem>
         <NavbarItem>
@@ -70,7 +75,7 @@ export default function UserNavbar() {
             <DropdownItem key="analytics">Analytics</DropdownItem>
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+            <DropdownItem key="help_and_feedback"><UserPannel/></DropdownItem>
             <DropdownItem key="logout" color="danger">
               Log Out
             </DropdownItem>
