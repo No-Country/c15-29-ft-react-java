@@ -3,7 +3,7 @@ import { Input, Select, SelectItem, Button, ButtonGroup } from "@nextui-org/reac
 import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
 
-export default function form() {
+export default function Form() {
     const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("hola");
