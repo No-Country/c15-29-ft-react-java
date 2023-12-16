@@ -45,7 +45,9 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/test/hello").permitAll();
                     auth.requestMatchers("/api/userEntity/register").permitAll();
                     auth.requestMatchers("/api/pet/getAll").permitAll();
+                    auth.requestMatchers("/api/pet/getAll/**").permitAll();
                     auth.requestMatchers("/api/pet/getAllByAdopt/{adopted}").permitAll();
+                    auth.requestMatchers("/api/pet/{id}").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {

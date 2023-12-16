@@ -1,13 +1,11 @@
 package com.nocountry.pets.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +24,15 @@ public class UserEntity {
     @Column(name="user_id")
     private Long id;
 
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    private List<Pet> pets;
+
+    //private List<Adoption> adoptions;
 //    VER SI SE PUEDE HACER QUE EL EMAIL SEA EL PRINCIPAL
     @Email
     @NotBlank
@@ -50,9 +57,22 @@ public class UserEntity {
     private String avatar;
     private String status;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RoleEntity> roles;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> pets;
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", nationality='" + nationality + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
+
 }

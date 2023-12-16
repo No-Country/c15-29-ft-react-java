@@ -10,73 +10,34 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import { parse, serialize } from 'cookie';
 import React, { useEffect, useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/Api/AuthContext";
 
 export default function LoginModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { setAuthToken, setErrorNotification, clearNotification  } = useAuth();
+  const { handleLogin, clearNotification } = useAuth();
 
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const url = "https://pets-adopt-api.onrender.com/api"
-  const router = useRouter();
+
 
   //Enviar datos login
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${url}/user/login`,
-        credentials,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Basic ' + btoa(`${credentials.username}:${credentials.password}`)
-          },
-        }
-      );
-  
-      if (res.status === 200) {
-
-        const cookies = parse(document.cookie);
-
-      const updatedCookies = {
-        ...cookies,
-        token: res.data.token
-      };
-
-      document.cookie = serialize('AuthToken', updatedCookies.token, {
-        maxAge: 30 * 24 * 60 * 60, 
-        path: '/',
-      });
-
-      setAuthToken(updatedCookies.token)
-   
-      onOpenChange(false)
-      router.push("/dashboard");
-
-      } else {
-        console.error("Error al login. Estado de respuesta:", res.status);
-        setErrorNotification('Error during login. Please try again.'); // Error: muestra un mensaje de error usando el contexto
-
-      }
+      await handleLogin(credentials);
+      onOpenChange(false);
     } catch (error) {
-      console.error("Error en la solicitud:", error.message);
-      setErrorNotification('Error during login. Please try again.'); // Error: muestra un mensaje de error usando el contexto
+      console.error("Error during login:", error);
     }
-    
   };
 
-    useEffect(() => {
+  useEffect(() => {
     return () => {
       // Limpiar la notificación cuando el componente se desmonte
       clearNotification();
@@ -133,11 +94,7 @@ export default function LoginModal() {
                     >
                       Remember me
                     </Checkbox>
-                    <Link
-                      color="primary"
-                      href="#"
-                      size="sm"
-                    >
+                    <Link color="primary" href="#" size="sm">
                       Forgot password?
                     </Link>
                   </div>
@@ -146,9 +103,9 @@ export default function LoginModal() {
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                   </Button>
-                    <Button type="submit" color="primary">
-                      Sign in
-                    </Button>
+                  <Button type="submit" color="primary">
+                    Sign in
+                  </Button>
                 </ModalFooter>
               </form>
             </>
