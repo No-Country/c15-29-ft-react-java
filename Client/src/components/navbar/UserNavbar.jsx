@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
+import {UserPannel} from ""
 
 export default function UserNavbar() {
 
