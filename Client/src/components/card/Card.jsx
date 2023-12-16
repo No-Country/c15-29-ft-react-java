@@ -5,7 +5,7 @@ import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, Modal
 import axios from "axios";
 import { useAuth } from "@/Api/AuthContext";
 
-export default function App({ age = "not Specified", species = "petSpecies", name = "petName", tags = [] }) {
+export default function App({ age = "not Specified", breed = "petBreed", name = "petName", tags = [] }) {
     const [srcImg, setSrcImg] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -108,13 +108,13 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                         </CardHeader>
                         <CardBody className="flex flex-col gap-2 items-start px-4">
                             <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg mt-2">
-                                <p className="text-small uppercase font-bold">{age}</p>
+                                <p className="text-small uppercase font-bold">{pet.age == "" || typeof pet.age !== "string" ? "Not specified" : pet.age}</p>
                             </Skeleton>
                             <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
-                                <small className="text-default-500">{species}</small>
+                                <small className="text-default-500">{pet.breed == "" || typeof pet.breed !== "string" ? "Not specified" : pet.breed}</small>
                             </Skeleton>
                             <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full">
-                                <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">{pet.name}</h4>
+                                <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">{pet.name == "" || typeof pet.name !== "string" ? "Not specified" : pet.name}</h4>
                             </Skeleton>
                         </CardBody>
                     </Card>
@@ -146,18 +146,14 @@ export default function App({ age = "not Specified", species = "petSpecies", nam
                                  ))} */}
                                     </div>
                                     <Divider orientation="horizontal" className="my-1" />
-                                    <h3 className="font-bold text-xl bold">{pet.name}</h3>
+                                    <h3 className="font-bold text-xl bold">{pet.name == "" || typeof pet.name !== "string" ? "Not specified" : pet.name}</h3>
                                     <div className="flex flex-row gap-2">
-                                        <p className="text-medium uppercase font-bold">{pet.age}</p>
+                                        <p className="text-medium uppercase font-bold">{pet.age == "" || typeof pet.age !== "string" ? "Not specified" : pet.age}</p>
                                         <Divider orientation="vertical" className="h-auto max-h-full" />
-                                        <small className="text-default-500 text-medium">{species}</small>
+                                        <small className="text-default-500 text-medium">{pet.breed == "" || typeof pet.breed !== "string" ? "Not specified" : pet.breed}</small>
                                     </div>
                                     <p>
-                                        Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                                        dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
-                                        Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod.
-                                        Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur
-                                        proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
+                                        {pet.generalDescription == "" || typeof pet.generalDescription !== "string" ? "Not specified" : pet.generalDescription}
                                     </p>
                                 </ModalBody>
                                 <ModalFooter>
