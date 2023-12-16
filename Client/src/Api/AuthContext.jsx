@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       getUserDataFromLocalStorage();
     }
     setLoading(false);
-  // Ahora se establece como false después de intentar recuperar el token
+    // Ahora se establece como false después de intentar recuperar el token
   }, []);
 
   const getUserDataFromLocalStorage = () => {

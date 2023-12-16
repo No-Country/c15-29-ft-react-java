@@ -9,7 +9,7 @@ export function Providers({ children }) {
   return (
     <NextUIProvider>
       <AuthProvider>
-        <NavbarCheck />
+        {/* <NavbarCheck /> */}
         <Toast />
         {children}
       </AuthProvider>

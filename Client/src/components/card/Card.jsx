@@ -5,7 +5,7 @@ import { Card, CardHeader, CardBody, Image, Skeleton, Modal, ModalContent, Modal
 import axios from "axios";
 import { useAuth } from "@/Api/AuthContext";
 
-export default function App({ age = "not Specified", breed = "petBreed", name = "petName", tags = [] }) {
+export default function App({ id = "Missing ID", age, breed, generalDescription, images, name, tags = ["No tags available"] }) {
     const [srcImg, setSrcImg] = useState("");
     const [isLoaded, setIsLoaded] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -14,7 +14,6 @@ export default function App({ age = "not Specified", breed = "petBreed", name = 
     const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
 
     const token = getCookieValue("AuthToken")
-    const [pets, setPets] = useState([])
     const [onlyPet, setOnlyPet] = useState([])
     const [selectedPetId, setSelectedPetId] = useState('')
 
@@ -46,8 +45,11 @@ export default function App({ age = "not Specified", breed = "petBreed", name = 
                     'Authorization': `Bearer ${token}`,
                 },
             });
+            const profilePicture = res.data.images[0]
+            getPetImage(id, profilePicture);
+            console.log(res.data.images[0])
+            console.log(res.data)
             setOnlyPet([res.data]);
-
         } catch (error) {
             console.log(onlyPet);
             console.log(token);
@@ -55,6 +57,23 @@ export default function App({ age = "not Specified", breed = "petBreed", name = 
             console.error('Error al obtener detalles de la mascota', error);
         }
     };
+
+    const getPetImage = async (id, firstImg) => {
+        try {
+            // url-en-produccion/api/image?key=39/images/ca2570d3-713f-4fcc-8292-c4e595073927 LA URL A LA QUE ME PEDISTE QUE HAGA FETCH
+            // "/38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23" LO QUE HAY EN IMAGES ARRAY, PRIMER INDICE
+            const res = await axios.get(`https://pets-adopt-api.onrender.com/image/38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23`, credentials, {
+                headers: {
+                    "Content-Type": "image/jpeg",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            console.log(res)
+        } catch (error) {
+            console.error('Error al obtener imagenes de la mascota', error);
+        }
+    };
+
 
     // placeholder to deal with adopt process later on
     const adoptPost = async () => {
@@ -65,112 +84,83 @@ export default function App({ age = "not Specified", breed = "petBreed", name = 
         password: "",
     });
 
-    const fetchTest = async () => {
-        try {
-            const response = await axios.get('https://pets-adopt-api.onrender.com/api/pet/getAll', credentials,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-            setPets(response.data);
-        } catch (error) {
-            console.error('Error al obtener mascotas', error);
-        }
-    }
-
     useEffect(() => {
         // setTimeout placeholder to simulate loading, remove this in production
         fetchImage(270, 270);
 
-        fetchTest()
     }, []);
-    console.log(pets)
 
     return (
-        <>
-            <div className="flex gap-12 flex-wrap justify-center items-center">
-                {pets.map((pet) => (
-                    <Card className="py-4 min-w-72 w-[300px] max-w-xs active:scale-90 transition-all duration-300 ease-in-out hover:scale-105" key={pet.id} onClick={() => {
-                        onOpen();
-                        showPetDetails(pet.id);
-                        setOpenModalId(pet.id);
-                    }} isPressable={true} isHoverable={true}>
-                        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start w-full">
-                            <Skeleton isLoaded={isLoaded} className="rounded-lg">
+        < >
+            <Card className="py-4 min-w-72 w-[300px] max-w-xs active:scale-90 transition-all duration-300 ease-in-out hover:scale-105" onClick={() => {
+                onOpen();
+                showPetDetails(id);
+                setOpenModalId(id);
+            }} isPressable={true} isHoverable={true}>
+                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start w-full">
+                    <Skeleton isLoaded={isLoaded} className="rounded-lg">
+                        <Image
+                            alt="Card background"
+                            className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
+                            src={images ? images[0] : srcImg}
+                            draggable={false}
+                        />
+                    </Skeleton>
+                </CardHeader>
+                <CardBody className="flex flex-col gap-2 items-start px-4">
+                    <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg mt-2">
+                        <p className="text-small uppercase font-bold">{typeof age !== "number" ? "Not specified" : age}</p>
+                    </Skeleton>
+                    <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
+                        <small className="text-default-500">{breed == "" || typeof breed !== "string" ? "Not specified" : breed}</small>
+                    </Skeleton>
+                    <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full">
+                        <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">{name == "" || typeof name !== "string" ? "Not specified" : name}</h4>
+                    </Skeleton>
+                </CardBody>
+            </Card>
+            <Modal isOpen={openModalId === id} onOpenChange={() => setOpenModalId(null)} backdrop="blur" shouldBlockScroll={false}>
+                <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
+                    {(onClose) => (
+                        <>
+                            <ModalBody className="flex flex-col gap-2 items-center py-8">
                                 <Image
                                     alt="Card background"
-                                    className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
-                                    src={pet.images ? pet.images[0] : srcImg}
+                                    className="object-cover rounded-xl select-none h-auto w-[400px]"
+                                    src={images ? images[0] : srcImg}
                                     draggable={false}
+                                    onClick={onOpen}
                                 />
-                            </Skeleton>
-                        </CardHeader>
-                        <CardBody className="flex flex-col gap-2 items-start px-4">
-                            <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg mt-2">
-                                <p className="text-small uppercase font-bold">{pet.age == "" || typeof pet.age !== "string" ? "Not specified" : pet.age}</p>
-                            </Skeleton>
-                            <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
-                                <small className="text-default-500">{pet.breed == "" || typeof pet.breed !== "string" ? "Not specified" : pet.breed}</small>
-                            </Skeleton>
-                            <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full">
-                                <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">{pet.name == "" || typeof pet.name !== "string" ? "Not specified" : pet.name}</h4>
-                            </Skeleton>
-                        </CardBody>
-                    </Card>
-                ))}
-            </div >
-            {pets.map((pet) => (
-                <Modal isOpen={openModalId === pet.id} onOpenChange={() => setOpenModalId(null)} key={pet.id}>
-                    <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
-                        {(onClose) => (
-                            <>
-                                <ModalBody className="flex flex-col gap-2 items-center py-8">
-                                    <Image
-                                        alt="Card background"
-                                        // make image bigger
-                                        className="object-cover rounded-xl select-none h-auto w-[400px]"
-                                        src={pet.images ? pet.images[0] : srcImg}
-                                        draggable={false}
-                                        onClick={onOpen}
-                                    />
-                                    <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
-                                        {tags.length > 0 ? tags.map((tag, index) => (
-                                            <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""} px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
-                                        )) : <span className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}>No tags available</span>
-                                        }
-                                    </div>
-                                    <div className="flex flex-row gap-2">
-                                        {/* {tags.map((tag, index) => ( 
-                                            <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
-                                 ))} */}
-                                    </div>
-                                    <Divider orientation="horizontal" className="my-1" />
-                                    <h3 className="font-bold text-xl bold">{pet.name == "" || typeof pet.name !== "string" ? "Not specified" : pet.name}</h3>
-                                    <div className="flex flex-row gap-2">
-                                        <p className="text-medium uppercase font-bold">{pet.age == "" || typeof pet.age !== "string" ? "Not specified" : pet.age}</p>
-                                        <Divider orientation="vertical" className="h-auto max-h-full" />
-                                        <small className="text-default-500 text-medium">{pet.breed == "" || typeof pet.breed !== "string" ? "Not specified" : pet.breed}</small>
-                                    </div>
-                                    <p>
-                                        {pet.generalDescription == "" || typeof pet.generalDescription !== "string" ? "Not specified" : pet.generalDescription}
-                                    </p>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button color="danger" variant="light" onPress={onClose}>
-                                        Keep searching
-                                    </Button>
-                                    <Button color="primary" onPress={adoptPost}>
-                                        Adopt!
-                                    </Button>
-                                </ModalFooter>
-                            </>
-                        )
-                        }
-                    </ModalContent >
-                </Modal >
-            ))
-            }
+                                <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
+                                    {tags.length > 0 ? tags.map((tag, index) => (
+                                        <span key={index} className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""} px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}>{tag}</span>
+                                    )) : <span className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}>No tags available</span>
+                                    }
+                                </div>
+                                <Divider orientation="horizontal" className="my-1" />
+                                <h3 className="font-bold text-xl bold">{name == "" || typeof name !== "string" ? "Not specified" : name}</h3>
+                                <div className="flex flex-row gap-2">
+                                    <p className="text-medium uppercase font-bold">{age == "" || typeof age !== "string" ? "Not specified" : age}</p>
+                                    <Divider orientation="vertical" className="h-auto max-h-full" />
+                                    <small className="text-default-500 text-medium">{breed == "" || typeof breed !== "string" ? "Not specified" : breed}</small>
+                                </div>
+                                <p>
+                                    {generalDescription == "" || typeof generalDescription !== "string" ? "Not specified" : generalDescription}
+                                </p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Keep searching
+                                </Button>
+                                <Button color="primary" onPress={adoptPost}>
+                                    Adopt!
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )
+                    }
+                </ModalContent >
+            </Modal >
         </>
     );
 }

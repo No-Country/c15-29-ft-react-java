@@ -1,13 +1,14 @@
 "use client"
 
 import React from 'react'
-import Card from '@/components/card/Card'
+import Adopt from '@/components/adopt/Adopt'
 
 export default function AdoptPage() {
+
   return (
     <>
       <div>AdoptPage</div>
-      <Card id={1} />
+      <Adopt />
     </>
   )
 }
