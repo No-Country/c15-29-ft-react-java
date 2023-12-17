@@ -13,8 +13,8 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/components/navbar/acmelogo.jsx";
-import LoginModal from "@/components/login/LoginModal";
-import RegisterModal from "../register/RegisterModal";
+import LoginModal from "@/components/Auth/login/LoginModal";
+import RegisterModal from "../Auth/register/RegisterModal";
 
 export default function GuestNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

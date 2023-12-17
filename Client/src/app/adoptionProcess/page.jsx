@@ -1,8 +1,8 @@
 "use client"
 
 import React from 'react'
-import Adopt from '@/components/adopt/Adopt'
-import { AdoptProcess } from '@/components/adopProcess/AdoptProcess'
+import Adopt from '@/components/PetComponents/adopt/Adopt'
+import { AdoptProcess } from '@/components/PetComponents/adopProcess/AdoptProcess'
 
 export default function AdoptProcessPage() {
     return (

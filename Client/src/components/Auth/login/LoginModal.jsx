@@ -11,8 +11,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import { MailIcon } from "@/components/login/Mailicon";
-import { LockIcon } from "@/components/login/LockIcon";
+import { MailIcon } from "@/components/Auth/login/Mailicon";
+import { LockIcon } from "@/components/Auth/login/LockIcon";
 import { useAuth } from "@/Api/AuthContext";
 
 export default function LoginModal() {

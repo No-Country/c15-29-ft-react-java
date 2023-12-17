@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import Adopt from '@/components/adopt/Adopt'
+import Adopt from '@/components/PetComponents/adopt/Adopt'
 
 export default function AdoptPage() {
 
