@@ -24,6 +24,24 @@ export default function Adopt() {
         }
     }
 
+    const deletePet = async (id) => {
+        try {
+            const response = await axios.delete(`https://pets-adopt-api.onrender.com/api/pet/${id}`, credentials,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
+            )
+            console.log(response)
+            console.log("La mascota ha sido eliminada")
+        }
+        catch (error) {
+            console.error('La mascota no ha podido ser eliminada', error);
+        }
+    }
+
+
     useEffect(() => {
         getPets();
     }, [])
@@ -31,6 +49,7 @@ export default function Adopt() {
     return (
         <div className="flex gap-12 flex-wrap justify-center items-center">
             {
+
                 pets.map((pet) => (
                     <Card id={pet.id} age={pet.age} breed={pet.breed} generalDescription={pet.generalDescription} images={pet.images} name={pet.name} tags={pet.tags} key={pet.id} />
                 ))
