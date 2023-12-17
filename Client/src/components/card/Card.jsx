@@ -55,6 +55,7 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
         }
     };
 
+
     const deletePet = async (id) => {
         try {
             const response = await axios.delete(`https://pets-adopt-api.onrender.com/api/pet/${id}`, credentials,
