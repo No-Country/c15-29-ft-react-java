@@ -36,14 +36,14 @@ public class Pet {
     @Size(max = 30, message = "Colour cannot exceed 30 characters.")
     private String colour;
 
-    private Double weight;
+    private Integer size;
 
     private List<String> images;
 
-    @Size(min= 15,max = 150, message = "generalDescription must be between 2 and 20 characters.")
+    @Size(min=15,max=150, message = "generalDescription must be between 15 and 150 characters.")
     private String generalDescription;
 
-    @Size(min= 4,max = 150, message = "Behavior must be between 5 and 150 characters.")
+    @Size(min= 4,max = 150, message = "Behavior must be between 4 and 150 characters.")
     private String behavior;
     @Size(min= 4,max = 150, message = "healthStatus must be between 4 and 150 characters.")
     private String healthStatus;
@@ -69,7 +69,7 @@ public class Pet {
                 ", age=" + age +
                 ", colour='" + colour + '\'' +
                 ", vaccinated=" + vaccinated +
-                ", weight=" + weight +
+                ", weight=" + size +
                 ", images=" + images +
                 ", sterilized=" + sterilized +
                 ", adopted=" + adopted +
