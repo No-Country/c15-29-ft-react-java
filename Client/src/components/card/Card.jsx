@@ -45,10 +45,7 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            const profilePicture = res.data.images[0]
-            getPetImage(id, profilePicture);
-            console.log(res.data.images[0])
-            console.log(res.data)
+            // getPetImages(id);
             setOnlyPet([res.data]);
         } catch (error) {
             console.log(onlyPet);
@@ -58,21 +55,40 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
         }
     };
 
-    const getPetImage = async (id, firstImg) => {
+
+    const deletePet = async (id) => {
         try {
-            // url-en-produccion/api/image?key=39/images/ca2570d3-713f-4fcc-8292-c4e595073927 LA URL A LA QUE ME PEDISTE QUE HAGA FETCH
-            // "/38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23" LO QUE HAY EN IMAGES ARRAY, PRIMER INDICE
-            const res = await axios.get(`https://pets-adopt-api.onrender.com/image/38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23`, credentials, {
-                headers: {
-                    "Content-Type": "image/jpeg",
-                    "Authorization": `Bearer ${token}`
+            const response = await axios.delete(`https://pets-adopt-api.onrender.com/api/pet/${id}`, credentials,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
                 }
-            });
-            console.log(res)
-        } catch (error) {
-            console.error('Error al obtener imagenes de la mascota', error);
+            )
+            window.location.reload()
+            console.log(response)
+            console.log("La mascota ha sido eliminada")
         }
-    };
+        catch (error) {
+            console.error('La mascota no ha podido ser eliminada', error);
+        }
+    }
+
+    // const getPetImage = async (id, firstImg) => {
+    //     try {
+    //         // url-en-produccion/api/image?key=39/images/ca2570d3-713f-4fcc-8292-c4e595073927 LA URL A LA QUE ME PEDISTE QUE HAGA FETCH
+    //         // "/38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23" LO QUE HAY EN IMAGES ARRAY, PRIMER INDICE
+    //         const res = await axios.get(`https://pets-adopt-api.onrender.com/api/image/keyz38/images/27637304-2f0c-402d-82c8-cdf5e16e6e23`, credentials, {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Authorization": `Bearer ${token}`
+    //             }
+    //         });
+    //         console.log(res)
+    //     } catch (error) {
+    //         console.error('Error al obtener imagenes de la mascota', error);
+    //     }
+    // };
 
 
     // placeholder to deal with adopt process later on
@@ -129,7 +145,11 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
                                     className="object-cover rounded-xl select-none h-auto w-[400px]"
                                     src={images ? images[0] : srcImg}
                                     draggable={false}
-                                    onClick={onOpen}
+                                    onClick={() => {
+                                        onOpen
+                                        console.log("hola")
+                                        deletePet(id)
+                                    }}
                                 />
                                 <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
                                     {tags.length > 0 ? tags.map((tag, index) => (
