@@ -18,10 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,6 +33,8 @@ public class UserEntityService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private SessionService sessionService;
     @Autowired
     private S3ServiceImpl s3Service;
 
@@ -55,8 +56,6 @@ public class UserEntityService {
 
         String username = createUserDTO.getUsername();
 
-        String avatarLink = String.format("nocountry-pawfinder/%s/images/%s", username, "thumbnail");
-
         //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
                 .username(createUserDTO.getUsername())
@@ -67,7 +66,6 @@ public class UserEntityService {
                 .lastName(createUserDTO.getLastName())
                 .dateOfBirth(createUserDTO.getDateOfBirth())
                 .avatar(uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername()))
-                .status(createUserDTO.getStatus())
                 .nationality(createUserDTO.getNationality())
                 .address(createUserDTO.getAddress())
                 .build();
@@ -106,13 +104,55 @@ public class UserEntityService {
     }
 
     @Transactional
-    public UserEntity updateUserEntity(String email, CreateUserDTO createUserDTO) {
-        UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("user not founded"));
-        if(createUserDTO.getAvatar() != null){
-            s3Service.deleteMultiplesFiles(user.getUsername());
+    public UserEntity updateUserEntity(CreateUserDTO createUserDTO) {
+        UserEntity userEntity = sessionService.getUserLogged();
+
+        //update only properties that is not null
+
+        if (createUserDTO.getEmail() != null) {
+            userEntity.setEmail(createUserDTO.getEmail());
         }
-        return userRepository.save(user);
+
+        if (createUserDTO.getPassword() != null) {
+            userEntity.setPassword(createUserDTO.getPassword());
+        }
+
+        if (createUserDTO.getName() != null) {
+            userEntity.setName(createUserDTO.getName());
+        }
+
+        if (createUserDTO.getLastName() != null) {
+            userEntity.setLastName(createUserDTO.getLastName());
+        }
+
+        if (createUserDTO.getDateOfBirth() != null) {
+            userEntity.setDateOfBirth(createUserDTO.getDateOfBirth());
+        }
+
+        if (createUserDTO.getNationality() != null) {
+            userEntity.setNationality(createUserDTO.getNationality());
+        }
+
+        if (createUserDTO.getAddress() != null) {
+            userEntity.setAddress(createUserDTO.getAddress());
+        }
+
+//        if (createUserDTO.getAvatar() != null) {
+//            String avatarLink = String.format("nocountry-pawfinder/%s/image/%s", userEntity.getUsername(), "thumbnail");
+//            uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername());
+//            userEntity.setAvatar(avatarLink);
+//        }
+        if(createUserDTO.getAvatar() != null){
+            s3Service.deleteMultiplesFiles(userEntity.getUsername());
+            userEntity.setAvatar(uploadAvatar(createUserDTO.getAvatar(), userEntity.getUsername()));
+        }
+
+
+        if (createUserDTO.getWhatsappNumber() != null) {
+            userEntity.setWhatsappNumber(createUserDTO.getWhatsappNumber());
+        }
+
+        return userRepository.save(userEntity);
     }
 
     public List<UserEntity> getAllUsers() {
@@ -122,6 +162,10 @@ public class UserEntityService {
     public UserEntity getUserForUsername(String username){
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("user not founded"));
+    }
+
+    public Optional<UserEntity> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
 }

@@ -47,5 +47,4 @@ public class PetDTO implements Serializable {
         private Boolean adopted = false;
 
         private Boolean adoptionInProcess = false;
-
 }
