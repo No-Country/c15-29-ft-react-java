@@ -10,8 +10,6 @@ import org.springframework.cglib.core.Local;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +38,7 @@ public class AdoptionEntity {
 
     LocalDateTime dateStarted;
     LocalDateTime dateCompleted;
+
 
     private Boolean newOwnerConfirm = false;
     private Boolean realOwnerConfirm = false;

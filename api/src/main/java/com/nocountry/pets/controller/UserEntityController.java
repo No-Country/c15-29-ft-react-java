@@ -64,10 +64,10 @@ public class UserEntityController {
         }
     }
 
-    @PutMapping("/{email}")
-    public ResponseEntity<?> updateUser(@PathVariable String email, @Valid @RequestBody CreateUserDTO createUserDTO) {
+    @PutMapping("")
+    public ResponseEntity<?> updateUser(@Valid @ModelAttribute CreateUserDTO createUserDTO) {
         try {
-            UserEntity updatedUser = userEntityService.updateUserEntity(email, createUserDTO);
+            UserEntity updatedUser = userEntityService.updateUserEntity(createUserDTO);
             return ResponseEntity.ok(updatedUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

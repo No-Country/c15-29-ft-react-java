@@ -85,7 +85,9 @@ export default function UserNavbar() {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>Help & Feedback</DropdownItem>
+
             <DropdownItem key="help_and_feedback"><UserPannel/></DropdownItem>
+
             <DropdownItem key="logout" color="danger" onClick={handleLogout}>
               Log Out
             </DropdownItem>
