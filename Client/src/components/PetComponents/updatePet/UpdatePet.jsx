@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "@/components/updatePet/Form";
+import Form from "@/components/PetComponents/updatePet/Form";
 
 export default function App() {
     return (

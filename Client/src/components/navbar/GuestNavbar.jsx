@@ -11,15 +11,24 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  Avatar,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
-import { AcmeLogo } from "@/components/navbar/acmelogo.jsx";
-import LoginModal from "@/components/login/LoginModal";
-import RegisterModal from "../register/RegisterModal";
+import LoginModal from "@/components/Auth/login/LoginModal";
+import RegisterModal from "../Auth/register/RegisterModal";
+import Image from "next/image";
 
 export default function GuestNavbar() {
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menuItems = ["Home", "About Us", "Pet browser", "How to adopt"];
+  const handleLogin = () => {
+    setIsMenuOpen(false);
+  };
+
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -29,30 +38,35 @@ export default function GuestNavbar() {
           className="md:hidden"
         />
         <NavbarBrand>
-          <AcmeLogo />
-          <p className="font-bold text-inherit">Paw Finder</p>
+          <Image
+            priority={true}
+            alt="logo"
+            src="/PawFinder.png"
+            width={128}
+            height={128}
+          />
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden md:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Home
+          <Link color="foreground" href="/">
+            <p> Home</p>
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="#" aria-current="page">
-            Pet Browser
+          <Link href="/adopt" aria-current="page">
+            <p> Pet Browser</p>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            About Us
+            <p> About Us</p>
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex">
+      <NavbarContent justify="end" className="hidden md:flex">
+        <NavbarItem>
           <LoginModal />
         </NavbarItem>
         <NavbarItem>
@@ -61,14 +75,56 @@ export default function GuestNavbar() {
           </Button>
         </NavbarItem>
       </NavbarContent>
+      <NavbarContent className="flex md:hidden w-auto items-center ">
+        <NavbarItem className="pl-[80%]">
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+            <Avatar showFallback src='https://images.unsplash.com/broken' />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem
+                textValue="Sign in"
+                key="Sign in"
+                color='default-600'
+              >
+                <LoginModal onClose={handleLogin}/>
+              </DropdownItem>
+              <DropdownItem
+                textValue="Sign up"
+                href="/createPost"
+                key="Sign up"
+                color='default-600'
+              >
+                <p>Sign Up</p>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarItem>
+      </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link color={"foreground"} className="w-full" href="#" size="lg">
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        <NavbarMenuItem>
+          <Link color={"foreground"} className="w-full" href="/" size="lg">
+            <p>Home</p>
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          {" "}
+          <Link color={"foreground"} className="w-full" href="about" size="lg">
+            <p>About Us</p>
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          {" "}
+          <Link color={"foreground"} className="w-full" href="/adopt" size="lg">
+            <p>Pet Browser</p>
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          {" "}
+          <Link color={"foreground"} className="w-full" href="/howto" size="lg">
+            <p>How to Adopt</p>
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );
