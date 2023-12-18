@@ -36,7 +36,7 @@ public class Pet {
     @Size(max = 30, message = "Colour cannot exceed 30 characters.")
     private String colour;
 
-    private Integer size;
+    private String size;
 
     private List<String> images;
 

@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 @Getter
 @Setter
-public class PetDTO {
+public class PetDTO implements Serializable {
         private UserEntity user_id;
         @NotBlank
         private String name;
@@ -25,7 +26,7 @@ public class PetDTO {
         @Size(max = 30, message = "Colour cannot exceed 30 characters.")
         private String colour;
 
-        private Integer size;
+        private String size;
 
         private List<MultipartFile> images;
 
@@ -46,5 +47,4 @@ public class PetDTO {
         private Boolean adopted = false;
 
         private Boolean adoptionInProcess = false;
-
 }

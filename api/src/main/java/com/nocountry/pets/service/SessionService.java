@@ -4,7 +4,6 @@ import com.nocountry.pets.models.UserEntity;
 import com.nocountry.pets.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 @Service

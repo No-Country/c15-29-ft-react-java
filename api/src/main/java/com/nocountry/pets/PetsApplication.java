@@ -71,15 +71,13 @@ public class PetsApplication {
 								.build()))
 						.build();
 
+
 				userRepository.save(userEntity);
 				userRepository.save(userEntity2);
 				userRepository.save(userEntity3);
 			};
 		}else {
 			return  null;}
-
-
-
 	}
 
 }
