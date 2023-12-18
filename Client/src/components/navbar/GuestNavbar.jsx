@@ -12,9 +12,9 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
-import { AcmeLogo } from "@/components/navbar/acmelogo.jsx";
 import LoginModal from "@/components/Auth/login/LoginModal";
 import RegisterModal from "../Auth/register/RegisterModal";
+import Image from "next/image";
 
 export default function GuestNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,19 +29,18 @@ export default function GuestNavbar() {
           className="md:hidden"
         />
         <NavbarBrand>
-          <AcmeLogo />
-          <p className="font-bold text-inherit">Paw Finder</p>
+          <Image alt="logo" src="/PawFinder.png" width={128} height={128} />
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/">
             Home
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="#" aria-current="page">
+          <Link href="/adopt" aria-current="page">
             Pet Browser
           </Link>
         </NavbarItem>
