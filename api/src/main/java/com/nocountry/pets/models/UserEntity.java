@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -32,31 +34,29 @@ public class UserEntity {
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    //private List<Adoption> adoptions;
-//    VER SI SE PUEDE HACER QUE EL EMAIL SEA EL PRINCIPAL
     @Email
     @NotBlank
-    @Size(max = 80)
     @Column(unique = true)
+    @Size(min = 10, max = 30, message = "Email must be between 10 and 30 characters.")
     private String email;
-
     @NotBlank
-    @Size(max = 30)
+    @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters.")
     private String username;
-
     @NotBlank
+    @Size(min = 3, max = 20, message = "Password must be between 3 and 20 characters.")
     private String password;
-
-
-//    AGREGADOS DE NUESTRA API
+    @Size(min = 2, max = 20, message = "Name cannot exceed 2 and 20 characters.")
     private String name;
+    @Size(max = 20, message = "Last name cannot exceed 20 characters.")
     private String lastName;
     private Date dateOfBirth;
+    @Size(max = 20)
     private String nationality;
+    @Size(max = 20, message = "Address cannot exceed 20 characters.")
     private String address;
     private String avatar;
-    private String status;
-
+    @Size(min = 10 , max = 20, message = "WhatsApp number cannot exceed 20 characters.")
+    private String whatsappNumber;
 
     @Override
     public String toString() {
@@ -70,7 +70,7 @@ public class UserEntity {
                 ", nationality='" + nationality + '\'' +
                 ", address='" + address + '\'' +
                 ", avatar='" + avatar + '\'' +
-                ", status='" + status + '\'' +
+                ", avatar='" + whatsappNumber + '\'' +
                 '}';
     }
 

@@ -15,34 +15,43 @@ import { LockIcon } from "@/components/login/LockIcon";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { UserIcon } from "./CredentialIcon";
-import { CredentialIcon } from "./UserIcon";
+import { useAuth } from "@/Api/AuthContext";
 
 
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [credentials, setCredentials] = useState({
-    username: "",
-    name: "",
-    lastName: "",
     email: "",
+    username: "",
     password: "",
-    // roles: [
-    //   "Invited"
-    // ],
+    avatar: "",
+    roles: ["INVITED"],
   });
 
-  const url = process.env.NEXT_PUBLIC_SWAGGER_URL;
+  const url = "https://pets-adopt-api.onrender.com/api";
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("email", credentials.email);
+    formData.append("username", credentials.username);
+    formData.append("password", credentials.password);
+    formData.append("avatar", credentials.avatar);
+    formData.append("roles", credentials.roles);
+
     try {
-      const res = await axios.post(`${url}/userEntity/register`, credentials, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-      });
+      const res = await axios.post(
+        `${url}/userEntity/register`,
+        Object.fromEntries(formData),
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (res.status === 200) {
         console.log("Registrado correctamente");
@@ -51,18 +60,17 @@ export default function RegisterModal() {
         onOpenChange(false);
         router.push("/panel");
       } else {
-        console.log(credentials);
-        console.error("Error al login. Estado de respuesta:", res.status);
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
       }
     } catch (error) {
-      console.log(credentials);
       console.error("Error en la solicitud:", error.message);
+      console.log("FormData content:", Object.fromEntries(formData));
     }
   };
 
   return (
     <>
-      <Link onPress={onOpen}>Login</Link>
+      <Link onPress={onOpen}>SIGN UP</Link>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
@@ -86,22 +94,6 @@ export default function RegisterModal() {
                     }
                     label="Username"
                     placeholder="Enter your username"
-                    variant="bordered"
-                  />
-                  <Input
-                    type="text"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
-                        name: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <CredentialIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Name"
-                    placeholder="Enter your Name"
                     variant="bordered"
                   />
                   <Input
@@ -134,6 +126,22 @@ export default function RegisterModal() {
                     label="password"
                     placeholder="Enter your Password"
                     type="password"
+                    variant="bordered"
+                  />
+
+                  <Input
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        avatar: e.target.files[0],
+                      })
+                    }
+                    endContent={
+                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    }
+                    label="avatar"
+                    placeholder="Enter your Picture"
+                    type="file"
                     variant="bordered"
                   />
                 </ModalBody>
