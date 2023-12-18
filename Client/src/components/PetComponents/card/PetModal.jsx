@@ -8,12 +8,16 @@ import {
   Button,
   Divider,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 export const PetModal = ({ pet }) => {
   const { breed, images, id, age, name, generalDescription } = pet;
   const tags = ["No tags available"];
   const { openModalId, setOpenModalId, srcImg } = usePet();
 
+  const handleAdopt = () => {
+    localStorage.setItem('adoptedPetId', id);
+  }
   return (
     <Modal
       isOpen={openModalId === id}
@@ -30,8 +34,8 @@ export const PetModal = ({ pet }) => {
                 className="object-cover rounded-xl select-none h-auto w-[400px]"
                 src={images ? images[0] : srcImg}
                 draggable={false}
+                loading="lazy"
                 onClick={() => {
-                  console.log("hola");
                   deletePet(id);
                 }}
               />
@@ -83,7 +87,9 @@ export const PetModal = ({ pet }) => {
               <Button color="danger" variant="light" onPress={onClose}>
                 Keep searching
               </Button>
-              <Button color="primary">Adopt!</Button>
+              <Link href='/adoptionProcess'>
+                <Button onPress={handleAdopt} color="primary">Adopt!</Button>
+              </Link>
             </ModalFooter>
           </>
         )}

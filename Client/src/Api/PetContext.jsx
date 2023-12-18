@@ -13,8 +13,6 @@ export const PetProvider = ({ children }) => {
   const [openModalId, setOpenModalId] = useState(null);
   const [srcImg, setSrcImg] = useState("");
 
-
-
   const showPetDetails = (id) => {
     setSelectedPetId(id);
   };
@@ -32,18 +30,17 @@ export const PetProvider = ({ children }) => {
     }
   };
 
-  const getPet = async () => {
+  const getPet = async (id) => {
     try {
       const res = await axios.get(
-        `https://pets-adopt-api.onrender.com/api/pet/${selectedPetId}`,
+        `https://pets-adopt-api.onrender.com/api/pet/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      // getPetImages(id);
-      setOnlyPet([res.data]);
+      setOnlyPet(res.data);
     } catch (error) {
       console.error("Error al obtener detalles de la mascota", error);
     }
@@ -80,7 +77,8 @@ export const PetProvider = ({ children }) => {
         openModalId,
         setOpenModalId,
         srcImg,
-        setSrcImg
+        setSrcImg,
+        onlyPet,
       }}
     >
       {children}

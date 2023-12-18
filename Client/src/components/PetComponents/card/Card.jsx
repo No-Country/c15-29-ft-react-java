@@ -94,6 +94,7 @@ export default function CardPet({
                 className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                 src={images ? images[0] : srcImg}
                 draggable={false}
+                loading="lazy"
               />
             </Skeleton>
           </CardHeader>

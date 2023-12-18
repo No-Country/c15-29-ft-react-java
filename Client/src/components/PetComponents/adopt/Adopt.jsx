@@ -15,7 +15,7 @@ export default function Adopt() {
   return (
     <div className="flex gap-12 flex-wrap justify-center items-center">
       {pets.map((pet) => (
-        <>
+        <React.Fragment key={pet.id}>
           <Card
             id={pet.id}
             age={pet.age}
@@ -27,7 +27,7 @@ export default function Adopt() {
             key={pet.id}
           />
           <PetModal pet={pet}/>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
