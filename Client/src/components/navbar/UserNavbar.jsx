@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useEffect } from "react";
 import {
   Navbar,
@@ -17,11 +13,18 @@ import {
 } from "@nextui-org/react";
 import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
-import {UserPannel} from "@/components/UserPannel/UserPannel"
+import { UserPannel } from "@/components/UserPannel/UserPannel";
 
 export default function UserNavbar() {
-
-  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout,  getUserPhoto, setLoading } = useAuth();
+  const {
+    userInfo,
+    loading,
+    getCookieValue,
+    getUserDataFromLocalStorage,
+    handleLogout,
+    getUserPhoto,
+    setLoading,
+  } = useAuth();
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -63,7 +66,7 @@ export default function UserNavbar() {
 
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
-        <DropdownTrigger>
+          <DropdownTrigger>
             <Avatar
               isBordered
               as="button"
@@ -71,22 +74,32 @@ export default function UserNavbar() {
               color="secondary"
               name={userInfo ? userInfo.username : "Guest"}
               size="sm"
-              src={userInfo ? userInfo.profileImage : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"}
+              src={
+                userInfo
+                  ? userInfo.profileImage
+                  : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"
+              }
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">{userInfo ? userInfo.email : "Guest"}</p>
+              <p className="font-semibold">
+                {userInfo ? userInfo.email : "Guest"}
+              </p>
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem key="team_settings">Team Settings</DropdownItem>
             <DropdownItem key="analytics">Analytics</DropdownItem>
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>Help & Feedback</DropdownItem>
+            <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>
+              Help & Feedback
+            </DropdownItem>
 
-            <DropdownItem key="help_and_feedback"><UserPannel/></DropdownItem>
+            <DropdownItem key="help_and_feedback">
+              <UserPannel />
+            </DropdownItem>
 
             <DropdownItem key="logout" color="danger" onClick={handleLogout}>
               Log Out
@@ -97,4 +110,3 @@ export default function UserNavbar() {
     </Navbar>
   );
 }
- 

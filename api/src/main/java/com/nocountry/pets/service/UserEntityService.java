@@ -11,7 +11,9 @@ import com.nocountry.pets.service.impl.S3ServiceImpl;
 import com.nocountry.pets.utils.ResizeImage;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,8 @@ public class UserEntityService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private SessionService sessionService;
     @Autowired
     private S3ServiceImpl s3Service;
 
@@ -102,11 +106,50 @@ public class UserEntityService {
     }
 
     @Transactional
-    public UserEntity updateUserEntity(String email, CreateUserDTO createUserDTO) {
-        UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("user not founded"));
+    public UserEntity updateUserEntity(CreateUserDTO createUserDTO) {
+        UserEntity userEntity = sessionService.getUserLogged();
 
-        return userRepository.save(user);
+        //update only properties that is not null
+
+        if (createUserDTO.getEmail() != null) {
+            userEntity.setEmail(createUserDTO.getEmail());
+        }
+
+        if (createUserDTO.getPassword() != null) {
+            userEntity.setPassword(createUserDTO.getPassword());
+        }
+
+        if (createUserDTO.getName() != null) {
+            userEntity.setName(createUserDTO.getName());
+        }
+
+        if (createUserDTO.getLastName() != null) {
+            userEntity.setLastName(createUserDTO.getLastName());
+        }
+
+        if (createUserDTO.getDateOfBirth() != null) {
+            userEntity.setDateOfBirth(createUserDTO.getDateOfBirth());
+        }
+
+        if (createUserDTO.getNationality() != null) {
+            userEntity.setNationality(createUserDTO.getNationality());
+        }
+
+        if (createUserDTO.getAddress() != null) {
+            userEntity.setAddress(createUserDTO.getAddress());
+        }
+
+        if (createUserDTO.getAvatar() != null) {
+            String avatarLink = String.format("nocountry-pawfinder/%s/image/%s", userEntity.getUsername(), "thumbnail");
+            uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername());
+            userEntity.setAvatar(avatarLink);
+        }
+
+        if (createUserDTO.getWhatsappNumber() != null) {
+            userEntity.setWhatsappNumber(createUserDTO.getWhatsappNumber());
+        }
+
+        return userRepository.save(userEntity);
     }
 
     public List<UserEntity> getAllUsers() {
