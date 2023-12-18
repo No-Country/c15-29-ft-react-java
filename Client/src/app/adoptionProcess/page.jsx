@@ -9,15 +9,17 @@ import { useEffect } from "react";
 export default function AdoptProcessPage() {
   const { getPet, onlyPet } = usePet();
   const { token } = useAuth();
-  const storedPetId = localStorage.getItem("adoptedPetId");
-
+ 
   useEffect(() => {
     // Recuperar el ID de la mascota desde el localStorage
-    if (storedPetId) {
+    if (typeof window !== 'undefined') {
       // Establecer el ID en el estado local
+      const storedPetId = localStorage.getItem("adoptedPetId");
       getPet(storedPetId);
     }
-  }, [storedPetId, getPet]);
+  }, [getPet]);
+
+  
 
 useEffect(() => {
   // Realizar acciones después de la actualización de onlyPet
