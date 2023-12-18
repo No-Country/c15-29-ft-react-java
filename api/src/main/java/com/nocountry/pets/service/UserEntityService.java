@@ -55,7 +55,7 @@ public class UserEntityService {
 
         String username = createUserDTO.getUsername();
 
-        String avatarLink = String.format("nocountry-pawfinder/%s/image/%s", username, "thumbnail");
+        String avatarLink = String.format("nocountry-pawfinder/%s/images/%s", username, "thumbnail");
 
         //set a new user from createUserDTO
         UserEntity userEntity = UserEntity.builder()
@@ -66,31 +66,34 @@ public class UserEntityService {
                 .name(createUserDTO.getName())
                 .lastName(createUserDTO.getLastName())
                 .dateOfBirth(createUserDTO.getDateOfBirth())
-                .avatar(avatarLink)
+                .avatar(uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername()))
                 .status(createUserDTO.getStatus())
                 .nationality(createUserDTO.getNationality())
                 .address(createUserDTO.getAddress())
                 .build();
 
-        uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername());
+//        uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername());
         userRepository.save(userEntity);
         return userEntity;
     }
 
-    public void uploadAvatar(MultipartFile multipartFile, String userName){
-        byte[] resizedImage = new byte[0];
+    public String uploadAvatar(MultipartFile multipartFile, String userName){
+        boolean successfulThumbnail = false;
+        boolean successfulOriginal = false;
         try{
             BufferedImage img = ImageIO.read(multipartFile.getInputStream());
-            resizedImage = ResizeImage.thumbnailAvatar(img);
+            byte[] resizedImage = ResizeImage.thumbnailAvatar(img);
+            if(resizedImage.length > 0){
+                successfulThumbnail = s3Service.uploadFile(resizedImage, String.format("%s/images/thumbnail", userName));
+                successfulOriginal = s3Service.uploadFile(multipartFile.getBytes(), String.format("%s/images/original", userName));
+            }
+            if (successfulThumbnail && successfulOriginal) {
+                return String.format("%s/images/%s", userName, "thumbnail");
+            } else {
+                throw new RuntimeException("Error uploading avatar");
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try{
-            s3Service.uploadFile(resizedImage, String.format("%s/image/%s", userName, "thumbnail"));
-            s3Service.uploadFile(multipartFile.getBytes(),String.format("%s/image/original",userName));
-        }catch (IOException exception) {
-            throw new RuntimeException("Error subiendo avatar");
+            throw new RuntimeException("Error processing or uploading avatar", e);
         }
     }
 
@@ -98,7 +101,7 @@ public class UserEntityService {
     public void deleteUserEntity(String email) {
         UserEntity user = userRepository.findByUsername(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
+        s3Service.deleteObject("nocountry-pawfinder",user.getUsername());
         userRepository.delete(user);
     }
 
@@ -106,7 +109,9 @@ public class UserEntityService {
     public UserEntity updateUserEntity(String email, CreateUserDTO createUserDTO) {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("user not founded"));
-
+        if(createUserDTO.getAvatar() != null){
+            s3Service.deleteMultiplesFiles(user.getUsername());
+        }
         return userRepository.save(user);
     }
 
