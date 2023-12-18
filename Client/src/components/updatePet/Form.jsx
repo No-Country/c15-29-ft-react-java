@@ -67,7 +67,6 @@ export default function Form() {
                 [e.target.name]: e.target.value
             })
         }
-        console.log(petData)
     }
 
     const handleFormSubmit = (e) => {
@@ -91,7 +90,7 @@ export default function Form() {
         console.log("soy formdata", formData)
 
         console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
-        sendForm(data);
+        editPet(61, data);
     }
     useEffect(() => {
         // sendForm();
@@ -100,11 +99,34 @@ export default function Form() {
     }, []);
 
 
+    const editPet = async (id, data) => {
+        try {
+            const response = await axios.put(`https://pets-adopt-api.onrender.com/api/pet/${id}`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            console.log(response)
+            if (res.status === 201) {
+                console.log("Pet edited successfully");
+                console.log(res.data);
+            }
+            else {
+                console.log("Error editing pet");
+                console.log(res.data, res.status);
+            }
+        } catch (error) {
+            console.error('Error al obtener detalles de la mascota', error);
+            console.log(data);
+        }
+    }
 
     return (
         <>
             <article className="flex flex-col gap-4 w-full">
-                <h2 className="text-2xl font-bold">Create Pet</h2>
+                <h2 className="text-2xl font-bold">Update Pet</h2>
                 <form className="flex flex-col gap-4">
                     <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
                     <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='breed' />

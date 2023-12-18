@@ -25,12 +25,11 @@ export default function Form() {
     });
 
     const sendForm = async (data) => {
-        console.log("Soy pet request2", petData)
         try {
             const res = await axios.post(`https://pets-adopt-api.onrender.com/api/pet`, data,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`,
                     },
                 });
@@ -43,7 +42,6 @@ export default function Form() {
             }
             console.log(res)
         } catch (error) {
-            console.log(token);
             console.log(data);
             console.log(petData);
             console.error('Error al obtener detalles de la mascota', error);
@@ -61,7 +59,7 @@ export default function Form() {
         if (e.target.name === "images") {
             setPetData({
                 ...petData,
-                [e.target.name]: [petData.images]
+                [e.target.name]: e.target.files
             })
         } else {
             setPetData({
@@ -69,30 +67,31 @@ export default function Form() {
                 [e.target.name]: e.target.value
             })
         }
-        console.log(petData)
     }
 
-    // const handleFormSubmit = (e) => {
-    //     e.preventDefault();
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
 
-    //     const imgArr = [...petData.images]
+        const imgArr = [...petData.images]
+        console.log(imgArr)
 
-    //     const formData = new FormData();
-    //     formData.append("name", petData.name);
-    //     formData.append("breed", petData.breed);
-    //     formData.append("age", petData.age);
-    //     formData.append("size", petData.size);
-    //     formData.append("healthStatus", petData.healthStatus);
-    //     formData.append("behavior", petData.behavior);
-    //     formData.append("location", petData.location);
-    //     formData.append("generalDescription", petData.generalDescription);
-    //     formData.append("images", imgArr);
+        const formData = new FormData();
+        formData.append("name", petData.name);
+        formData.append("breed", petData.breed);
+        formData.append("age", petData.age);
+        formData.append("size", petData.size);
+        formData.append("healthStatus", petData.healthStatus);
+        formData.append("behavior", petData.behavior);
+        formData.append("location", petData.location);
+        formData.append("generalDescription", petData.generalDescription);
+        formData.append("images", imgArr[0]);
+        const data = Object.fromEntries(formData);
 
-    //     const data = Object.fromEntries(formData);
+        console.log("soy formdata", formData)
 
-    //     console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
-    //     sendForm(petData);
-    // }
+        console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
+        sendForm(data);
+    }
     useEffect(() => {
         // sendForm();
         // console.log("this is the token: ", token)
@@ -132,7 +131,7 @@ export default function Form() {
                     <Input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
                         handleInputChange(e)
                     }} name='images' />
-                    <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
+                    <Button color="secondary" variant='ghost' onClick={(e) => handleFormSubmit(e)}>
                         Post
                     </Button>
                 </form>
