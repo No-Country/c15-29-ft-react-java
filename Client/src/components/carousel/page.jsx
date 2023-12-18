@@ -12,7 +12,7 @@ export default function Carousel() {
           position: "absolute",
           width: "100%",
           height: "100%",
-          objectFit: "contain",
+          objectFit: "cover",
         }}
       >
         <source src="./doggy1.mp4" type="video/mp4" />

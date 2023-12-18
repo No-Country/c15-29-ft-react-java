@@ -28,10 +28,7 @@ export default function UserNavbar() {
     setLoading,
   } = useAuth();
 
-  const menuItems = ["Home", "About Us", "Pet browser", "How to adopt"];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -50,27 +47,33 @@ export default function UserNavbar() {
   return (
     <Navbar>
       <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="md:hidden"
-        />
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        className="md:hidden"
+      />
       <NavbarBrand>
-        <Image alt="logo" src="/PawFinder.png" width={128} height={128} />
+        <Image
+          priority={true}
+          alt="logo"
+          src="/PawFinder.png"
+          width={128}
+          height={128}
+        />
       </NavbarBrand>
 
       <NavbarContent className="hidden md:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="/">
-      Home
+            <p> Home</p>
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
           <Link href="/adopt" aria-current="page" color="secondary">
-          Pet Browser
+            <p>Pet Browser</p>
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            About Us
+            <p> About Us</p>
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -93,37 +96,88 @@ export default function UserNavbar() {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
+            <DropdownItem
+              textValue="Signed in as"
+              key="profile"
+              className="h-14 gap-2"
+            >
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">
                 {userInfo ? userInfo.email : "Guest"}
               </p>
             </DropdownItem>
-            <DropdownItem key="Dashboard">Dashboard</DropdownItem>
-            <DropdownItem key="My Pets">My Pets</DropdownItem>
-            <DropdownItem key="Create Post">Create Post</DropdownItem>
-            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-              Log Out
+
+            <DropdownItem
+              textValue="Dashboard"
+              href="/dashboard"
+              key="Dashboard"
+            >
+              <p>Dashboard</p>
+            </DropdownItem>
+
+            <DropdownItem textValue="My Pets" href="myPets" key="My Pets">
+              <p>My Pets</p>
+            </DropdownItem>
+
+            <DropdownItem
+              textValue="Create Post"
+              href="/createPost"
+              key="Create Post"
+            >
+              <p>Create Post</p>
+            </DropdownItem>
+
+            <DropdownItem
+              textValue="Log Out"
+              key="logout"
+              color="danger"
+              onClick={handleLogout}
+            >
+              <p>Log Out</p>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link color={"foreground"} className="w-full" href="#" size="lg">
-              {item}
+          <NavbarMenuItem>
+            <Link color={"foreground"} className="w-full" href="/" size="lg">
+              <p>Home</p>
             </Link>
           </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
+          <NavbarMenuItem>
+            {" "}
+            <Link
+              color={"foreground"}
+              className="w-full"
+              href="about"
+              size="lg"
+            >
+              <p>About Us</p>
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            {" "}
+            <Link
+              color={"foreground"}
+              className="w-full"
+              href="/adopt"
+              size="lg"
+            >
+              <p>Pet Browser</p>
+            </Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            {" "}
+            <Link
+              color={"foreground"}
+              className="w-full"
+              href="/howto"
+              size="lg"
+            >
+              <p>How to Adopt</p>
+            </Link>
+          </NavbarMenuItem>
+        </NavbarMenu>
       </NavbarContent>
     </Navbar>
   );
 }
-
-
-
-
-
-
-

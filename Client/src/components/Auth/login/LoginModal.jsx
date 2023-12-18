@@ -15,7 +15,7 @@ import { MailIcon } from "@/components/Auth/login/Mailicon";
 import { LockIcon } from "@/components/Auth/login/LockIcon";
 import { useAuth } from "@/Api/AuthContext";
 
-export default function LoginModal() {
+export default function LoginModal({ onClose }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { handleLogin, clearNotification } = useAuth();
 
@@ -31,12 +31,11 @@ export default function LoginModal() {
     e.preventDefault();
     try {
       await handleLogin(credentials);
-      onOpenChange(false);
+      onClose(); // Cierra el modal después de enviar el formulario con éxito
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
-
   useEffect(() => {
     return () => {
       // Limpiar la notificación cuando el componente se desmonte
@@ -50,7 +49,7 @@ export default function LoginModal() {
         <ModalContent>
           {(onClose) => (
             <>
-              <form onSubmit={handleSubmit}>
+              <form  onSubmit={(e) => handleSubmit(e, onClose)}>
                 <ModalHeader className="flex flex-col gap-1">
                   Log in
                 </ModalHeader>
