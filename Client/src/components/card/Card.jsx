@@ -119,6 +119,7 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
                             className="object-cover rounded-xl select-none h-[270px] w-[270px] cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out"
                             src={images ? images[0] : srcImg}
                             draggable={false}
+                            loading="lazy"
                         />
                     </Skeleton>
                 </CardHeader>
@@ -144,6 +145,7 @@ export default function App({ id = "Missing ID", age, breed, generalDescription,
                                     className="object-cover rounded-xl select-none h-auto w-[400px]"
                                     src={images ? images[0] : srcImg}
                                     draggable={false}
+                                    loading="lazy"
                                     onClick={() => {
                                         onOpen
                                         console.log("hola")
