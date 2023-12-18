@@ -9,75 +9,74 @@ import {
     ModalHeader,
     useDisclosure,
   } from "@nextui-org/react";
-  import React, { useState } from "react";
+  import React, {useEffect, useState } from "react";
  
   import axios from "axios";
   import { useRouter } from "next/navigation";
-
   import { useAuth } from "@/Api/AuthContext";
+ 
   
   
  export const UserPannel=()=> {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  
+    const { token } = useAuth();
     const [credentials, setCredentials] = useState({
-      name:"",
+      name:"juan",
       lastName:"",
-  dateOfBirth:"",
-      username: "",
-      email: "",
       nationality:"",
-      adress:"",
-      password: "",
+      address:"",
       avatar: "",
-      roles: ["INVITED"],
       whatsappNumber:""
     });
   
     const url = "https://pets-adopt-api.onrender.com/api";
     const router = useRouter();
   
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+   
+    const handleSubmitPannel = async (e) => {
+        e.preventDefault();
+        
   
-      const formData = new FormData();
-      formData.append("name", credentials.name);
-      formData.append("lastName", credentials.lastName);
-      formData.append("dateOfBirth", credentials.dateOfBirth);
-      formData.append("username", credentials.username);
-      formData.append("email", credentials.email);
-      formData.append("nationality", credentials.nationality);
-      formData.append("adress", credentials.adress);
-      formData.append("password", credentials.password);
-      formData.append("avatar", credentials.avatar);
-      formData.append("roles", credentials.roles);
-      formData.append("whatsappNumber", credentials.whatsappNumber);
-  
-      try {
-        const res = await axios.post(
-          `${url}/userEntity`,
-          Object.fromEntries(formData),
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+        const formData = new FormData();
+        formData.append("name", credentials.name);
+       formData.append("lastName", credentials.lastName);
+        formData.append("nationality", credentials.nationality);
+        formData.append("address", credentials.address);
+        formData.append("whatsappNumber", credentials.whatsappNumber); 
+        formData.append("avatar", credentials.avatar); 
+    
+        try {
+          const res = await axios.put(
+            `${url}/userEntity`,
+            Object.fromEntries(formData),
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+    
+          if (res.status === 200) {
+           
+            console.log(res);
+    
+            onOpenChange(false);
+            router.push("/panel");
+          } else {
+            console.error("Error al Terminar de completar sus datos. Estado de respuesta:", res.status);
           }
-        );
-  
-        if (res.status === 200) {
-          console.log("Registrado correctamente");
-          console.log(res);
-  
-          onOpenChange(false);
-          router.push("/panel");
-        } else {
-          console.error("Error al Registrarse. Estado de respuesta:", res.status);
+        } catch (error) {
+           
+          console.error("Error en la solicitud:", error.message);
+          console.log("FormData content:", Object.fromEntries(formData));
         }
-      } catch (error) {
-        console.error("Error en la solicitud:", error.message);
-        console.log("FormData content:", Object.fromEntries(formData));
-      }
-    };
+    }
+  
+    
+
+  
+ 
   
     return (
       <>
@@ -86,7 +85,7 @@ import {
           <ModalContent>
             {(onClose) => (
               <>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitPannel} >
                   <ModalHeader className="flex flex-col gap-1">
                     userPanel
                   </ModalHeader>
@@ -106,20 +105,7 @@ import {
                       variant="bordered"
                     />
   
-                    <Input
-                      type="email"
-                      onChange={(e) =>
-                        setCredentials({
-                          ...credentials,
-                          lastName: e.target.value,
-                        })
-                      }
-                      autoFocus
-                    
-                      label="lastName"
-                      placeholder="Enter your lastname"
-                      variant="bordered"
-                    />
+                   
   
  
   
@@ -147,29 +133,17 @@ import {
                       onChange={(e) =>
                         setCredentials({
                           ...credentials,
-                         adress: e.target.value,
+                         address: e.target.value,
                         })
                       }
                     
-                      label="adress"
-                      placeholder="Enter your adress"
+                      label="address"
+                      placeholder="Enter your address"
                       type="text"
                       variant="bordered"
                     />
   
-                    <Input
-                      onChange={(e) =>
-                        setCredentials({
-                          ...credentials,
-                          password: e.target.value,
-                        })
-                      }
-                    
-                      label="password"
-                      placeholder="Enter your Password"
-                      type="password"
-                      variant="bordered"
-                    />
+                   
   
                     <Input
                       onChange={(e) =>
@@ -205,11 +179,13 @@ import {
                     <Button color="danger" variant="flat" onPress={onClose}>
                       Close
                     </Button>
-                    <Button type="submit" color="primary">
+                    <Button onClick={handleSubmitPannel}  color="primary">
                       Sign up
                     </Button>
+                    
                   </ModalFooter>
                 </form>
+ 
               </>
             )}
           </ModalContent>

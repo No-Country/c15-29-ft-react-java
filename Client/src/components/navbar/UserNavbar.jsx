@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect } from "react";
 import {
   Navbar,
@@ -17,7 +21,16 @@ import {UserPannel} from "@/components/UserPannel/UserPannel"
 
 export default function UserNavbar() {
 
-  const { userInfo, loading } = useAuth();
+  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout,  getUserPhoto, setLoading } = useAuth();
+
+  useEffect(() => {
+    const storedToken = getCookieValue("AuthToken");
+    if (storedToken && loading) {
+      getUserDataFromLocalStorage();
+      //eslint-disabled-next-line
+      setLoading(false);
+    }
+  }, [getCookieValue, getUserDataFromLocalStorage, loading]);
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -43,11 +56,6 @@ export default function UserNavbar() {
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-          <UserPannel/>
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
             Integrations
           </Link>
         </NavbarItem>
@@ -63,7 +71,7 @@ export default function UserNavbar() {
               color="secondary"
               name={userInfo ? userInfo.username : "Guest"}
               size="sm"
-              src={userInfo ? userInfo.profileImage : "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
+              src={userInfo ? userInfo.profileImage : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -76,10 +84,9 @@ export default function UserNavbar() {
             <DropdownItem key="analytics">Analytics</DropdownItem>
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
+            <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>Help & Feedback</DropdownItem>
             <DropdownItem key="help_and_feedback"><UserPannel/></DropdownItem>
-           
-
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
