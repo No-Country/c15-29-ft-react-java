@@ -40,7 +40,13 @@ export const PetProvider = ({ children }) => {
           },
         }
       );
-      setOnlyPet(res.data);
+  
+      if (res.status === 200) {
+        setOnlyPet(res.data);
+      } else {
+        console.error("Error al obtener detalles de la mascota. Código de estado:", res.status);
+      }
+      return onlyPet;
     } catch (error) {
       console.error("Error al obtener detalles de la mascota", error);
     }
