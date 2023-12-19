@@ -10,7 +10,7 @@ export default function Adopt() {
 
   useEffect(() => {
     getPets();
-  }, []);
+  }, [getPets]);
 
   return (
     <div className="flex gap-12 flex-wrap justify-center items-center">

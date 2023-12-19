@@ -38,13 +38,6 @@ export default function CardPet({
   }, [selectedPetId, token, getPet]);
 
   // test placeholder till we get images from backend, delete later on
-  const fetchImage = async (width, height) => {
-    const customURL = `https://picsum.photos/${width}/${height}`;
-    const res = await fetch(customURL);
-    setSrcImg(res.url);
-    if (res.ok) setIsLoaded(true);
-    return res.url;
-  };
 
   // const getPetImage = async (id, firstImg) => {
   //     try {
@@ -70,10 +63,19 @@ export default function CardPet({
 //     password: "",
 //   });
 
-  useEffect(() => {
-    // setTimeout placeholder to simulate loading, remove this in production
-    fetchImage(270, 270);
-  }, []);
+useEffect(() => {
+  const fetchImage = async (width, height) => {
+    const customURL = `https://picsum.photos/${width}/${height}`;
+    const res = await fetch(customURL);
+    setSrcImg(res.url);
+    if (res.ok) setIsLoaded(true);
+    return res.url;
+  };
+
+  // setTimeout placeholder to simulate loading, remove this in production
+  fetchImage(270, 270);
+}, [setSrcImg, setIsLoaded]);
+
 
   return (
     <>

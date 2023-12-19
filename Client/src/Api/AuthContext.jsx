@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { serialize } from "cookie";
+import { useDisclosure } from "@nextui-org/react";
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const url = "https://pets-adopt-api.onrender.com/api";
 
@@ -100,6 +102,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleRegister = async (credentials) => {
+    const formData = new FormData();
+    formData.append("email", credentials.email);
+    formData.append("username", credentials.username);
+    formData.append("password", credentials.password);
+    formData.append("avatar", credentials.avatar);
+    formData.append("roles", credentials.roles);
+
+    try {
+      const res = await axios.post(
+        `${url}/userEntity/register`,
+        Object.fromEntries(formData),
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        console.log("Registrado correctamente");
+        console.log(res);
+
+        onOpenChange(false);
+        router.push("/panel");
+      } else {
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      console.log("FormData content:", Object.fromEntries(formData));
+    }
+  };
+
   const getUserPhoto = async () => {
     try {
       const res = await axios.get(`${url}/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail`, {
@@ -177,7 +213,8 @@ export const AuthProvider = ({ children }) => {
         getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
-        getUserPhoto
+        getUserPhoto,
+        handleRegister
       }}
     >
       {children}

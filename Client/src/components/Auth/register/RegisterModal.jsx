@@ -1,16 +1,26 @@
-import { Button, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
-import React, { useState } from "react";
-import { MailIcon } from "@/components/login/Mailicon";
-import { LockIcon } from "@/components/login/LockIcon";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { UserIcon } from "./CredentialIcon";
-import { useAuth } from "@/Api/AuthContext";
 
+import {
+  Button,
+  Checkbox,
+  Input,
+  Link,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { MailIcon } from "@/components/Auth/login/Mailicon";
+import { LockIcon } from "@/components/Auth/login/LockIcon";
+import { UserIcon } from "./CredentialIcon";
+import { ImageIcon } from "./ImageIcon";
+import { useAuth } from "@/Api/AuthContext";
 
 export default function RegisterModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const { handleRegister, clearNotification } = useAuth();
   const [credentials, setCredentials] = useState({
     email: "",
     username: "",
@@ -19,48 +29,25 @@ export default function RegisterModal() {
     roles: ["INVITED"],
   });
 
-  const url = "https://pets-adopt-api.onrender.com/api";
-  const router = useRouter();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("email", credentials.email);
-    formData.append("username", credentials.username);
-    formData.append("password", credentials.password);
-    formData.append("avatar", credentials.avatar);
-    formData.append("roles", credentials.roles);
-
     try {
-      const res = await axios.post(
-        `${url}/userEntity/register`,
-        Object.fromEntries(formData),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (res.status === 200) {
-        console.log("Registrado correctamente");
-        console.log(res);
-
-        onOpenChange(false);
-        router.push("/panel");
-      } else {
-        console.error("Error al Registrarse. Estado de respuesta:", res.status);
-      }
+      await handleRegister(credentials);
+      onClose(); // Cierra el modal después de enviar el formulario con éxito
     } catch (error) {
-      console.error("Error en la solicitud:", error.message);
-      console.log("FormData content:", Object.fromEntries(formData));
+      console.error("Error during register:", error);
     }
   };
+  useEffect(() => {
+    return () => {
+      // Limpiar la notificación cuando el componente se desmonte
+      clearNotification();
+    };
+  }, [clearNotification]);
 
   return (
     <>
-      <Link onPress={onOpen}>SIGN UP</Link>
+      <Link onPress={onOpen}>Sign Up</Link>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
@@ -86,7 +73,6 @@ export default function RegisterModal() {
                     placeholder="Enter your username"
                     variant="bordered"
                   />
-
                   <Input
                     type="email"
                     onChange={(e) =>
@@ -128,7 +114,8 @@ export default function RegisterModal() {
                       })
                     }
                     endContent={
-                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                      <ImageIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+
                     }
                     label="avatar"
                     placeholder="Enter your Picture"
@@ -152,5 +139,3 @@ export default function RegisterModal() {
     </>
   );
 }
-
-

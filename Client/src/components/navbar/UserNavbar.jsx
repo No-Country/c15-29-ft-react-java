@@ -1,25 +1,42 @@
-
-
-
-
-import React, { useEffect } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
-import { AcmeLogo } from "@/components/navbar/acmelogo";
+import React, { useEffect, useState } from "react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
+  Avatar,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+} from "@nextui-org/react";
 import { useAuth } from "@/Api/AuthContext.jsx";
-import { UserPannel } from "@/components/UserPannel/UserPannel";
+import Image from "next/image";
 
 export default function UserNavbar() {
-  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout, getUserPhoto, setLoading } = useAuth();
+  const {
+    userInfo,
+    loading,
+    getCookieValue,
+    getUserDataFromLocalStorage,
+    handleLogout,
+    getUserPhoto,
+    setLoading,
+  } = useAuth();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
     if (storedToken && loading) {
       getUserDataFromLocalStorage();
-      //eslint-disabled-next-line
-      console.log(userInfo);
       setLoading(false);
     }
-  }, [getCookieValue, getUserDataFromLocalStorage, loading]);
+  }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -69,7 +86,11 @@ export default function UserNavbar() {
               color="secondary"
               name={userInfo ? userInfo.username : "Guest"}
               size="sm"
-              src={userInfo ? userInfo.profileImage : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"}
+              src={
+                userInfo
+                  ? userInfo.avatar
+                  : "https://pets-adopt-api.onrender.com/image/josue_zorrilla_profile.jpeg"
+              }
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -83,21 +104,33 @@ export default function UserNavbar() {
                 {userInfo ? userInfo.email : "Guest"}
               </p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>
-              Help & Feedback
+            <DropdownItem
+              textValue="Dashboard"
+              href="/dashboard"
+              key="Dashboard"
+            >
+              <p>Dashboard</p>
             </DropdownItem>
 
-            <DropdownItem key="help_and_feedback">
-              <UserPannel />
+            <DropdownItem textValue="My Pets" href="myPets" key="My Pets">
+              <p>My Pets</p>
             </DropdownItem>
 
-            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-              Log Out
+            <DropdownItem
+              textValue="Create Pet"
+              href="/createPet"
+              key="Create Pet"
+            >
+              <p>Create Post</p>
+            </DropdownItem>
+
+            <DropdownItem
+              textValue="Log Out"
+              key="logout"
+              color="danger"
+              onClick={handleLogout}
+            >
+              <p>Log Out</p>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

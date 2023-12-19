@@ -79,7 +79,7 @@ export default function GuestNavbar() {
         <NavbarItem className="pl-[80%]">
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
-            <Avatar showFallback src='https://images.unsplash.com/broken' />
+            <Avatar showFallback />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownItem
@@ -87,15 +87,14 @@ export default function GuestNavbar() {
                 key="Sign in"
                 color='default-600'
               >
-                <LoginModal onClose={handleLogin}/>
+                <LoginModal/>
               </DropdownItem>
               <DropdownItem
                 textValue="Sign up"
-                href="/createPost"
                 key="Sign up"
                 color='default-600'
               >
-                <p>Sign Up</p>
+                <RegisterModal />
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
