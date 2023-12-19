@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { serialize } from "cookie";
+import { useDisclosure } from "@nextui-org/react";
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const url = "https://pets-adopt-api.onrender.com/api";
 
