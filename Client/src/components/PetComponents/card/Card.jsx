@@ -38,7 +38,7 @@ export default function CardPet({
   }, [selectedPetId, token, getPet]);
 
   // test placeholder till we get images from backend, delete later on
- 
+
   // const getPetImage = async (id, firstImg) => {
   //     try {
   //         // url-en-produccion/api/image?key=39/images/ca2570d3-713f-4fcc-8292-c4e595073927 LA URL A LA QUE ME PEDISTE QUE HAGA FETCH
@@ -75,6 +75,7 @@ useEffect(() => {
   // setTimeout placeholder to simulate loading, remove this in production
   fetchImage(270, 270);
 }, [setSrcImg, setIsLoaded]);
+
 
   return (
     <>

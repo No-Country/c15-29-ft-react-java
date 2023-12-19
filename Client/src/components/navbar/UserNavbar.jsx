@@ -35,6 +35,7 @@ export default function UserNavbar() {
     if (storedToken && loading) {
       getUserDataFromLocalStorage();
       //eslint-disabled-next-line
+      console.log(userInfo);
       setLoading(false);
     }
   }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading]);
@@ -105,7 +106,6 @@ export default function UserNavbar() {
                 {userInfo ? userInfo.email : "Guest"}
               </p>
             </DropdownItem>
-
             <DropdownItem
               textValue="Dashboard"
               href="/dashboard"
@@ -119,9 +119,9 @@ export default function UserNavbar() {
             </DropdownItem>
 
             <DropdownItem
-              textValue="Create Post"
-              href="/createPost"
-              key="Create Post"
+              textValue="Create Pet"
+              href="/createPet"
+              key="Create Pet"
             >
               <p>Create Post</p>
             </DropdownItem>

@@ -128,16 +128,3 @@ export default function GuestNavbar() {
     </Navbar>
   );
 }
-
-// {"id":41,
-// "roles":[{"id":3,"name":"INVITED"}],
-// "email":"ocandovivas@gmail.com",
-// "username":"sebas003",
-// "password":"$2a$10$cxhjYTcEQC50i7Jym4sIi.oKCzZFHOHou81Ee/B7uM1c6Av0IOcI6",
-// "name":null,
-// "lastName":null,
-// "dateOfBirth":null,
-// "nationality":null,
-// "address":null,
-// "avatar":"sebas003/images/thumbnail",
-// "whatsappNumber":null}
