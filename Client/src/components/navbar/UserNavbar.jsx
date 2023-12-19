@@ -15,7 +15,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { useAuth } from "@/Api/AuthContext.jsx";
-import Image from "next/image";
+import { UserPannel } from "@/components/UserPannel/UserPannel";
 
 export default function UserNavbar() {
   const {
@@ -27,8 +27,6 @@ export default function UserNavbar() {
     getUserPhoto,
     setLoading,
   } = useAuth();
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -90,8 +88,8 @@ export default function UserNavbar() {
               size="sm"
               src={
                 userInfo
-                  ? userInfo.avatar
-                  : "https://pets-adopt-api.onrender.com/image/josue_zorrilla_profile.jpeg"
+                  ? userInfo.profileImage
+                  : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"
               }
             />
           </DropdownTrigger>
@@ -106,34 +104,21 @@ export default function UserNavbar() {
                 {userInfo ? userInfo.email : "Guest"}
               </p>
             </DropdownItem>
-
-            <DropdownItem
-              textValue="Dashboard"
-              href="/dashboard"
-              key="Dashboard"
-            >
-              <p>Dashboard</p>
+            <DropdownItem key="settings">My Settings</DropdownItem>
+            <DropdownItem key="team_settings">Team Settings</DropdownItem>
+            <DropdownItem key="analytics">Analytics</DropdownItem>
+            <DropdownItem key="system">System</DropdownItem>
+            <DropdownItem key="configurations">Configurations</DropdownItem>
+            <DropdownItem key="help_and_feedback" onClick={getUserPhoto}>
+              Help & Feedback
             </DropdownItem>
 
-            <DropdownItem textValue="My Pets" href="myPets" key="My Pets">
-              <p>My Pets</p>
+            <DropdownItem key="help_and_feedback">
+              <UserPannel />
             </DropdownItem>
 
-            <DropdownItem
-              textValue="Create Post"
-              href="/createPost"
-              key="Create Post"
-            >
-              <p>Create Post</p>
-            </DropdownItem>
-
-            <DropdownItem
-              textValue="Log Out"
-              key="logout"
-              color="danger"
-              onClick={handleLogout}
-            >
-              <p>Log Out</p>
+            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
+              Log Out
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

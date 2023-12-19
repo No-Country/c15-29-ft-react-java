@@ -1,5 +1,4 @@
 import {
-
   Button,
   Input,
   Link,
@@ -10,58 +9,60 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React, { useState } from "react";
-import { MailIcon } from "@/components/login/Mailicon";
-import { LockIcon } from "@/components/login/LockIcon";
+import React, { useEffect, useState } from "react";
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { UserIcon } from "./CredentialIcon";
 import { useAuth } from "@/Api/AuthContext";
 
-
-export default function RegisterModal() {
+export const UserPannel = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const { token } = useAuth();
   const [credentials, setCredentials] = useState({
-    email: "",
-    username: "",
-    password: "",
+    name: "juan",
+    lastName: "",
+    nationality: "",
+    address: "",
     avatar: "",
-    roles: ["INVITED"],
+    whatsappNumber: "",
   });
 
   const url = "https://pets-adopt-api.onrender.com/api";
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmitPannel = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("email", credentials.email);
-    formData.append("username", credentials.username);
-    formData.append("password", credentials.password);
+    formData.append("name", credentials.name);
+    formData.append("lastName", credentials.lastName);
+    formData.append("nationality", credentials.nationality);
+    formData.append("address", credentials.address);
+    formData.append("whatsappNumber", credentials.whatsappNumber);
     formData.append("avatar", credentials.avatar);
-    formData.append("roles", credentials.roles);
 
     try {
-      const res = await axios.post(
-        `${url}/userEntity/register`,
+      const res = await axios.put(
+        `${url}/userEntity`,
         Object.fromEntries(formData),
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       if (res.status === 200) {
-        console.log("Registrado correctamente");
         console.log(res);
 
         onOpenChange(false);
         router.push("/panel");
       } else {
-        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+        console.error(
+          "Error al Terminar de completar sus datos. Estado de respuesta:",
+          res.status
+        );
       }
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
@@ -71,14 +72,14 @@ export default function RegisterModal() {
 
   return (
     <>
-      <Link onPress={onOpen}>SIGN UP</Link>
+      <Link onPress={onOpen}>userPanel</Link>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
             <>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmitPannel}>
                 <ModalHeader className="flex flex-col gap-1">
-                  Sign Up
+                  userPanel
                 </ModalHeader>
                 <ModalBody>
                   <Input
@@ -86,32 +87,12 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        username: e.target.value,
+                        name: e.target.value,
                       })
                     }
                     autoFocus
-                    endContent={
-                      <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Username"
-                    placeholder="Enter your username"
-                    variant="bordered"
-                  />
-
-                  <Input
-                    type="email"
-                    onChange={(e) =>
-                      setCredentials({
-                        ...credentials,
-                        email: e.target.value,
-                      })
-                    }
-                    autoFocus
-                    endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="email"
-                    placeholder="Enter your Email"
+                    label="name"
+                    placeholder="Enter your name"
                     variant="bordered"
                   />
 
@@ -119,15 +100,25 @@ export default function RegisterModal() {
                     onChange={(e) =>
                       setCredentials({
                         ...credentials,
-                        password: e.target.value,
+                        nationality: e.target.value,
                       })
                     }
-                    endContent={
-                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+                    label="nationality"
+                    placeholder="Enter your nationality"
+                    type="nationality"
+                    variant="bordered"
+                  />
+
+                  <Input
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        address: e.target.value,
+                      })
                     }
-                    label="password"
-                    placeholder="Enter your Password"
-                    type="password"
+                    label="address"
+                    placeholder="Enter your address"
+                    type="text"
                     variant="bordered"
                   />
 
@@ -138,12 +129,22 @@ export default function RegisterModal() {
                         avatar: e.target.files[0],
                       })
                     }
-                    endContent={
-                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
                     label="avatar"
                     placeholder="Enter your Picture"
                     type="file"
+                    variant="bordered"
+                  />
+
+                  <Input
+                    onChange={(e) =>
+                      setCredentials({
+                        ...credentials,
+                        whatsappNumber: e.target.value,
+                      })
+                    }
+                    label="whatsappNumber"
+                    placeholder="Enter your date of whatsapp Number"
+                    type="number"
                     variant="bordered"
                   />
                 </ModalBody>
@@ -151,7 +152,7 @@ export default function RegisterModal() {
                   <Button color="danger" variant="flat" onPress={onClose}>
                     Close
                   </Button>
-                  <Button type="submit" color="primary">
+                  <Button onClick={handleSubmitPannel} color="primary">
                     Sign up
                   </Button>
                 </ModalFooter>
@@ -162,6 +163,4 @@ export default function RegisterModal() {
       </Modal>
     </>
   );
-}
-
-
+};
