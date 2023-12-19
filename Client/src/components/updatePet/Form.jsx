@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
 
 export default function Form() {
-    const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
+    const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("hola");
     const sizes = [
@@ -91,36 +91,6 @@ export default function Form() {
 
         console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
         editPet(61, data);
-    }
-    useEffect(() => {
-        // sendForm();
-        // console.log("this is the token: ", token)
-        // console.log("this is the petData: ", petData)
-    }, []);
-
-
-    const editPet = async (id, data) => {
-        try {
-            const response = await axios.put(`https://pets-adopt-api.onrender.com/api/pet/${id}`, data,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`,
-                    }
-                })
-            console.log(response)
-            if (res.status === 201) {
-                console.log("Pet edited successfully");
-                console.log(res.data);
-            }
-            else {
-                console.log("Error editing pet");
-                console.log(res.data, res.status);
-            }
-        } catch (error) {
-            console.error('Error al obtener detalles de la mascota', error);
-            console.log(data);
-        }
     }
 
     return (
