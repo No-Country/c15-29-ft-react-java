@@ -34,8 +34,6 @@ export default function UserNavbar() {
     const storedToken = getCookieValue("AuthToken");
     if (storedToken && loading) {
       getUserDataFromLocalStorage();
-      //eslint-disabled-next-line
-      console.log(userInfo);
       setLoading(false);
     }
   }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading]);

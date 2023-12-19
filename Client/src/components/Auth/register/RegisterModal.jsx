@@ -48,48 +48,6 @@ export default function RegisterModal() {
   return (
     <>
       <Link onPress={onOpen}>Sign Up</Link>
-  const url = "https://pets-adopt-api.onrender.com/api";
-  const router = useRouter();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("email", credentials.email);
-    formData.append("username", credentials.username);
-    formData.append("password", credentials.password);
-    formData.append("avatar", credentials.avatar);
-    formData.append("roles", credentials.roles);
-
-    try {
-      const res = await axios.post(
-        `${url}/userEntity/register`,
-        Object.fromEntries(formData),
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (res.status === 200) {
-        console.log("Registrado correctamente");
-        console.log(res);
-
-        onOpenChange(false);
-        router.push("/panel");
-      } else {
-        console.error("Error al Registrarse. Estado de respuesta:", res.status);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud:", error.message);
-      console.log("FormData content:", Object.fromEntries(formData));
-    }
-  };
-
-  return (
-    <>
-      <Link onPress={onOpen}>SIGN UP</Link>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
