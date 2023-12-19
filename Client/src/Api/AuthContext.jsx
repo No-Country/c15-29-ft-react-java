@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       getUserDataFromLocalStorage();
     }
     setLoading(false);
-  // Ahora se establece como false después de intentar recuperar el token
+    // Ahora se establece como false después de intentar recuperar el token
   }, []);
 
   const getUserDataFromLocalStorage = () => {
@@ -97,6 +97,40 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
       setErrorNotification("Error during login. Please try again.");
+    }
+  };
+
+  const handleRegister = async (credentials) => {
+    const formData = new FormData();
+    formData.append("email", credentials.email);
+    formData.append("username", credentials.username);
+    formData.append("password", credentials.password);
+    formData.append("avatar", credentials.avatar);
+    formData.append("roles", credentials.roles);
+
+    try {
+      const res = await axios.post(
+        `${url}/userEntity/register`,
+        Object.fromEntries(formData),
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        console.log("Registrado correctamente");
+        console.log(res);
+
+        onOpenChange(false);
+        router.push("/panel");
+      } else {
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      console.log("FormData content:", Object.fromEntries(formData));
     }
   };
 
@@ -177,7 +211,8 @@ export const AuthProvider = ({ children }) => {
         getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
-        getUserPhoto
+        getUserPhoto,
+        handleRegister
       }}
     >
       {children}
