@@ -1,32 +1,11 @@
-import React, { useEffect, useState } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarMenuToggle,
-} from "@nextui-org/react";
+import React, { useEffect } from "react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
+import { AcmeLogo } from "@/components/navbar/acmelogo";
 import { useAuth } from "@/Api/AuthContext.jsx";
 import { UserPannel } from "@/components/UserPannel/UserPannel";
 
 export default function UserNavbar() {
-  const {
-    userInfo,
-    loading,
-    getCookieValue,
-    getUserDataFromLocalStorage,
-    handleLogout,
-    getUserPhoto,
-    setLoading,
-  } = useAuth();
+  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout, getUserPhoto, setLoading } = useAuth();
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -86,11 +65,7 @@ export default function UserNavbar() {
               color="secondary"
               name={userInfo ? userInfo.username : "Guest"}
               size="sm"
-              src={
-                userInfo
-                  ? userInfo.profileImage
-                  : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"
-              }
+              src={userInfo ? userInfo.profileImage : "https://pets-adopt-api.onrender.com/api/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail"}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
