@@ -1,14 +1,4 @@
-import {
-  Button,
-  Input,
-  Link,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@nextui-org/react";
+import { Button, Input, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import React, { useState } from "react";
 import { MailIcon } from "@/components/login/Mailicon";
 import { LockIcon } from "@/components/login/LockIcon";
