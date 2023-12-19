@@ -46,6 +46,30 @@ export const PetProvider = ({ children }) => {
     }
   };
 
+  const editPet = async (id, data) => {
+    try {
+      const response = await axios.put(`https://pets-adopt-api.onrender.com/api/pet/${id}`, data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+          }
+        })
+      console.log(response)
+      if (res.status === 201) {
+        console.log("Pet edited successfully");
+        console.log(res.data);
+      }
+      else {
+        console.log("Error editing pet");
+        console.log(res.data, res.status);
+      }
+    } catch (error) {
+      console.error('Error al obtener detalles de la mascota', error);
+      console.log(data);
+      }
+  }
+
   const deletePet = async (id) => {
     try {
       const response = await axios.delete(
