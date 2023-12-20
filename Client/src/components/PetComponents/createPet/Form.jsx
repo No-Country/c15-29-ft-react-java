@@ -29,9 +29,9 @@ export default function Form() {
             const res = await axios.post(`https://pets-adopt-api.onrender.com/api/pet`, data,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
                 });
 
             if (res.status === 201) {
