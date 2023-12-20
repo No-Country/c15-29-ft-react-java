@@ -67,9 +67,9 @@ public class PetController {
         }
     }
 
-//    @GetMapping("/pet/getPetByUserId/{id_user}")
+//    @GetMapping("/getPetByUserId/{id_user}")
 //    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long id_user) {
-//        List<Pet> petsById = petService.getPetByUserId(id_user);
+//        List<Pet> petsById = petService.getAllPetsByUserId(id_user);
 //
 //        if (petsById.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -78,4 +78,14 @@ public class PetController {
 //        }
 //    }
 
+    @GetMapping("/getPetByUserId/{idUser}")
+    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long idUser) {
+        List<Pet> petsById = petService.getAllPetsByUserId(idUser);
+
+        if (petsById.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(petsById, HttpStatus.OK);
+        }
+    }
 }
