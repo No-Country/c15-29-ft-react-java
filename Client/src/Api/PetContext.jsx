@@ -8,28 +8,18 @@ const url = "https://pets-adopt-api.onrender.com/api";
 
 export const PetProvider = ({ children }) => {
     const [pets, setPets] = useState([]);
+    const [userPets, setUserPets] = useState([]);
     const [onlyPet, setOnlyPet] = useState([]);
     const [selectedPetId, setSelectedPetId] = useState("");
     const [openModalId, setOpenModalId] = useState(null);
     const [srcImg, setSrcImg] = useState("");
+    const { getCookieValue } = useAuth();
 
     const cookieToken = getCookieValue("AuthToken");
     const showPetDetails = (id) => {
         setSelectedPetId(id);
     };
 
-    const getPets = async () => {
-        try {
-            const response = await axios.get(`${url}/pet/getAll`, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            setPets(response.data);
-        } catch (error) {
-            console.error("Error al obtener mascotas", error);
-        }
-    };
     const getPets = async () => {
         try {
             const response = await axios.get(`${url}/pet/getAll`, {
@@ -92,21 +82,6 @@ export const PetProvider = ({ children }) => {
     }, []);
 
     const getPet = async (id) => {
-        try {
-            const res = await axios.get(
-                `https://pets-adopt-api.onrender.com/api/pet/${id}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            setOnlyPet(res.data);
-        } catch (error) {
-            console.error("Error al obtener detalles de la mascota", error);
-        }
-    };
-    const getPet = async (id) => {
         if (selectedPetId) {
             try {
                 const res = await axios.get(
@@ -124,29 +99,6 @@ export const PetProvider = ({ children }) => {
         }
     };
 
-    const editPet = async (id, data) => {
-        try {
-            const response = await axios.put(`https://pets-adopt-api.onrender.com/api/pet/${id}`, data,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`,
-                    }
-                })
-            console.log(response)
-            if (res.status === 201) {
-                console.log("Pet edited successfully");
-                console.log(res.data);
-            }
-            else {
-                console.log("Error editing pet");
-                console.log(res.data, res.status);
-            }
-        } catch (error) {
-            console.error('Error al obtener detalles de la mascota', error);
-            console.log(data);
-        }
-    }
     const editPet = async (id, data) => {
         try {
             const response = await axios.put(
@@ -192,24 +144,6 @@ export const PetProvider = ({ children }) => {
         }
     };
 
-    const getPetImage = async (id, firstImg) => {
-        try {
-            console.log(id, firstImg)
-            const imgUrl = firstImg.substring(10)
-            console.log(imgUrl)
-            const res = await axios.get(`https://pets-adopt-api.onrender.com/getimage?entityId=${id}&idImg=${imgUrl}`, credentials, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            setSrcImg(res.data);
-            console.log(res)
-        } catch (error) {
-            console.error('Error al obtener imagenes de la mascota', error);
-        }
-    };
-
     return (
         <PetContext.Provider
             value={{
@@ -224,6 +158,9 @@ export const PetProvider = ({ children }) => {
                 srcImg,
                 setSrcImg,
                 onlyPet,
+                getUserPets,
+                userPets,
+                getPetImage,
             }}
         >
             {children}
