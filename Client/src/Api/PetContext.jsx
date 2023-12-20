@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { useAuth } from "./AuthContext";
 
 const PetContext = createContext();
@@ -13,6 +13,7 @@ export const PetProvider = ({ children }) => {
     const [openModalId, setOpenModalId] = useState(null);
     const [srcImg, setSrcImg] = useState("");
 
+    const cookieToken = getCookieValue("AuthToken");
     const showPetDetails = (id) => {
         setSelectedPetId(id);
     };
@@ -29,6 +30,66 @@ export const PetProvider = ({ children }) => {
             console.error("Error al obtener mascotas", error);
         }
     };
+    const getPets = async () => {
+        try {
+            const response = await axios.get(`${url}/pet/getAll`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            setPets(response.data);
+        } catch (error) {
+            console.error("Error al obtener mascotas", error);
+        }
+    };
+
+    const getUserPets = async (id, token) => {
+        try {
+            const response = await axios.get(
+                `https://pets-adopt-api.onrender.com/api/pet/getPetByUserId/${id}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            setUserPets(response.data);
+        } catch (error) {
+            console.error("Error al obtener mascotas del usuario", error);
+        }
+    };
+
+    const getPetImage = useCallback(async (id, firstImg, token) => {
+        try {
+            if (firstImg) {
+                const imgUrl = firstImg.substring(10);
+                const response = await axios.get(
+                    `https://pets-adopt-api.onrender.com/getimage?entityId=${id}&idImg=${imgUrl}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        responseType: "blob",
+                    }
+                );
+                const imageBlob = response.data;
+                const imageUrl = URL.createObjectURL(imageBlob);
+                return imageUrl;
+            }
+        } catch (error) {
+            const imageUrl = "./errorlogo.png";
+            return imageUrl;
+            console.error("Error al obtener imagen de la mascota", error);
+
+            // Imprimir detalles específicos del servidor
+            if (error.response) {
+                console.error("Server response details:", error.response.data);
+            }
+            return null; // Manejar el error devolviendo null o algún valor por defecto
+        }
+    }, []);
 
     const getPet = async (id) => {
         try {
@@ -43,6 +104,23 @@ export const PetProvider = ({ children }) => {
             setOnlyPet(res.data);
         } catch (error) {
             console.error("Error al obtener detalles de la mascota", error);
+        }
+    };
+    const getPet = async (id) => {
+        if (selectedPetId) {
+            try {
+                const res = await axios.get(
+                    `https://pets-adopt-api.onrender.com/api/pet/${id}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                setOnlyPet(res.data);
+            } catch (error) {
+                console.error("Error al obtener detalles de la mascota", error);
+            }
         }
     };
 
@@ -69,6 +147,31 @@ export const PetProvider = ({ children }) => {
             console.log(data);
         }
     }
+    const editPet = async (id, data) => {
+        try {
+            const response = await axios.put(
+                `https://pets-adopt-api.onrender.com/api/pet/${id}`,
+                data,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log(response);
+            if (res.status === 201) {
+                console.log("Pet edited successfully");
+                console.log(res.data);
+            } else {
+                console.log("Error editing pet");
+                console.log(res.data, res.status);
+            }
+        } catch (error) {
+            console.error("Error al obtener detalles de la mascota", error);
+            console.log(data);
+        }
+    };
 
     const deletePet = async (id) => {
         try {
@@ -114,7 +217,6 @@ export const PetProvider = ({ children }) => {
                 pets,
                 deletePet,
                 getPet,
-                getPetImage,
                 showPetDetails,
                 selectedPetId,
                 openModalId,

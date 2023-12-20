@@ -16,6 +16,7 @@ import {
 } from "@nextui-org/react";
 import { useAuth } from "@/Api/AuthContext.jsx";
 import Image from "next/image";
+import { UserPannel } from "../userPannel/UserPannel";
 
 export default function UserNavbar() {
   const {
@@ -123,6 +124,15 @@ export default function UserNavbar() {
             >
               <p>Create Post</p>
             </DropdownItem>
+            
+            <DropdownItem
+              textValue="User pannel"
+              href="#"
+              key="User pannel"
+            >
+              <Link onPress={<UserPannel />}>User Panel</Link>
+            </DropdownItem>
+            
 
             <DropdownItem
               textValue="Log Out"

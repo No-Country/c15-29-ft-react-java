@@ -14,7 +14,8 @@ export default function Adopt() {
 
   useEffect(() => {
     getPets();
-  }, [getPets]);
+    console.log(pets);
+  }, []);
 
   useEffect(() => {
     if (notification) {
