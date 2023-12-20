@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { serialize } from "cookie";
+import { useDisclosure } from "@nextui-org/react";
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const url = "https://pets-adopt-api.onrender.com/api";
 
@@ -22,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       getUserDataFromLocalStorage();
     }
     setLoading(false);
-  // Ahora se establece como false después de intentar recuperar el token
+    // Ahora se establece como false después de intentar recuperar el token
   }, []);
 
   const getUserDataFromLocalStorage = () => {
@@ -97,6 +99,41 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
       setErrorNotification("Error during login. Please try again.");
+    }
+  };
+
+  const handleRegister = async (credentials) => {
+    const formData = new FormData();
+    formData.append("email", credentials.email);
+    formData.append("username", credentials.username);
+    formData.append("password", credentials.password);
+    formData.append("avatar", credentials.avatar);
+    formData.append("roles", credentials.roles);
+
+    try {
+      const res = await axios.post(
+        `${url}/userEntity/register`,
+        Object.fromEntries(formData),
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        console.log("Registrado correctamente");
+        console.log(res);
+        setNotification({ type: "success", message: "Successfully registered" });
+
+        onOpenChange(false);
+        router.push("/adopt");
+      } else {
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      console.log("FormData content:", Object.fromEntries(formData));
     }
   };
 
@@ -177,7 +214,8 @@ export const AuthProvider = ({ children }) => {
         getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
-        getUserPhoto
+        getUserPhoto,
+        handleRegister
       }}
     >
       {children}
