@@ -174,6 +174,79 @@ public class PetService {
         return Optional.of(petRepository.save(existingPet));
     }
 
+    public Optional<Pet> updatePet(Long petId, PetDTO updatedPet) {
+        Pet existingPet = petRepository.getByIdOrThrow(petId);
+
+        if (updatedPet.getName() != null) {
+            existingPet.setName(updatedPet.getName());
+        }
+
+        if (updatedPet.getBreed() != null) {
+            existingPet.setBreed(updatedPet.getBreed());
+        }
+
+        if (updatedPet.getAge() != null) {
+            existingPet.setAge(updatedPet.getAge());
+        }
+
+        if (updatedPet.getColour() != null) {
+            existingPet.setColour(updatedPet.getColour());
+        }
+
+        if (updatedPet.getSize() != null) {
+            existingPet.setSize(updatedPet.getSize());
+        }
+
+        if(updatedPet.getImages().size() > 0){
+            s3Service.deleteMultiplesFiles(existingPet.getId().toString());
+            List<byte[]> dataImages = updatedPet.getImages().stream()
+                    .map( image -> {
+                        try {
+                            return image.getBytes();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList();
+            List<String> newImages = s3Service.uploadMultipleObjects(dataImages, existingPet.getId());
+            existingPet.setImages(newImages);
+        }
+
+        if (updatedPet.getGeneralDescription() != null) {
+            existingPet.setGeneralDescription(updatedPet.getGeneralDescription());
+        }
+
+        if (updatedPet.getBehavior() != null) {
+            existingPet.setBehavior(updatedPet.getBehavior());
+        }
+
+        if (updatedPet.getHealthStatus() != null) {
+            existingPet.setHealthStatus(updatedPet.getHealthStatus());
+        }
+
+        if (updatedPet.getLocation() != null) {
+            existingPet.setLocation(updatedPet.getLocation());
+        }
+
+        if (updatedPet.getVaccinated() != null) {
+            existingPet.setVaccinated(updatedPet.getVaccinated());
+        }
+
+        if (updatedPet.getSterilized() != null) {
+            existingPet.setSterilized(updatedPet.getSterilized());
+        }
+
+        if (updatedPet.getAdopted() != null) {
+            existingPet.setAdopted(updatedPet.getAdopted());
+        }
+
+        if (updatedPet.getAdoptionInProcess() != null) {
+            existingPet.setAdoptionInProcess(updatedPet.getAdoptionInProcess());
+        }
+
+        return Optional.of(petRepository.save(existingPet));
+    }
+
 
 }
 
