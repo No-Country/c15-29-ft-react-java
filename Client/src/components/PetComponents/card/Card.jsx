@@ -5,12 +5,14 @@ import { Card, CardHeader, CardBody, Image, Skeleton, useDisclosure } from "@nex
 import { useAuth } from "@/Api/AuthContext";
 import { usePet } from "@/Api/PetContext";
 
-export default function CardPet({ id = "Missing ID", age, breed, images, name }) {
+export default function CardPet({ pet }) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { getPet, showPetDetails, selectedPetId, setOpenModalId, srcImg, setSrcImg } = usePet()
+  const { getPet, getPetImage, showPetDetails, selectedPetId, setOpenModalId, srcImg, setSrcImg, deletePet } = usePet()
   const { onOpen } = useDisclosure();
   // starts as null, when it changes to a number, the modal opens, and later on becomes null again
   const { getCookieValue } = useAuth();
+
+  const { id, name, age, breed, images } = pet;
 
   const token = getCookieValue("AuthToken");
 
@@ -26,18 +28,20 @@ export default function CardPet({ id = "Missing ID", age, breed, images, name })
   // placeholder to deal with adopt process later on
   const adoptPost = async () => { };
 
+  const fetchImage = async (width, height) => {
+    const customURL = `https://picsum.photos/${width}/${height}`;
+    const res = await fetch(customURL);
+    setSrcImg(res.url);
+    if (res.ok) setIsLoaded(true);
+    return res.url;
+  };
   useEffect(() => {
-    const fetchImage = async (width, height) => {
-      const customURL = `https://picsum.photos/${width}/${height}`;
-      const res = await fetch(customURL);
-      setSrcImg(res.url);
-      if (res.ok) setIsLoaded(true);
-      return res.url;
-    };
-
-    // setTimeout placeholder to simulate loading, remove this in production
-    fetchImage(270, 270);
-  }, [setSrcImg, setIsLoaded]);
+    console.log(id, images, pet);
+    if (images?.length > 0)
+      getPetImage(id, images[0]);
+    else
+      fetchImage(270, 270);
+  }, []);
 
 
   return (

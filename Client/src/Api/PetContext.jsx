@@ -91,14 +91,16 @@ export const PetProvider = ({ children }) => {
 
     const getPetImage = async (id, firstImg) => {
         try {
+            console.log(id, firstImg)
             const imgUrl = firstImg.substring(10)
-
+            console.log(imgUrl)
             const res = await axios.get(`https://pets-adopt-api.onrender.com/getimage?entityId=${id}&idImg=${imgUrl}`, credentials, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 }
             });
+            setSrcImg(res.data);
             console.log(res)
         } catch (error) {
             console.error('Error al obtener imagenes de la mascota', error);
@@ -112,6 +114,7 @@ export const PetProvider = ({ children }) => {
                 pets,
                 deletePet,
                 getPet,
+                getPetImage,
                 showPetDetails,
                 selectedPetId,
                 openModalId,
