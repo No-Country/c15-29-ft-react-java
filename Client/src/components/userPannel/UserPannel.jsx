@@ -14,10 +14,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/Api/AuthContext";
+import { Toaster, toast } from "sonner";
+
 
 export const UserPannel = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { token } = useAuth();
+  const { handleLogout, notification, clearNotification, token } = useAuth();
+
   const [credentials, setCredentials] = useState({
     name: "juan",
     lastName: "",
@@ -26,6 +29,8 @@ export const UserPannel = () => {
     avatar: "",
     whatsappNumber: "",
   });
+
+  
 
   const url = "https://pets-adopt-api.onrender.com/api";
   const router = useRouter();
@@ -57,7 +62,7 @@ export const UserPannel = () => {
         console.log(res);
 
         onOpenChange(false);
-        router.push("/panel");
+        router.push("/");
       } else {
         console.error(
           "Error al Terminar de completar sus datos. Estado de respuesta:",

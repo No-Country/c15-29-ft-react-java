@@ -33,11 +33,12 @@ export default function RegisterModal() {
     e.preventDefault();
     try {
       await handleRegister(credentials);
-      onClose(); // Cierra el modal después de enviar el formulario con éxito
+      onOpenChange(false);
     } catch (error) {
       console.error("Error during register:", error);
     }
   };
+
   useEffect(() => {
     return () => {
       // Limpiar la notificación cuando el componente se desmonte

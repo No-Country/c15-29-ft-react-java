@@ -124,9 +124,10 @@ export const AuthProvider = ({ children }) => {
       if (res.status === 201) {
         console.log("Registrado correctamente");
         console.log(res);
+        setNotification({ type: "success", message: "Successfully registered" });
 
         onOpenChange(false);
-        router.push("/panel");
+        router.push("/adopt");
       } else {
         console.error("Error al Registrarse. Estado de respuesta:", res.status);
       }
