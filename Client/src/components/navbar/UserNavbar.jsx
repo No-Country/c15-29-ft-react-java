@@ -16,7 +16,7 @@ import { useAuth } from "@/Api/AuthContext.jsx";
 
 export default function UserNavbar() {
 
-  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout,  getUserPhoto, setLoading } = useAuth();
+  const { userInfo, loading, getCookieValue, getUserDataFromLocalStorage, handleLogout, getUserPhoto, setLoading } = useAuth();
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -58,7 +58,7 @@ export default function UserNavbar() {
 
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
-        <DropdownTrigger>
+          <DropdownTrigger>
             <Avatar
               isBordered
               as="button"
@@ -89,4 +89,3 @@ export default function UserNavbar() {
     </Navbar>
   );
 }
- 
