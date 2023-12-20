@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { serialize } from "cookie";
+import { useDisclosure } from "@nextui-org/react";
 
 const AuthContext = createContext();
 
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const url = "https://pets-adopt-api.onrender.com/api";
 
@@ -22,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       getUserDataFromLocalStorage();
     }
     setLoading(false);
-  // Ahora se establece como false después de intentar recuperar el token
+    // Ahora se establece como false después de intentar recuperar el token
   }, []);
 
   const getUserDataFromLocalStorage = () => {
@@ -100,6 +102,71 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handleRegister = async (credentials) => {
+    const formData = new FormData();
+    formData.append("email", credentials.email);
+    formData.append("username", credentials.username);
+    formData.append("password", credentials.password);
+    formData.append("avatar", credentials.avatar);
+    formData.append("roles", credentials.roles);
+
+    try {
+      const res = await axios.post(
+        `${url}/userEntity/register`,
+        Object.fromEntries(formData),
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        console.log("Registrado correctamente");
+        console.log(res);
+        setNotification({ type: "success", message: "Successfully registered" });
+        handleLogin({
+          username: credentials.username,
+          password: credentials.password,
+        });
+
+        onOpenChange(false);
+        router.push("/adopt");
+      } else {
+        console.error("Error al Registrarse. Estado de respuesta:", res.status);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      console.log("FormData content:", Object.fromEntries(formData));
+    }
+  };
+
+  const getUserPhoto = async () => {
+    try {
+      const res = await axios.get(`${url}/nocountry-pawfinder/PrimerUsuarioConImagen/image/thumbnail`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        console.log(res);
+      } else {
+        console.error(
+          "Error al traer datos del usuario. Estado de respuesta:",
+          res.status
+        );
+        setErrorNotification("Error during get data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
+      setErrorNotification("Error during get data. Please try again.");
+    }
+  };
+
+  
+
   const getUserData = async (username, token) => {
     try {
       const res = await axios.get(`${url}/userEntity/${username}`, {
@@ -151,6 +218,8 @@ export const AuthProvider = ({ children }) => {
         getUserDataFromLocalStorage,
         getCookieValue,
         handleLogout,
+        getUserPhoto,
+        handleRegister
       }}
     >
       {children}

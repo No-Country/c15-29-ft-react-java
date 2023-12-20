@@ -21,6 +21,7 @@ export default function Form() {
         behavior: "",
         location: "",
         generalDescription: "",
+        images: [],
     });
 
     const sendForm = async (data) => {
@@ -49,6 +50,12 @@ export default function Form() {
     }
 
     const handleInputChange = (e) => {
+        if (e.target.name === "images") {
+            return setPetData({
+                ...petData,
+                [e.target.name]: e.target.files
+            })
+        }
         setPetData({
             ...petData,
             [e.target.name]: e.target.value
@@ -67,6 +74,8 @@ export default function Form() {
         formData.append("healthStatus", petData.healthStatus);
         formData.append("behavior", petData.behavior);
         formData.append("location", petData.location);
+        formData.append("generalDescription", petData.generalDescription);
+        formData.append("images", petData.images);
 
         const data = Object.fromEntries(formData);
 
@@ -109,6 +118,10 @@ export default function Form() {
                         setInputInfo(e.target.value)
                         handleInputChange(e)
                     }} name='generalDescription' />
+                    <Input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
+                        handleInputChange(e)
+                        console.log(e.target.files)
+                    }} name='images' multiple />
                     <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
                         Post
                     </Button>

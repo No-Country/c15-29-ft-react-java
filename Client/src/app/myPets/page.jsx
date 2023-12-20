@@ -1,7 +1,8 @@
 import React from "react";
 import Adopt from "@/components/PetComponents/adopt/Adopt";
+import MyPets from "@/components/PetComponents/myPets/MyPets";
 
-export default function AdoptPage() {
+export default function MyPetstPage() {
   return (
     <>
     <div className="container mx-auto my-12 text-center">
@@ -9,12 +10,10 @@ export default function AdoptPage() {
         <p className="ml-4 md:mr-2">🐾</p>  Encuentra a tu Compañero Peludo  <p className="mr-4 md:ml-2">🐾</p>
       </h1>
       <p className="text-gray-400 mb-8 mx-4">
-        ¡Bienvenido a nuestra comunidad de adopciones! Estas mascotas esperan
-        ansiosas un hogar lleno de amor y alegría. Explora las tarjetas a
-        continuación y descubre a tu próximo mejor amigo.
+      Bienvenido a nuestra sección personalizada de adopciones! Aquí, podrás ver exclusivamente las mascotas que tú has subido
       </p>
       </div>
-      <Adopt />
+      <MyPets />
     </>
   );
 }
