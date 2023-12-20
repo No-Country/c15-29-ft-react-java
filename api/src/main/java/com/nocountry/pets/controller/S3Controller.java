@@ -13,15 +13,15 @@ public class S3Controller {
     @Autowired
     private IS3Service is3Service;
 
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file")MultipartFile file) throws IOException {
-//        return is3Service.uploadFile(file);
-        return "";
+
+    @GetMapping("/getimage")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public byte[] getObject(@RequestParam String entityId, @RequestParam String idImg){
+        return is3Service.getObject("nocountry-pawfinder", String.format("%s/images/%s",entityId,idImg));
     }
 
-    @GetMapping("/image/{key}")
-    @CrossOrigin(origins = "http://localhost:3000")
-    public byte[] getObject(@PathVariable String key){
-        return is3Service.getObject("nocountry-pawfinder", key);
+    @GetMapping("/deleteimages")
+    public void deleteObjects(@RequestParam String rootId){
+        is3Service.deleteMultiplesFiles(rootId);
     }
 }
