@@ -1,60 +1,77 @@
-"use client"
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-import React from "react";
-import { Image, Divider } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { Image, Divider, Skeleton } from "@nextui-org/react";
+import { usePet } from "@/Api/PetContext";
 
-export const AdoptProcess = ({ pet }) => {
-  const { breed, images, age, name, generalDescription } = pet;
-  const tags = ["No tags available"];
+export const AdoptProcess = ({ pet, user }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { srcImg, setSrcImg } = usePet()
+
+  useEffect(() => {
+    const fetchImage = async (width, height) => {
+      const customURL = `https://picsum.photos/${width}/${height}`;
+      const res = await fetch(customURL);
+      setSrcImg(res.url);
+      if (res.ok) setIsLoaded(true);
+      return res.url;
+    };
+  
+    // setTimeout placeholder to simulate loading, remove this in production
+    fetchImage(270, 270);
+  }, [setSrcImg, setIsLoaded]);
+  
+
 
   return (
-    <div className="flex flex-col gap-2 items-center py-8">
-      <Image
-        alt="Card background"
-        className="object-cover rounded-xl select-none h-auto w-[400px]"
-        src={images ? images[0] : ""}
-        draggable={false}
-        loading="lazy"
-      />
-      <div className="flex flex-row gap-2 flex-wrap justify-center items-center w-full mt-1">
-        {tags.length > 0 ? (
-          tags.map((tag, index) => (
-            <span
-              key={index}
-              className={`bg-blue-100 text-blue-800 text-sm font-medium  ${
-                tags.length > 1 ? "me-2" : ""
-              } px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}
-            >
-              {tag}
-            </span>
-          ))
-        ) : (
-          <span
-            className={`bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300`}
-          >
-            No tags available
-          </span>
+    <Skeleton isLoaded={isLoaded} className="w-full rounded-lg h-full max-w-screen-lg mx-8 mt-16 md:mx-auto">
+    <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-lg shadow-md p-6  mx-auto flex flex-col md:flex-row ">
+    
+      <div className="md:w-1/2 md:pr-6 animate__animated animate__fadeInLeft">
+        <div>
+        {/* // eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={srcImg} // Reemplaza con la URL de tu imagen de mascota
+          alt={`Avatar de ${pet.name}`}
+          className="w-full md:w-64 h-64 mx-auto md:rounded-full mb-4 animate__animated animate__fadeInLeft"
+        />
+        </div>
+        
+        <div className="text-center">
+          <h2 className="text-3xl font-semibold mb-2">{pet.name}</h2>
+          <p className="mb-4">{pet.age}</p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Información General</h3>
+          <ul className="list-disc pl-4">
+            <li>ID: {pet.id}</li>
+            <li>Adoptado: {pet.adopted ? "Sí" : "No"}</li>
+            <li>
+              En proceso de adopción: {pet.adoptionInProcess ? "Sí" : "No"}
+            </li>
+            <li>Fecha de nacimiento: {pet.vaccinated || "No especificada"}</li>
+            {/* Agrega más detalles según sea necesario */}
+          </ul>
+        </div>
+      </div>
+      <div className="md:w-1/2 md:pl-6 animate__animated animate__fadeInRight mt-6 md:mt-0">
+        <h2 className="text-3xl font-semibold mb-2">Datos del Adoptante</h2>
+        {user && (
+          <ul className="list-disc pl-4">
+            <li>Email: {user.email}</li>
+            <li>Apellido: {user.lastName || 'No especificado'}</li>
+            <li>Nacionalidad: {user.nationality || 'No especificada'}</li>
+            <li>Whatsapp: {user.whatsappNumber || 'No especificado'}</li>
+          </ul>
         )}
+        <div className="mt-6">
+          <button className="bg-f3794f text-white px-6 py-3 rounded-full hover:bg-red-500 focus:outline-none focus:shadow-outline-blue active:bg-red-800 transition duration-300">
+            Adoptar
+          </button>
+        </div>
       </div>
-      <Divider orientation="horizontal" className="my-1" />
-      <h3 className="font-bold text-xl bold">
-        {name == "" || typeof name !== "string" ? "Not specified" : name}
-      </h3>
-      <div className="flex flex-row gap-2">
-        <p className="text-medium uppercase font-bold">
-          {age == "" || typeof age !== "string" ? "Not specified" : age}
-        </p>
-        <Divider orientation="vertical" className="h-auto max-h-full" />
-        <small className="text-default-500 text-medium">
-          {breed == "" || typeof breed !== "string" ? "Not specified" : breed}
-        </small>
-      </div>
-      <p>
-        {generalDescription == "" || typeof generalDescription !== "string"
-          ? "Not specified"
-          : generalDescription}
-      </p>
-      {/* Add any additional details or actions you need here */}
     </div>
+      </Skeleton>
   );
 };

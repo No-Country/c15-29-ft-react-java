@@ -4,51 +4,65 @@ import { useAuth } from "@/Api/AuthContext";
 import { usePet } from "@/Api/PetContext";
 import { AdoptProcess } from "@/components/PetComponents/adoptProcess/AdoptProcess";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function AdoptProcessPage() {
   const { getPet, onlyPet } = usePet();
   const { token } = useAuth();
- 
+  const storedPetIdRef = useRef(null);
+
   useEffect(() => {
     // Recuperar el ID de la mascota desde el localStorage
     if (typeof window !== 'undefined') {
       // Establecer el ID en el estado local
-      const storedPetId = localStorage.getItem("adoptedPetId");
-      getPet(storedPetId);
+      storedPetIdRef.current = localStorage.getItem("adoptedPetId");
+      getPet(storedPetIdRef.current);
     }
   }, [getPet]);
-
-  
-
-useEffect(() => {
-  // Realizar acciones después de la actualización de onlyPet
-  if (token) {
-    getUserPet(39, token);
-  }
-}, [token]); // Asegúrate de que solo token sea la dependencia  
-
-  const getUserPet = async (id, token) => {
-    try {
-      const res = await axios.get(
-        `https://pets-adopt-api.onrender.com/api/userEntity/getById/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.error("Error al obtener detalles del usuario", error);
-    }
-  };
 
   return (
     <>
       <div>AdoptPage</div>
-      <AdoptProcess pet={onlyPet} />
+      <AdoptProcess pet={onlyPet} user={onlyPet.user_id} />
     </>
   );
 }
+
+
+
+// address
+// : 
+// "San Juan 944"
+// avatar
+// : 
+// "pruebasPruebasJuan/images/thumbnail"
+// dateOfBirth
+// : 
+// null
+// email
+// : 
+// "pruebasPruebasJuan@gmail.com"
+// id
+// : 
+// 39
+// lastName
+// : 
+// "Ortega"
+// name
+// : 
+// "Juan"
+// nationality
+// : 
+// null
+// password
+// : 
+// "$2a$10$a1b9HSJ0zqP3eAyr7LKJcuQp9HCJ9O.RSkPKhp4r9ixhJtfqoaoUC"
+// roles
+// : 
+// [{…}]
+// username
+// : 
+// "pruebasPruebasJuan"
+// whatsappNumber
+// : 
+// "3517707973"
