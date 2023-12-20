@@ -22,7 +22,6 @@ import java.util.List;
 @RestController()
 @RequestMapping("/api/userEntity")
 
-//esta etiqueta es necesaria?
 //@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserEntityController {
 
@@ -180,16 +179,23 @@ public class UserEntityController {
         }
     }
 
-    @PutMapping("/{email}")
-    public ResponseEntity<?> updateUser(@PathVariable String email, @Valid @RequestBody CreateUserDTO createUserDTO) {
+    @PutMapping("")
+    public ResponseEntity<?> updateUser(@Valid @ModelAttribute CreateUserDTO createUserDTO) {
         try {
-            UserEntity updatedUser = userEntityService.updateUserEntity(email, createUserDTO);
+            UserEntity updatedUser = userEntityService.updateUserEntity(createUserDTO);
             return ResponseEntity.ok(updatedUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el usuario");
         }
+    }
+
+    @GetMapping("/getById/{userId}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Long userId) {
+        return userEntityService.getUserById(userId)
+                .map(user -> ResponseEntity.ok().body(user))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 

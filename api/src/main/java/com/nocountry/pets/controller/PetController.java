@@ -1,17 +1,13 @@
 package com.nocountry.pets.controller;
 
+import com.nocountry.pets.controller.request.PetDTO;
 import com.nocountry.pets.models.Pet;
-import com.nocountry.pets.models.UserEntity;
-import com.nocountry.pets.repositories.PetRepository;
-import com.nocountry.pets.repositories.UserRepository;
 import com.nocountry.pets.service.PetService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,10 +40,12 @@ public class PetController {
         return pet.map(value -> ResponseEntity.ok(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Pet> updatePet(@PathVariable Long id, @RequestBody Pet updatedPet) {
-        Optional<Pet> pet = petService.updatePet(id, updatedPet);
-        return pet.map(value -> ResponseEntity.ok(value)).orElseGet(() -> ResponseEntity.notFound().build());
+    @PutMapping("/{petId}")
+    public ResponseEntity<Pet> updatePet(@PathVariable Long petId, @Valid @ModelAttribute PetDTO updatedPet) {
+        Optional<Pet> result = petService.updatePet(petId, updatedPet);
+
+        return result.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -56,10 +54,10 @@ public class PetController {
         return success ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
-        @PostMapping()
-    public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
+    @PostMapping()
+    public ResponseEntity<Pet> createPet(@Valid @ModelAttribute PetDTO petDto) {
         try {
-            Pet createdPet = petService.createPet(pet);
+            Pet createdPet = petService.createPet(petDto);
             System.out.println(createdPet.toString());
             return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);
         } catch (IllegalArgumentException e) {
@@ -69,9 +67,9 @@ public class PetController {
         }
     }
 
-//    @GetMapping("/pet/getPetByUserId/{id_user}")
+//    @GetMapping("/getPetByUserId/{id_user}")
 //    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long id_user) {
-//        List<Pet> petsById = petService.getPetByUserId(id_user);
+//        List<Pet> petsById = petService.getAllPetsByUserId(id_user);
 //
 //        if (petsById.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -80,5 +78,14 @@ public class PetController {
 //        }
 //    }
 
+    @GetMapping("/getPetByUserId/{idUser}")
+    public ResponseEntity<List<Pet>> obtenerMascotasPorUsuario(@PathVariable Long idUser) {
+        List<Pet> petsById = petService.getAllPetsByUserId(idUser);
 
+        if (petsById.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(petsById, HttpStatus.OK);
+        }
+    }
 }
