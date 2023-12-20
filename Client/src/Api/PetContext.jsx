@@ -8,10 +8,14 @@ const url = "https://pets-adopt-api.onrender.com/api";
 
 export const PetProvider = ({ children }) => {
   const [pets, setPets] = useState([]);
+  const [userPets, setUserPets] = useState([]);
   const [onlyPet, setOnlyPet] = useState([]);
   const [selectedPetId, setSelectedPetId] = useState("");
   const [openModalId, setOpenModalId] = useState(null);
   const [srcImg, setSrcImg] = useState("");
+  const { getCookieValue } = useAuth()
+
+const token = getCookieValue("AuthToken")
 
   const showPetDetails = (id) => {
     setSelectedPetId(id);
@@ -29,6 +33,22 @@ export const PetProvider = ({ children }) => {
       console.error("Error al obtener mascotas", error);
     }
   };
+
+  const getUserPets = async (id) => {
+    try {
+      const response = await axios.get('https://pets-adopt-api.onrender.com/api/pet/getPetByUserId/63', {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      setUserPets(response.data);
+    } catch (error) {
+      console.log(token);
+      console.error("Error al obtener mascotas del usuario", error);
+    }
+  };
+
 
   const getPet = async (id) => {
     try {
@@ -103,6 +123,8 @@ export const PetProvider = ({ children }) => {
         srcImg,
         setSrcImg,
         onlyPet,
+        getUserPets,
+        userPets
       }}
     >
       {children}

@@ -77,7 +77,6 @@ export const UserPannel = () => {
 
   return (
     <>
-      <Link onPress={onOpen}>userPanel</Link>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
