@@ -14,7 +14,8 @@ export default function Adopt() {
 
   useEffect(() => {
     getPets();
-  }, [getPets]);
+    console.log(pets);
+  }, []);
 
   useEffect(() => {
     if (notification) {
@@ -30,14 +31,7 @@ export default function Adopt() {
       {pets.map((pet) => (
         <React.Fragment key={pet.id}>
           <Card
-            id={pet.id}
-            age={pet.age}
-            breed={pet.breed}
-            generalDescription={pet.generalDescription}
-            images={pet.images}
-            name={pet.name}
-            tags={pet.tags}
-            key={pet.id}
+            pet={pet}
           />
           <PetModal pet={pet}/>
         </React.Fragment>
