@@ -32,6 +32,18 @@ public class PetService {
         return (List<Pet>) petRepository.findAll();
     }
 
+//    public List<Pet> getAllPetsByUserId(Long id){
+//        List<Pet> allPets = this.getAllPets();
+//        List<Pet> allPetsByUser = allPets.stream()
+//                .filter( pet -> pet.getUser_id().getId() == id)
+//                .collect(Collectors.toList());
+//        return allPetsByUser;
+//    }
+
+    public List<Pet> getAllPetsByUserId(Long id){
+       List<Pet> pets = this.petRepository.findAllPetsByUserId(id);
+       return pets;
+    }
     public List<Pet> getAllByAdopted(Boolean adopted) {
 
         return petRepository.findAllByAdopted(adopted);
@@ -88,10 +100,6 @@ public class PetService {
             return false;
         }
     }
-
-//    public List<Pet> getPetByUserId (Long id_user) {
-//        return petRepository.findByUserId(id_user);
-//    }
 
     public Optional<Pet> updatePet(Long petId, PetDTO updatedPet) {
         Pet existingPet = petRepository.getByIdOrThrow(petId);
