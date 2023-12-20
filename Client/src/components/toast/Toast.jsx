@@ -1,4 +1,3 @@
-// components/Toast.js
 import { useAuth } from "@/Api/AuthContext";
 import { useEffect } from "react";
 import { Toaster, toast } from "sonner";
@@ -23,4 +22,3 @@ export default function ToastComponent() {
     </div>
   );
 }
-

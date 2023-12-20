@@ -21,7 +21,7 @@ export default function Form() {
         behavior: "",
         location: "",
         generalDescription: "",
-        images: []
+        images: [],
     });
 
     const sendForm = async (data) => {
@@ -29,10 +29,11 @@ export default function Form() {
             const res = await axios.post(`https://pets-adopt-api.onrender.com/api/pet`, data,
                 {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
                     },
                 });
+
             if (res.status === 201) {
                 console.log("Pet created successfully");
                 console.log(res.data);
@@ -40,8 +41,8 @@ export default function Form() {
                 console.log("Error creating pet");
                 console.log(res.data, res.status);
             }
-            console.log(res)
         } catch (error) {
+            console.log(token);
             console.log(data);
             console.log(petData);
             console.error('Error al obtener detalles de la mascota', error);
@@ -49,31 +50,21 @@ export default function Form() {
     }
 
     const handleInputChange = (e) => {
-        // if (e.target.name === "images") {
-        //     return setPetData({
-        //         ...petData,
-        //         [e.target.name]: e.target.files
-        //     })
-        // }
-
         if (e.target.name === "images") {
-            setPetData({
+            return setPetData({
                 ...petData,
                 [e.target.name]: e.target.files
             })
-        } else {
-            setPetData({
-                ...petData,
-                [e.target.name]: e.target.value
-            })
         }
+        setPetData({
+            ...petData,
+            [e.target.name]: e.target.value
+        })
+        console.log(petData)
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        const imgArr = [...petData.images]
-        console.log(imgArr)
 
         const formData = new FormData();
         formData.append("name", petData.name);
@@ -84,13 +75,12 @@ export default function Form() {
         formData.append("behavior", petData.behavior);
         formData.append("location", petData.location);
         formData.append("generalDescription", petData.generalDescription);
-        formData.append("images", imgArr[0]);
+        formData.append("images", petData.images);
+
         const data = Object.fromEntries(formData);
 
-        console.log("soy formdata", formData)
-
         console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
-        sendForm(data);
+        sendForm(petData);
     }
     useEffect(() => {
         // sendForm();
@@ -104,7 +94,7 @@ export default function Form() {
         <>
             <article className="flex flex-col gap-4 w-full">
                 <h2 className="text-2xl font-bold">Create Pet</h2>
-                <form className="flex flex-col gap-4">
+                <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
                     <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
                     <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='breed' />
                     <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='age' />
@@ -130,8 +120,9 @@ export default function Form() {
                     }} name='generalDescription' />
                     <Input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
                         handleInputChange(e)
-                    }} name='images' />
-                    <Button color="secondary" variant='ghost' onClick={(e) => handleFormSubmit(e)}>
+                        console.log(e.target.files)
+                    }} name='images' multiple />
+                    <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
                         Post
                     </Button>
                 </form>
