@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
 
 export default function Form() {
-    const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
+    const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("hola");
     const sizes = [
@@ -51,20 +51,23 @@ export default function Form() {
 
     const handleInputChange = (e) => {
         if (e.target.name === "images") {
-            return setPetData({
+            setPetData({
                 ...petData,
                 [e.target.name]: e.target.files
             })
+        } else {
+            setPetData({
+                ...petData,
+                [e.target.name]: e.target.value
+            })
         }
-        setPetData({
-            ...petData,
-            [e.target.name]: e.target.value
-        })
-        console.log(petData)
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
+        const imgArr = [...petData.images]
+        console.log(imgArr)
 
         const formData = new FormData();
         formData.append("name", petData.name);
@@ -75,8 +78,7 @@ export default function Form() {
         formData.append("behavior", petData.behavior);
         formData.append("location", petData.location);
         formData.append("generalDescription", petData.generalDescription);
-        formData.append("images", petData.images);
-
+        formData.append("images", imgArr[0]);
         const data = Object.fromEntries(formData);
 
         console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
@@ -94,7 +96,7 @@ export default function Form() {
         <>
             <article className="flex flex-col gap-4 w-full">
                 <h2 className="text-2xl font-bold">Create Pet</h2>
-                <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
+                <form className="flex flex-col gap-4">
                     <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
                     <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='breed' />
                     <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='age' />
@@ -120,9 +122,8 @@ export default function Form() {
                     }} name='generalDescription' />
                     <Input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
                         handleInputChange(e)
-                        console.log(e.target.files)
-                    }} name='images' multiple />
-                    <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
+                    }} name='images' />
+                    <Button color="secondary" variant='ghost' onClick={(e) => handleFormSubmit(e)}>
                         Post
                     </Button>
                 </form>
