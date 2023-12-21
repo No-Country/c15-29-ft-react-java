@@ -71,7 +71,7 @@ export default function Form({ pet }) {
 
     return (
         <>
-            <Card className="flex flex-col gap-4 w-1/2 bg-background/60 dark:bg-default-100/50 backdrop-blur-lg rounded-xl p-8">
+            <Card className="flex flex-col gap-4 w-full bg-background/60 dark:bg-default-100/50 backdrop-blur-lg p-8 rounded-none sm:w-1/2 sm:rounded-xl">
                 <h2 className="text-2xl font-bold">Update Pet</h2>
                 <form className="flex flex-col gap-4">
                     <Input type="text" label="Pet Name" placeholder={`${name}`} variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
@@ -81,7 +81,7 @@ export default function Form({ pet }) {
                         <Select
                             label="Select pet size"
                             placeholder="Size"
-                            className="max-w-xs"
+                            className="w-full"
                             variant='underlined' isRequired name="size" onChange={handleInputChange}>
                             {sizes.map((size) => (
                                 <SelectItem key={size.value} value={size.value} >
