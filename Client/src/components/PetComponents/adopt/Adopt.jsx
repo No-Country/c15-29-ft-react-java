@@ -14,7 +14,6 @@ export default function Adopt() {
 
   useEffect(() => {
     getPets();
-    console.log(pets);
   }, []);
 
   useEffect(() => {
@@ -30,9 +29,7 @@ export default function Adopt() {
     <div className="flex gap-12 flex-wrap justify-center items-center">
       {pets.map((pet) => (
         <React.Fragment key={pet.id}>
-          <Card
-            pet={pet}
-          />
+          <Card pet={pet} />
           <PetModal pet={pet} />
         </React.Fragment>
       ))}

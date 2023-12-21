@@ -7,18 +7,11 @@ export default function App() {
     const { getPet, onlyPet } = usePet();
     const { token } = useAuth();
 
-    useEffect(() => {
-        // Recuperar el ID de la mascota desde el localStorage
-        if (typeof window !== 'undefined') {
-        }
-    }, []);
+    const petData = () => getPet(66);
     return (
 
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-            <Form pet={onlyPet} />
-            <div className="w-1/2">
-                <h1 onLoad={console.log("hola", onlyPet)}>hola</h1>
-            </div>
+        <div className="flex w-full flex-wrap justify-center md:flex-nowrap gap-4">
+            <Form pet={petData} />
         </div>
     );
 }

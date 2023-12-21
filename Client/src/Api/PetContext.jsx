@@ -103,7 +103,7 @@ export const PetProvider = ({ children }) => {
     const editPet = async (id, data) => {
         try {
             const response = await axios.put(
-                `https://pets-adopt-api.onrender.com/api/pet/${id}`,
+                `https://pets-adopt-api.onrender.com/api/pet/66`,
                 data,
                 {
                     headers: {
@@ -112,12 +112,12 @@ export const PetProvider = ({ children }) => {
                     },
                 }
             );
-            if (res.status === 201) {
+            if (response.status === 201) {
                 console.log("Pet edited successfully");
-                console.log(res.data);
+                console.log(response.data);
             } else {
                 console.log("Error editing pet");
-                console.log(res.data, res.status);
+                console.log(response.data, response.status);
             }
         } catch (error) {
             console.error("Error al obtener detalles de la mascota", error);

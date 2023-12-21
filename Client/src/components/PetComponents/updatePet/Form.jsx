@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Select, SelectItem, Button, ButtonGroup } from "@nextui-org/react";
+import { Input, Select, SelectItem, Button, ButtonGroup, Card } from "@nextui-org/react";
 import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
 import { usePet } from '@/Api/PetContext';
@@ -71,10 +71,10 @@ export default function Form({ pet }) {
 
     return (
         <>
-            <article className="flex flex-col gap-4 w-full">
+            <Card className="flex flex-col gap-4 w-1/2 bg-background/60 dark:bg-default-100/50 backdrop-blur-lg rounded-xl p-8">
                 <h2 className="text-2xl font-bold">Update Pet</h2>
                 <form className="flex flex-col gap-4">
-                    <Input type="text" label="Pet Name" placeholder="Pet Name" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
+                    <Input type="text" label="Pet Name" placeholder={`${name}`} variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
                     <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='breed' />
                     <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='age' />
                     <div className="flex w-full flex-wrap md:flex-nowrap gap-4" >
@@ -104,7 +104,7 @@ export default function Form({ pet }) {
                         Post
                     </Button>
                 </form>
-            </article>
+            </Card>
         </>
     )
 }
