@@ -93,6 +93,7 @@ export const PetProvider = ({ children }) => {
                     }
                 );
                 setOnlyPet(res.data);
+                return res.data;
             } catch (error) {
                 console.error("Error al obtener detalles de la mascota", error);
             }
@@ -107,11 +108,10 @@ export const PetProvider = ({ children }) => {
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${cookieToken}`,
                     },
                 }
             );
-            console.log(response);
             if (res.status === 201) {
                 console.log("Pet edited successfully");
                 console.log(res.data);
@@ -151,6 +151,7 @@ export const PetProvider = ({ children }) => {
                 pets,
                 deletePet,
                 getPet,
+                editPet,
                 showPetDetails,
                 selectedPetId,
                 openModalId,
