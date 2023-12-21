@@ -42,6 +42,7 @@ export const PetModal = ({ pet }) => {
       onOpenChange={() => setOpenModalId(null)}
       backdrop="blur"
       shouldBlockScroll={false}
+      className="sm:h-screen sm:w-screen sm:m-0 sm:rounded-none"
     >
       <ModalContent className="flex flex-col gap-2 max-w-2xl w-full max-h-full min-h-[500px] h-auto">
         {(onClose) => (
@@ -62,9 +63,8 @@ export const PetModal = ({ pet }) => {
                   tags.map((tag, index) => (
                     <span
                       key={index}
-                      className={`bg-blue-100 text-blue-800 text-sm font-medium  ${
-                        tags.length > 1 ? "me-2" : ""
-                      } px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}
+                      className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""
+                        } px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}
                     >
                       {tag}
                     </span>
@@ -96,7 +96,7 @@ export const PetModal = ({ pet }) => {
               </div>
               <p>
                 {generalDescription == "" ||
-                typeof generalDescription !== "string"
+                  typeof generalDescription !== "string"
                   ? "Not specified"
                   : generalDescription}
               </p>
