@@ -1,3 +1,4 @@
+import { useAuth } from "@/Api/AuthContext";
 import { usePet } from "@/Api/PetContext";
 import {
   Image,
@@ -9,15 +10,32 @@ import {
   Divider,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export const PetModal = ({ pet }) => {
   const { breed, images, id, age, name, generalDescription } = pet;
   const tags = ["No tags available"];
-  const { openModalId, setOpenModalId, srcImg } = usePet();
+  const [localSrcImg, setLocalSrcImg] = useState(null);
+  const { openModalId, setOpenModalId, srcImg, getPetImage } = usePet();
+  const { getCookieValue } = useAuth()
+
+  const token = getCookieValue("AuthToken");
 
   const handleAdopt = () => {
     localStorage.setItem('adoptedPetId', id);
   }
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (id && images && token) {
+        const imageUrl = await getPetImage(id, images[0], token);
+        setLocalSrcImg(imageUrl);
+      }
+    };
+
+    fetchImage();
+  }, [id, images, token, getPetImage]);
+
   return (
     <Modal
       isOpen={openModalId === id}
@@ -32,7 +50,7 @@ export const PetModal = ({ pet }) => {
               <Image
                 alt="Card background"
                 className="object-cover rounded-xl select-none h-auto w-[400px]"
-                src={images ? images[0] : srcImg}
+                src={localSrcImg}
                 draggable={false}
                 loading="lazy"
                 onClick={() => {
