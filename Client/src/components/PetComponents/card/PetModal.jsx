@@ -1,7 +1,7 @@
 import { useAuth } from "@/Api/AuthContext";
 import { usePet } from "@/Api/PetContext";
 import {
-  Image,
+  Image,  
   Modal,
   ModalContent,
   ModalBody,

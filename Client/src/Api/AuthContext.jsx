@@ -165,8 +165,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  
-
   const getUserData = async (username, token) => {
     try {
       const res = await axios.get(`${url}/userEntity/${username}`, {

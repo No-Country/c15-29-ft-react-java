@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Select, SelectItem, Button, ButtonGroup } from "@nextui-org/react";
+import { Input, Select, SelectItem, Button, ButtonGroup, Card } from "@nextui-org/react";
 import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
+import { usePet } from '@/Api/PetContext';
 
-export default function Form() {
-    const { setAuthToken, setErrorNotification, clearNotification, getCookieValue } = useAuth();
+export default function Form({ pet }) {
+    const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
-    const [inputInfo, setInputInfo] = useState("hola");
+    const [inputInfo, setInputInfo] = useState("");
     const sizes = [
         { value: 'small', label: 'Small' },
         { value: 'medium', label: 'Medium' },
@@ -21,50 +22,30 @@ export default function Form() {
         behavior: "",
         location: "",
         generalDescription: "",
-        images: [],
+        images: []
     });
-
-    const sendForm = async (data) => {
-        try {
-            const res = await axios.post(`https://pets-adopt-api.onrender.com/api/pet`, data,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-
-            if (res.status === 201) {
-                console.log("Pet created successfully");
-                console.log(res.data);
-            } else {
-                console.log("Error creating pet");
-                console.log(res.data, res.status);
-            }
-        } catch (error) {
-            console.log(token);
-            console.log(data);
-            console.log(petData);
-            console.error('Error al obtener detalles de la mascota', error);
-        }
-    }
+    const { id, name, breed, age, size, healthStatus, behavior, location, generalDescription, images } = pet
+    const { editPet } = usePet();
 
     const handleInputChange = (e) => {
         if (e.target.name === "images") {
-            return setPetData({
+            setPetData({
                 ...petData,
                 [e.target.name]: e.target.files
             })
+        } else {
+            setPetData({
+                ...petData,
+                [e.target.name]: e.target.value
+            })
         }
-        setPetData({
-            ...petData,
-            [e.target.name]: e.target.value
-        })
-        console.log(petData)
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
+        const imgArr = [...petData.images]
+        console.log(imgArr)
 
         const formData = new FormData();
         formData.append("name", petData.name);
@@ -75,34 +56,32 @@ export default function Form() {
         formData.append("behavior", petData.behavior);
         formData.append("location", petData.location);
         formData.append("generalDescription", petData.generalDescription);
-        formData.append("images", petData.images);
+        formData.append("images", imgArr[0]);
+        const editData = Object.fromEntries(formData);
 
-        const data = Object.fromEntries(formData);
+        console.log("soy formdata", formData)
 
-        console.log("this is data before obj entr: ", data, "this is data after obj entr: ", Object.fromEntries(formData))
-        sendForm(petData);
+        console.log("this is data before obj entr: ", editData, "this is data after obj entr: ", Object.fromEntries(formData))
+
+        console.log("this is the petData: ", petData)
+        editPet(3, petData)
     }
-    useEffect(() => {
-        // sendForm();
-        // console.log("this is the token: ", token)
-        // console.log("this is the petData: ", petData)
-    }, []);
 
 
 
     return (
         <>
-            <article className="flex flex-col gap-4 w-full">
-                <h2 className="text-2xl font-bold">Create Pet</h2>
-                <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
-                    <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
+            <Card className="flex flex-col gap-4 w-full bg-background/60 dark:bg-default-100/50 backdrop-blur-lg p-8 rounded-none sm:w-1/2 sm:rounded-xl">
+                <h2 className="text-2xl font-bold">Update Pet</h2>
+                <form className="flex flex-col gap-4">
+                    <Input type="text" label="Pet Name" placeholder={`${name}`} variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" />
                     <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='breed' />
                     <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='age' />
                     <div className="flex w-full flex-wrap md:flex-nowrap gap-4" >
                         <Select
                             label="Select pet size"
                             placeholder="Size"
-                            className="max-w-xs"
+                            className="w-full"
                             variant='underlined' isRequired name="size" onChange={handleInputChange}>
                             {sizes.map((size) => (
                                 <SelectItem key={size.value} value={size.value} >
@@ -120,13 +99,12 @@ export default function Form() {
                     }} name='generalDescription' />
                     <Input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
                         handleInputChange(e)
-                        console.log(e.target.files)
-                    }} name='images' multiple />
-                    <Button color="secondary" variant='ghost' onClick={() => sendForm(petData)}>
+                    }} name='images' />
+                    <Button color="secondary" variant='ghost' onClick={(e) => handleFormSubmit(e)}>
                         Post
                     </Button>
                 </form>
-            </article>
+            </Card>
         </>
     )
 }
