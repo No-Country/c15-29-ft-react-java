@@ -22,7 +22,7 @@ export default function AdoptProcessPage() {
 
   return (
     <>
-      <div>AdoptPage</div>
+    
       <AdoptProcess pet={onlyPet} user={onlyPet.user_id} />
     </>
   );

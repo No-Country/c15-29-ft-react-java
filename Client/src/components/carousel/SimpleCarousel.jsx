@@ -29,7 +29,7 @@ export default function SimpleCarousel() {
             </h4>
             <div className="mt-5">
               {text === "Cool Pets looking for a Family" ||
-              text === "Tons of Love" ? (
+                text === "Tons of Love" ? (
                 <Button
                   label="Find love"
                   className="w-40 h-10 rounded-3xl text-lg bg-neutral-800 text-stone-200 p-button p-button-rounded"

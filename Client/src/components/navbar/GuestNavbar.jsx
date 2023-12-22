@@ -60,7 +60,7 @@ export default function GuestNavbar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+        <Link href="/about" aria-current="page">
             <p> About Us</p>
           </Link>
         </NavbarItem>
@@ -108,7 +108,7 @@ export default function GuestNavbar() {
         </NavbarMenuItem>
         <NavbarMenuItem>
           {" "}
-          <Link color={"foreground"} className="w-full" href="about" size="lg">
+          <Link color={"foreground"} className="w-full" href="/about" size="lg">
             <p>About Us</p>
           </Link>
         </NavbarMenuItem>
