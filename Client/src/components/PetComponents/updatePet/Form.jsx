@@ -5,6 +5,7 @@ import { useAuth } from '@/Api/AuthContext';
 import { usePet } from '@/Api/PetContext';
 
 export default function Form({ pet }) {
+    const { id, name, breed, age, size, healthStatus, behavior, location, generalDescription, images } = pet
     const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("");
@@ -24,46 +25,23 @@ export default function Form({ pet }) {
         generalDescription: "",
         images: []
     });
-    const { id, name, breed, age, size, healthStatus, behavior, location, generalDescription, images } = pet
     const { editPet } = usePet();
 
     const handleInputChange = (e) => {
-        if (e.target.name === "images") {
+        e.target.name === "images" ?
             setPetData({
                 ...petData,
                 [e.target.name]: e.target.files
             })
-        } else {
+            :
             setPetData({
                 ...petData,
                 [e.target.name]: e.target.value
             })
-        }
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        const imgArr = [...petData.images]
-        console.log(imgArr)
-
-        const formData = new FormData();
-        formData.append("name", petData.name);
-        formData.append("breed", petData.breed);
-        formData.append("age", petData.age);
-        formData.append("size", petData.size);
-        formData.append("healthStatus", petData.healthStatus);
-        formData.append("behavior", petData.behavior);
-        formData.append("location", petData.location);
-        formData.append("generalDescription", petData.generalDescription);
-        formData.append("images", imgArr[0]);
-        const editData = Object.fromEntries(formData);
-
-        console.log("soy formdata", formData)
-
-        console.log("this is data before obj entr: ", editData, "this is data after obj entr: ", Object.fromEntries(formData))
-
-        console.log("this is the petData: ", petData)
         editPet(3, petData)
     }
 
