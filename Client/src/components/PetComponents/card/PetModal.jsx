@@ -1,7 +1,7 @@
 import { useAuth } from "@/Api/AuthContext";
 import { usePet } from "@/Api/PetContext";
 import {
-  Image,  
+  Image,
   Modal,
   ModalContent,
   ModalBody,
@@ -16,7 +16,7 @@ export const PetModal = ({ pet }) => {
   const { breed, images, id, age, name, generalDescription } = pet;
   const tags = ["No tags available"];
   const [localSrcImg, setLocalSrcImg] = useState(null);
-  const { openModalId, setOpenModalId, srcImg, getPetImage } = usePet();
+  const { openModalId, setOpenModalId, srcImg, getPetImage, deletePet } = usePet();
   const { getCookieValue } = useAuth()
 
   const token = getCookieValue("AuthToken");
@@ -62,9 +62,8 @@ export const PetModal = ({ pet }) => {
                   tags.map((tag, index) => (
                     <span
                       key={index}
-                      className={`bg-blue-100 text-blue-800 text-sm font-medium  ${
-                        tags.length > 1 ? "me-2" : ""
-                      } px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}
+                      className={`bg-blue-100 text-blue-800 text-sm font-medium  ${tags.length > 1 ? "me-2" : ""
+                        } px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300`}
                     >
                       {tag}
                     </span>
@@ -96,7 +95,7 @@ export const PetModal = ({ pet }) => {
               </div>
               <p>
                 {generalDescription == "" ||
-                typeof generalDescription !== "string"
+                  typeof generalDescription !== "string"
                   ? "Not specified"
                   : generalDescription}
               </p>
