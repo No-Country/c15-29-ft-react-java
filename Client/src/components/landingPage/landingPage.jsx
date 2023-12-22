@@ -8,11 +8,11 @@ export default function () {
     <>
       <div>
         <div className="bg-white">
-          <section className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center">
+          <section className="bg-white dark:bg-zinc-900 h-screen flex items-center justify-center">
             <div className="grid max-w-screen-xl grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="text-center lg:text-left">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-indigo-700 dark:text-white mb-4">
-                  <span className="text-purple-500">Welcome</span> to Paw
+                  <span className="text-orange-700">Welcome</span> to Paw
                   Finders
                 </h1>
                 <p className="text-gray-700 dark:text-gray-400 mb-8">
@@ -25,7 +25,7 @@ export default function () {
                 </p>
                 <div className="space-y-4">
                   <Link href="/adopt">
-                    <button className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md">
+                    <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md">
                       <img
                         src="https://svgsilh.com/svg_v2/1084899.svg"
                         alt=""
@@ -62,7 +62,7 @@ export default function () {
             </div>
           </section>
 
-          <section className="bg-gray-50 dark:bg-gray-800">
+          <section className="bg-gray-50 dark:bg-zinc-800">
             <div className="max-w-screen-xl px-4 py-8 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6">
               <div className="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
                 <div className="text-gray-500 sm:text-lg dark:text-gray-400">
@@ -79,7 +79,7 @@ export default function () {
                   >
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +96,7 @@ export default function () {
                     </li>
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +113,7 @@ export default function () {
                     </li>
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -128,9 +128,9 @@ export default function () {
                         find a home for an animal
                       </span>
                     </li>
-                    <div></div>
+                    
                     <Link href="/adopt">
-                      <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center ">
+                      <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md mt-4 ">
                         <img
                           src="https://svgsilh.com/svg_v2/1084899.svg"
                           href="/adopt"
@@ -181,7 +181,7 @@ export default function () {
                   >
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ export default function () {
                     </li>
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +215,7 @@ export default function () {
                     </li>
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +232,7 @@ export default function () {
                     </li>
                     <li className="flex space-x-3">
                       <svg
-                        className="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400"
+                        className="flex-shrink-0 w-5 h-5 text-orange-800 dark:text-orange-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +248,7 @@ export default function () {
                       </span>
                     </li>
 
-                    <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                    <button className="bg-orange-700 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md">
                       <img
                         src="https://svgsilh.com/svg_v2/1084899.svg"
                         alt=""
@@ -266,126 +266,9 @@ export default function () {
             </div>
           </section>
         </div>
-        <section className="bg-white dark:bg-gray-900">
-          <div className="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
-            <div className="col-span-2 mb-8">
-              <p className="text-lg font-medium text-purple-600 dark:text-purple-500">
-                Trust paw finders
-              </p>
-              <h2 className="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
-                Here you could verify that the pets are vaccinated and in good
-                hands
-              </h2>
-              <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                Contact our users via phone
-              </p>
-              <div className="pt-6 mt-6 space-y-4 border-t border-gray-200 dark:border-gray-700">
-                <div>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
-                  >
-                    support a pet
-                    <svg
-                      className="w-5 h-5 ml-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </a>
-                </div>
-                <div>
-                  <a
-                    href="#"
-                    className="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700"
-                  >
-                    Paw finder
-                    <svg
-                      className="w-5 h-5 ml-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
-              <div>
-                <svg
-                  className="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  className
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM2 13a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zm14 1a1 1 0 11-2 0 1 1 0 012 0z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <h3 className="mb-2 text-2xl font-bold dark:text-white">
-                  Pet lovers community
-                </h3>
-                <p className="font-light text-gray-500 dark:text-gray-400">
-                  We are a community of pet lovers who care about them.
-                </p>
-              </div>
-              <div>
-                <svg
-                  className="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                </svg>
-                <h3 className="mb-2 text-2xl font-bold dark:text-white">
-                  Find pets in your area
-                </h3>
-                <p className="font-light text-gray-500 dark:text-gray-400">
-                  Contact people in your area who need a pet or give it up for
-                  adoption
-                </p>
-              </div>
-              <div>
-                <svg
-                  className="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <h3 className="mb-2 text-2xl font-bold dark:text-white">
-                  For happy pets around the worlds
-                </h3>
-                <p className="font-light text-gray-500 dark:text-gray-400">
-                  This service network is available to everyone
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      
         <div id="about">
-        <section className="bg-gray-50 dark:bg-gray-800">
+        <section className="bg-gray-50 dark:bg-zinc-900">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
             <div className="mb-8">
               <h2 className="uppercase font-bold text-2xl lg:text-4xl">
@@ -452,7 +335,7 @@ export default function () {
         </section>
         </div>
 
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section className="bg-gray-50 dark:bg-zinc-800">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
             <figure className="max-w-screen-md mx-auto">
               <svg
@@ -477,7 +360,7 @@ export default function () {
         </section>
       </div>
 
-      <footer className="bg-gray-800 text-white py-10">
+      <footer className="bg-zinc-900 text-white py-10">
   <div className="container mx-auto">
     {/* Logo and Description */}
     <div className="text-center mb-8">
