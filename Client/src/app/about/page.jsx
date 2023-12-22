@@ -20,7 +20,7 @@ export default function AboutPage() {
                   Welcome to Paw Finders, your heartwarming gateway to pet
                   adoption! Explore our app and embark on a journey to find your
                   perfect furry companion. Every paw has a story, and here,
-                  you'll discover the joy of giving a loving home to those who
+                  you&apos;ll discover the joy of giving a loving home to those who
                   need it most. Join us in making a difference, one adoption at
                   a time. 🐾 #AdoptDontShop
                 </p>
@@ -228,7 +228,7 @@ export default function AboutPage() {
                         ></path>
                       </svg>
                       <span className="text-base font-medium leading-tight text-gray-900 dark:text-white">
-                        Check the pet's condition
+                        Check the pet&apos;s condition
                       </span>
                     </li>
                     <li className="flex space-x-3">
@@ -352,7 +352,7 @@ export default function AboutPage() {
               </svg>
               <blockquote>
                 <p className="text-xl font-medium text-gray-900 md:text-2xl dark:text-white">
-                  "Treat animals how you would like to be treated"
+                &quot;Treat animals how you would like to be treated&quot;
                 </p>
               </blockquote>
               <figcaption className="flex items-center justify-center mt-6 space-x-3"></figcaption>
