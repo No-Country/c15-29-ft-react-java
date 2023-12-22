@@ -26,52 +26,50 @@ export const AdoptProcess = ({ pet, user }) => {
 
   return (
     <Skeleton isLoaded={isLoaded} className="w-full rounded-lg h-full max-w-screen-lg mx-8 mt-16 md:mx-auto">
-    <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-lg shadow-md p-6  mx-auto flex flex-col md:flex-row ">
-    
-      <div className="md:w-1/2 md:pr-6 animate__animated animate__fadeInLeft">
-        <div>
-        {/* // eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={srcImg} // Reemplaza con la URL de tu imagen de mascota
-          alt={`Avatar de ${pet.name}`}
-          className="w-full md:w-64 h-64 mx-auto md:rounded-full mb-4 animate__animated animate__fadeInLeft"
-        />
-        </div>
-        
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold mb-2">{pet.name}</h2>
-          <p className="mb-4">{pet.age}</p>
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Información General</h3>
-          <ul className="list-disc pl-4">
-            <li>ID: {pet.id}</li>
-            <li>Adoptado: {pet.adopted ? "Sí" : "No"}</li>
-            <li>
-              En proceso de adopción: {pet.adoptionInProcess ? "Sí" : "No"}
-            </li>
-            <li>Fecha de nacimiento: {pet.vaccinated || "No especificada"}</li>
-            {/* Agrega más detalles según sea necesario */}
-          </ul>
-        </div>
-      </div>
-      <div className="md:w-1/2 md:pl-6 animate__animated animate__fadeInRight mt-6 md:mt-0">
-        <h2 className="text-3xl font-semibold mb-2">Datos del Adoptante</h2>
-        {user && (
-          <ul className="list-disc pl-4">
-            <li>Email: {user.email}</li>
-            <li>Apellido: {user.lastName || 'No especificado'}</li>
-            <li>Nacionalidad: {user.nationality || 'No especificada'}</li>
-            <li>Whatsapp: {user.whatsappNumber || 'No especificado'}</li>
-          </ul>
-        )}
-        <div className="mt-6">
-          <button className="bg-f3794f text-white px-6 py-3 rounded-full hover:bg-red-500 focus:outline-none focus:shadow-outline-blue active:bg-red-800 transition duration-300">
-            Adoptar
-          </button>
-        </div>
+<div className="bg-gradient-to-r from-orange-500 to-zinc-900 text-white rounded-lg shadow-md p-6 mx-auto flex flex-col md:flex-row">
+  <div className="md:w-1/2 md:pr-6 animate__animated animate__fadeInLeft">
+    <div className="relative mb-6">
+      <img
+        src={srcImg}
+        alt={`Avatar de ${pet.name}`}
+        className="w-full h-64 object-cover rounded-md shadow-lg animate__animated animate__fadeInLeft"
+      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <h2 className="text-4xl font-extrabold leading-tight">{pet.name}</h2>
       </div>
     </div>
+    <div className="text-center">
+      <p className="text-lg mb-4">{pet.age}</p>
+    </div>
+    <div>
+      <h3 className="text-2xl font-semibold mb-4 mt-6">Información General</h3>
+      <ul className="list-disc pl-4">
+        <li className="text-lg">ID: {pet.id}</li>
+        <li className="text-lg">Adoptado: {pet.adopted ? "Sí" : "No"}</li>
+        <li className="text-lg">
+          En proceso de adopción: {pet.adoptionInProcess ? "Sí" : "No"}
+        </li>
+        <li className="text-lg">Fecha de nacimiento: {pet.vaccinated || "No especificada"}</li>
+      </ul>
+    </div>
+  </div>
+  <div className="md:w-1/2 md:pl-6 animate__animated animate__fadeInRight mt-6 md:mt-0">
+    <h2 className="text-4xl font-extrabold mb-6">Datos del Adoptante</h2>
+    {user && (
+      <ul className="list-disc pl-4">
+        <li className="text-lg">Email: {user.email}</li>
+        <li className="text-lg">Apellido: {user.lastName || "No especificado"}</li>
+        <li className="text-lg">Nacionalidad: {user.nationality || "No especificada"}</li>
+        <li className="text-lg">Whatsapp: {user.whatsappNumber || "No especificado"}</li>
+      </ul>
+    )}
+    <div className="mt-8">
+      <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full inline-flex items-center transition-all duration-300 shadow-md">
+        Adoptar
+      </button>
+    </div>
+  </div>
+</div>
       </Skeleton>
   );
 };

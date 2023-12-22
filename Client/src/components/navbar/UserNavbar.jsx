@@ -71,7 +71,7 @@ export default function UserNavbar() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/about">
             <p> About Us</p>
           </Link>
         </NavbarItem>
