@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { serialize } from "cookie";
 import { useDisclosure } from "@nextui-org/react";
 
@@ -16,6 +16,29 @@ export const AuthProvider = ({ children }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const url = "https://pets-adopt-api.onrender.com/api";
+
+  const getUserImage = useCallback(async (token, imgUrl) => {
+    try {
+        const response = await axios.get(
+          `https://pets-adopt-api.onrender.com/getimage/${imgUrl}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            responseType: "blob",
+          }
+        );
+        const imageBlob = response.data;
+        console.log(response.data);
+        const imageResponse = URL.createObjectURL(imageBlob);
+        return imageResponse;
+    } catch (error) {
+      const imageResponse = "./errorlogo.png";
+      return imageResponse;
+    }
+  }, []);
+
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
@@ -217,7 +240,8 @@ export const AuthProvider = ({ children }) => {
         getCookieValue,
         handleLogout,
         getUserPhoto,
-        handleRegister
+        handleRegister,
+        getUserImage
       }}
     >
       {children}
