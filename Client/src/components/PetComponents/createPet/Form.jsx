@@ -4,12 +4,13 @@ import { Input, Select, SelectItem, Button, ButtonGroup, Card } from "@nextui-or
 import axios from 'axios';
 import { useAuth } from '@/Api/AuthContext';
 import useValidation from '@/components/hooks/useValidation';
+import { useRouter } from 'next/navigation'
 
 export default function Form() {
+    const router = useRouter();
     const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("");
-
     const sizes = [
         { value: 'small', label: 'Small' },
         { value: 'medium', label: 'Medium' },
@@ -41,6 +42,8 @@ export default function Form() {
             if (res.status === 201) {
                 console.log("Pet created successfully");
                 console.log(res.data);
+                // redirect to adopt route
+                router.push("/adopt");
             } else {
                 console.log("Error creating pet");
                 console.log(res.data, res.status);

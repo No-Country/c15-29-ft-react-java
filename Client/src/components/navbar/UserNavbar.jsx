@@ -37,7 +37,7 @@ export default function UserNavbar() {
     if (storedToken && loading) {
       getUserDataFromLocalStorage();
       console.log(userInfo);
-      setUserImg(getUserImage(storedToken, 'usuarioparajosue/images/thumbnail')) 
+      setUserImg(getUserImage(storedToken, 'usuarioparajosue/images/thumbnail'))
       setLoading(false);
     }
   }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading, getUserImage]);
@@ -121,16 +121,16 @@ export default function UserNavbar() {
               href="/createPet"
               key="Create Pet"
             >
-              <p>Create Post</p>
+              <p>Create Pet</p>
             </DropdownItem>
-            
+
             <DropdownItem
               textValue="User pannel"
               key="User pannel"
             >
               <Link onPress={<UserPannel />}>User Panel</Link>
             </DropdownItem>
-            
+
 
             <DropdownItem
               textValue="Log Out"

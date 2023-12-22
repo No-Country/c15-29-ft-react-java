@@ -51,24 +51,24 @@ export default function CardPet({ pet }) {
           </Skeleton>
         </CardHeader>
         <CardBody className="flex flex-col gap-2 items-start px-4">
-          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg mt-2">
-            <p className="text-small uppercase font-bold">
-              {typeof age !== "number" ? "Not specified" : age}
-            </p>
+          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full pt-2">
+            <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">
+              {name == "" || typeof name !== "string"
+                ? "Not specified"
+                : name}
+            </h4>
           </Skeleton>
-          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg my-0.5">
+          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg pt-[-.8rem]">
             <small className="text-default-500">
               {breed == "" || typeof breed !== "string"
                 ? "Not specified"
                 : breed}
             </small>
           </Skeleton>
-          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg w-full">
-            <h4 className="font-bold text-large overflow-hidden overflow-ellipsis whitespace-nowrap w-full">
-              {name == "" || typeof name !== "string"
-                ? "Not specified"
-                : name}
-            </h4>
+          <Skeleton isLoaded={isLoaded} className="w-2/5 rounded-lg mt-1">
+            <p className="text-small uppercase font-bold">
+              {typeof age !== "number" ? "Not specified" : age}
+            </p>
           </Skeleton>
         </CardBody>
       </Card>

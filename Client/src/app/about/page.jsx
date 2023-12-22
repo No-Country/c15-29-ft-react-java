@@ -5,6 +5,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function AboutPage() {
+  const teamMembers = [
+    { name: 'Sebastian Ocando', role: 'Front-End Dev' },
+    { name: 'Bruno Aguilar', role: 'Front-End Dev' },
+    { name: 'Daniel Cuello', role: 'Front-End Dev' },
+    { name: 'Enrique Moreira', role: 'Front-End Dev' },
+    { name: 'Josue Zorrilla', role: 'Back-End Dev' },
+    { name: 'Juan Ubaldi', role: 'Front-End Dev' },
+    { name: 'Juan Ortega', role: 'Back-End Dev' },
+    { name: 'Valerie Ramos', role: 'Back-End Dev' },
+    { name: 'Diego Gonzalez', role: 'Designer' },
+    { name: 'Ariadna Menendez', role: 'QA Analyst' },
+    { name: 'Camila Cancino', role: 'QA Analyst' },
+  ];
+
   return (
     <>
       <div>
@@ -129,7 +143,7 @@ export default function AboutPage() {
                         find a home for an animal
                       </span>
                     </li>
-                    
+
                     <Link href="/adopt">
                       <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md mt-4 ">
                         <img
@@ -147,8 +161,8 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <Link href="/adopt">
-                  <Image
-                    src="/about.jpg"
+                  <img
+                    src="https://images.unsplash.com/photo-1608144353051-8d60377afc80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGdhdGl0b3xlbnwwfDB8MHx8fDA%3D"
                     alt="dashboard feature image"
                     width={800}
                     height={750}
@@ -159,8 +173,8 @@ export default function AboutPage() {
 
               <div class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
                 <Link href="#">
-                  <Image
-                    src="/dog1.jpg"
+                  <img
+                    src="https://images.unsplash.com/photo-1600804340584-c7db2eacf0bf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVycml0b3xlbnwwfHwwfHx8MA%3D%3D"
                     alt="Dog"
                     width={800}
                     height={750}
@@ -248,16 +262,16 @@ export default function AboutPage() {
                         Agree and adopt a pet
                       </span>
                     </li>
-                <Link href="/createPet">
-                    <button className="bg-orange-700 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md mt-4">
-                      <img
-                        src="https://svgsilh.com/svg_v2/1084899.svg"
-                        alt=""
-                        class="fill-current w-4 h-4 mr-2"
-                      />
+                    <Link href="/createPet">
+                      <button className="bg-orange-700 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-full inline-flex items-center transition-all duration-300 shadow-md mt-4">
+                        <img
+                          src="https://svgsilh.com/svg_v2/1084899.svg"
+                          alt=""
+                          class="fill-current w-4 h-4 mr-2"
+                        />
 
-                      <span>Give up for adoption</span>
-                    </button></Link>
+                        <span>Give up for adoption</span>
+                      </button></Link>
                   </ul>
                   <p className="font-bold  lg:text-xl">
                     Paw finders communicates to you by telephone
@@ -267,75 +281,74 @@ export default function AboutPage() {
             </div>
           </section>
         </div>
-      
+
         <div id="about">
-        <section className="bg-gray-50 dark:bg-zinc-900">
-          <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
-            <div className="mb-8">
-              <h2 className="uppercase font-bold text-2xl lg:text-4xl">
-                About Us
-              </h2>
-              <p className="mt-4 text-lg">
-                We are a group of passionate developers actively seeking
-                opportunities to make a mark in the world of development. Our
-                journey with this project began with a shared commitment to
-                improve the prospects and well-being of pets.
-              </p>
-            </div>
+          <section className="bg-gray-50 dark:bg-zinc-900">
+            <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
+              <div className="mb-8">
+                <h2 className="uppercase font-bold text-2xl lg:text-4xl">
+                  About Us
+                </h2>
+                <p className="mt-4 text-lg">
+                  We are a group of passionate developers actively seeking
+                  opportunities to make a mark in the world of development. Our
+                  journey with this project began with a shared commitment to
+                  improve the prospects and well-being of pets.
+                </p>
+              </div>
 
-            <div className="mb-8">
-              <h2 className="uppercase font-bold text-2xl lg:text-4xl">
-                Paw Finders Mission
-              </h2>
-              <p className="mt-4 text-lg">
-                At{" "}
-                <span className="font-bold text-yellow-700">Paw Finders</span>,
-                we are driven by a deep commitment to creating loving homes for
-                every pet. Our mission is to connect adoptable animals with
-                caring individuals and families, fostering a future where no pet
-                is left behind.
-              </p>
-              <p className="mt-4 text-lg">
-                Through our user-friendly platform, we strive to simplify the
-                adoption process, promote responsible pet ownership, and raise
-                awareness about the joys of welcoming a furry friend into your
-                life. At the heart of our mission is the belief that every pet
-                deserves a second chance and a forever home. Join us in building
-                a community that celebrates compassion, responsibility, and the
-                unbreakable bond between pets and their human companions.
-              </p>
-            </div>
+              <div className="mb-8">
+                <h2 className="uppercase font-bold text-2xl lg:text-4xl">
+                  Paw Finders Mission
+                </h2>
+                <p className="mt-4 text-lg">
+                  At{" "}
+                  <span className="font-bold text-yellow-700">Paw Finders</span>,
+                  we are driven by a deep commitment to creating loving homes for
+                  every pet. Our mission is to connect adoptable animals with
+                  caring individuals and families, fostering a future where no pet
+                  is left behind.
+                </p>
+                <p className="mt-4 text-lg">
+                  Through our user-friendly platform, we strive to simplify the
+                  adoption process, promote responsible pet ownership, and raise
+                  awareness about the joys of welcoming a furry friend into your
+                  life. At the heart of our mission is the belief that every pet
+                  deserves a second chance and a forever home. Join us in building
+                  a community that celebrates compassion, responsibility, and the
+                  unbreakable bond between pets and their human companions.
+                </p>
+              </div>
 
-            <div>
-              <h2 className="uppercase font-bold text-2xl lg:text-4xl">
-                Paw Finders Vision
-              </h2>
-              <p className="mt-4 text-lg">
-                At{" "}
-                <span className="font-bold text-yellow-700">Paw Finders</span>,
-                we envision a future where every pet finds a home filled with
-                love and commitment. We picture a global community dedicated to
-                responsible adoption, where people find fulfillment and joy in
-                opening their hearts and homes to animals in need.
-              </p>
-              <p className="mt-4 text-lg">
-                We strive to be a positive force that inspires and facilitates
-                meaningful connections between adopters and pets, contributing
-                to the reduction of shelter populations and fostering stronger,
-                more compassionate relationships between humans and their animal
-                companions.
-              </p>
-              <p className="mt-4 text-lg">
-                In pursuing this vision, we aim to be a beacon of hope for all
-                pets, tirelessly working towards a future where adoption is the
-                first choice for those seeking the loyal companionship of a new
-                furry friend.
-              </p>
+              <div>
+                <h2 className="uppercase font-bold text-2xl lg:text-4xl">
+                  Paw Finders Vision
+                </h2>
+                <p className="mt-4 text-lg">
+                  At{" "}
+                  <span className="font-bold text-yellow-700">Paw Finders</span>,
+                  we envision a future where every pet finds a home filled with
+                  love and commitment. We picture a global community dedicated to
+                  responsible adoption, where people find fulfillment and joy in
+                  opening their hearts and homes to animals in need.
+                </p>
+                <p className="mt-4 text-lg">
+                  We strive to be a positive force that inspires and facilitates
+                  meaningful connections between adopters and pets, contributing
+                  to the reduction of shelter populations and fostering stronger,
+                  more compassionate relationships between humans and their animal
+                  companions.
+                </p>
+                <p className="mt-4 text-lg">
+                  In pursuing this vision, we aim to be a beacon of hope for all
+                  pets, tirelessly working towards a future where adoption is the
+                  first choice for those seeking the loyal companionship of a new
+                  furry friend.
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         </div>
-
         <section className="bg-gray-50 dark:bg-zinc-800">
           <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
             <figure className="max-w-screen-md mx-auto">
@@ -352,7 +365,7 @@ export default function AboutPage() {
               </svg>
               <blockquote>
                 <p className="text-xl font-medium text-gray-900 md:text-2xl dark:text-white">
-                &quot;Treat animals how you would like to be treated&quot;
+                  &quot;Treat animals how you would like to be treated&quot;
                 </p>
               </blockquote>
               <figcaption className="flex items-center justify-center mt-6 space-x-3"></figcaption>
@@ -362,48 +375,48 @@ export default function AboutPage() {
       </div>
 
       <footer className="bg-zinc-900 text-white py-10">
-  <div className="container mx-auto">
-    {/* Logo and Description */}
-    <div className="text-center mb-8">
-      <h1 className="text-3xl font-bold text-yellow-500 mb-2">
-        Paw Finders
-      </h1>
-      <p className="text-gray-400 text-sm md:text-base">
-        Find your furry companion and transform lives through responsible pet adoption.
-      </p>
-    </div>
+        <div className="container mx-auto">
+          {/* Logo and Description */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-yellow-500 mb-2">
+              Paw Finders
+            </h1>
+            <p className="text-gray-400 text-sm md:text-base">
+              Find your furry companion and transform lives through responsible pet adoption.
+            </p>
+          </div>
 
-    {/* Sections */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {[
-        { title: "Product", items: ["Stocks", "Register"], links: ["/adopt", "/"] },
-        { title: "Services", items: ["Adoption Form", "Our Team"], links: ["/createPet", "https://github.com/No-Country/c15-29-ft-react-java"] },
-        { title: "User", items: ["Login", "About"], links: ["/", "/about"] },
-      ].map((section, index) => (
-        <div key={index} className="text-center">
-          <p className="text-gray-500 font-semibold mb-2">{section.title}</p>
-          <ul className="space-y-2">
-            {section.items.map((item, i) => (
-              <li key={i} className="text-gray-300 hover:text-blue-500 cursor-pointer">
-                <a href={section.links[i]}>{item}</a>
-              </li>
+          {/* Sections */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { title: "Product", items: ["Stocks", "Register"], links: ["/adopt", "/"] },
+              { title: "Services", items: ["Adoption Form", "Our Team"], links: ["/createPet", "https://github.com/No-Country/c15-29-ft-react-java"] },
+              { title: "User", items: ["Login", "About"], links: ["/", "/about"] },
+            ].map((section, index) => (
+              <div key={index} className="text-center">
+                <p className="text-gray-500 font-semibold mb-2">{section.title}</p>
+                <ul className="space-y-2">
+                  {section.items.map((item, i) => (
+                    <li key={i} className="text-gray-300 hover:text-blue-500 cursor-pointer">
+                      <a href={section.links[i]}>{item}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
 
-  {/* Copyright */}
-  <div className="flex justify-center items-center mt-8">
-    <p className="text-sm text-gray-500">
-      © 2023-2024 All rights reserved -{" "}
-      <span className="text-blue-500 cursor-pointer font-semibold">
-        Paw Finder
-      </span>
-    </p>
-  </div>
-</footer>
+        {/* Copyright */}
+        <div className="flex justify-center items-center mt-8">
+          <p className="text-sm text-gray-500">
+            © 2023-2024 All rights reserved -{" "}
+            <span className="text-blue-500 cursor-pointer font-semibold">
+              Paw Finder
+            </span>
+          </p>
+        </div>
+      </footer>
     </>
   );
 }
