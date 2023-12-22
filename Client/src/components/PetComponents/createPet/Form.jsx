@@ -7,11 +7,13 @@ export default function Form() {
     const { getCookieValue } = useAuth();
     const token = getCookieValue("AuthToken")
     const [inputInfo, setInputInfo] = useState("");
+
     const sizes = [
         { value: 'small', label: 'Small' },
         { value: 'medium', label: 'Medium' },
         { value: 'large', label: 'Large' },
     ];
+
     const [petData, setPetData] = useState({
         name: "",
         breed: "",
@@ -112,23 +114,20 @@ export default function Form() {
     const generalDescriptionRegex = /^[a-zA-Z0-9\s,.'":;!?-]{3,50}$/
     const generalDescriptionValidation = handleValidation(generalDescriptionRegex);
 
-    // age
-    // <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired ageValidation={ageValidation} color={ageValidation ? "danger" : "success"} errorMessage={ageValidation && "Please enter a valid age"} onValueChange={setAgeValue} onChange={handleInputChange} name='age' />
-
     return (
         <>
             <Card className="flex flex-col gap-4 w-full bg-background/60 dark:bg-default-100/50 backdrop-blur-lg p-8 rounded-none sm:w-1/2 sm:rounded-xl">
                 <h2 className="text-2xl font-bold pb-1">Let everyone know about the pet looking for a permanent home!</h2>
                 <form className="flex flex-col gap-4">
-                    <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="name" nameValidation={nameValidation[2]} color={nameValidation[2] ? "danger" : "success"} errorMessage={nameValidation[2] ? "Name must be between 3 and 20 characters" : ""} onValueChange={nameValidation[1]} />
-                    <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name="breed" breedValidation={breedValidation[2]} color={breedValidation[2] ? "danger" : "success"} errorMessage={breedValidation[2] ? "Breed must be between 3 and 20 characters" : ""} onValueChange={breedValidation[1]} />
-                    <Input type="number" label="Age" placeholder="Age" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='age' ageValidation={ageValidation[2]} color={ageValidation[2] ? "danger" : "success"} errorMessage={ageValidation[2] ? "Age must be a number between 1 and 100" : ""} onValueChange={ageValidation[1]} />
+                    <Input type="text" label="Pet Name" placeholder="Pet Name / Alias" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name="name" nameValidation={nameValidation[2]} color={nameValidation[2] ? "danger" : "success"} errorMessage={nameValidation[2] ? "Name must be between 3 and 20 characters" : ""} onValueChange={nameValidation[1]} />
+                    <Input type="text" label="Breed" placeholder="Breed" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name="breed" breedValidation={breedValidation[2]} color={breedValidation[2] ? "danger" : "success"} errorMessage={breedValidation[2] ? "Breed must be between 3 and 20 characters" : ""} onValueChange={breedValidation[1]} />
+                    <Input type="number" label="Age" placeholder="Age" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name='age' ageValidation={ageValidation[2]} color={ageValidation[2] ? "danger" : "success"} errorMessage={ageValidation[2] ? "Age must be a number between 1 and 100" : ""} onValueChange={ageValidation[1]} />
                     <div className="flex w-full flex-wrap md:flex-nowrap gap-4" >
                         <Select
                             label="Select pet size"
                             placeholder="Size"
                             className="w-full"
-                            variant='underlined' isRequired name="size" onChange={handleInputChange}>
+                            variant='underlined' isrequired='true' name="size" onChange={handleInputChange}>
                             {sizes.map((size) => (
                                 <SelectItem key={size.value} value={size.value} >
                                     {size.label}
@@ -136,14 +135,14 @@ export default function Form() {
                             ))}
                         </Select>
                     </div>
-                    <Input type="text" label="Health Status" placeholder="Health status" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='healthStatus' healthStatusValidation={healthStatusValidation[2]} color={healthStatusValidation[2] ? "danger" : "success"} errorMessage={healthStatusValidation[2] ? "Health Status must be between 3 and 20 characters" : ""} onValueChange={healthStatusValidation[1]} />
-                    <Input type="text" label="Behavior" placeholder="Behavior" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='behavior' behaviorValidation={behaviorValidation[2]} color={behaviorValidation[2] ? "danger" : "success"} errorMessage={behaviorValidation[2] ? "Behavior must be between 3 and 20 characters" : ""} onValueChange={behaviorValidation[1]} />
-                    <Input type="text" label="Location" placeholder="Location" variant='underlined' labelPlacement="outside" isRequired onChange={handleInputChange} name='location' locationValidation={locationValidation[2]} color={locationValidation[2] ? "danger" : "success"} errorMessage={locationValidation[2] ? "Location must be between 3 and 35 characters" : ""} onValueChange={locationValidation[1]} />
-                    <Input type="text" label="Description" placeholder="Description" variant='underlined' labelPlacement="outside" isRequired={true} isClearable value={inputInfo} onClear={() => setInputInfo("")} onChange={(e) => {
+                    <Input type="text" label="Health Status" placeholder="Health status" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name='healthStatus' healthStatusValidation={healthStatusValidation[2]} color={healthStatusValidation[2] ? "danger" : "success"} errorMessage={healthStatusValidation[2] ? "Health Status must be between 3 and 20 characters" : ""} onValueChange={healthStatusValidation[1]} />
+                    <Input type="text" label="Behavior" placeholder="Behavior" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name='behavior' behaviorValidation={behaviorValidation[2]} color={behaviorValidation[2] ? "danger" : "success"} errorMessage={behaviorValidation[2] ? "Behavior must be between 3 and 20 characters" : ""} onValueChange={behaviorValidation[1]} />
+                    <Input type="text" label="Location" placeholder="Location" variant='underlined' labelplacement="outside" isrequired='true' onChange={handleInputChange} name='location' locationValidation={locationValidation[2]} color={locationValidation[2] ? "danger" : "success"} errorMessage={locationValidation[2] ? "Location must be between 3 and 35 characters" : ""} onValueChange={locationValidation[1]} />
+                    <Input type="text" label="Description" placeholder="Description" variant='underlined' labelplacement="outside" isrequired='true' isClearable value={inputInfo} onClear={() => setInputInfo("")} onChange={(e) => {
                         setInputInfo(e.target.value)
                         handleInputChange(e)
                     }} name='generalDescription' generalDescriptionValidation={generalDescriptionValidation[2]} color={generalDescriptionValidation[2] ? "danger" : "success"} errorMessage={generalDescriptionValidation[2] ? "Description must be between 3 and 50 characters" : ""} onValueChange={generalDescriptionValidation[1]} />
-                    <input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelPlacement="outside" isRequired onChange={(e) => {
+                    <input type="file" label="Upload Image" placeholder="Upload Images" variant='underlined' labelplacement="outside" isrequired='true' onChange={(e) => {
                         console.log("hi")
                         handleInputChange(e)
                     }} name='images' accept='.jpeg' />

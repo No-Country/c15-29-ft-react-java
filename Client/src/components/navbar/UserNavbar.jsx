@@ -25,19 +25,22 @@ export default function UserNavbar() {
     getCookieValue,
     getUserDataFromLocalStorage,
     handleLogout,
-    getUserPhoto,
+    getUserImage,
     setLoading,
   } = useAuth();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userImg, setUserImg] = useState('')
 
   useEffect(() => {
     const storedToken = getCookieValue("AuthToken");
     if (storedToken && loading) {
       getUserDataFromLocalStorage();
+      console.log(userInfo);
+      setUserImg(getUserImage(storedToken, 'usuarioparajosue/images/thumbnail')) 
       setLoading(false);
     }
-  }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading]);
+  }, [getCookieValue, getUserDataFromLocalStorage, loading, setLoading, getUserImage]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -85,13 +88,9 @@ export default function UserNavbar() {
               as="button"
               className="transition-transform"
               color="secondary"
-              name={userInfo ? userInfo.username : "Guest"}
+              name={userImg}
               size="sm"
-              src={
-                userInfo
-                  ? userInfo.avatar
-                  : "https://pets-adopt-api.onrender.com/image/josue_zorrilla_profile.jpeg"
-              }
+              src={userImg}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -127,7 +126,6 @@ export default function UserNavbar() {
             
             <DropdownItem
               textValue="User pannel"
-              href="#"
               key="User pannel"
             >
               <Link onPress={<UserPannel />}>User Panel</Link>
