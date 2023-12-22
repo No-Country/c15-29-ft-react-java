@@ -6,7 +6,7 @@ import PetCard from "./PetCard";
 import { useAuth } from "@/Api/AuthContext";
 
 export default function MyPets() {
-  const { userPets, getUserPets } = usePet();
+  const { userPets = [], getUserPets } = usePet();
   const { userInfo } = useAuth();
   const { token } = useAuth()
 
