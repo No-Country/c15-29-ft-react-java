@@ -42,19 +42,19 @@ export const AdoptProcess = ({ pet, user }) => {
       <p className="text-lg mb-4">{pet.age}</p>
     </div>
     <div>
-      <h3 className="text-2xl font-semibold mb-4 mt-6">Información General</h3>
+      <h3 className="text-2xl font-semibold mb-4 mt-6">General Information</h3>
       <ul className="list-disc pl-4">
         <li className="text-lg">ID: {pet.id}</li>
-        <li className="text-lg">Adoptado: {pet.adopted ? "Sí" : "No"}</li>
+        <li className="text-lg">Adopt: {pet.adopted ? "Sí" : "No"}</li>
         <li className="text-lg">
-          En proceso de adopción: {pet.adoptionInProcess ? "Sí" : "No"}
+        In Adoption Process: {pet.adoptionInProcess ? "Sí" : "No"}
         </li>
-        <li className="text-lg">Fecha de nacimiento: {pet.vaccinated || "No especificada"}</li>
+        <li className="text-lg">Date of Birth: {pet.vaccinated || "No especificada"}</li>
       </ul>
     </div>
   </div>
   <div className="md:w-1/2 md:pl-6 animate__animated animate__fadeInRight mt-6 md:mt-0">
-    <h2 className="text-4xl font-extrabold mb-6">Datos del Adoptante</h2>
+    <h2 className="text-4xl font-extrabold mb-6">Adopter Information</h2>
     {user && (
       <ul className="list-disc pl-4">
         <li className="text-lg">Email: {user.email}</li>
@@ -65,7 +65,7 @@ export const AdoptProcess = ({ pet, user }) => {
     )}
     <div className="mt-8">
       <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-full inline-flex items-center transition-all duration-300 shadow-md">
-        Adoptar
+        Adopt
       </button>
     </div>
   </div>
