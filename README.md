@@ -8,8 +8,20 @@ We strongly believe in providing animals with a safe and supportive environment 
 
 --- 
 # Requirements 🛠️📋
-👉🏻
+👉🏻 To use locally Pawfinder, you need to:
 
+Clone our repository
+```sh
+git clone https://github.com/No-Country/c15-29-ft-react-java.git
+```
+Move into Client Folder and install dependencies
+```sh
+cd Client | npm i
+```
+Run the project locally
+```sh
+npm run dev
+```
 
 # Our team 👇🏻👇🏻
 
@@ -25,14 +37,13 @@ We strongly believe in providing animals with a safe and supportive environment 
 
 # Promotional Video 🎥📢
 
-[![](https://images.dog.ceo/breeds/pekinese/n02086079_6620.jpg 'Promotional video')](https://www.url.com/)
+[![](https://i.ibb.co/vcbwP35/Paw-Finder.jpg 'Promotional video')](https://youtu.be/OUkwgorDZKc)
 
 ## Technology Stack ⚙️🖥️
 
 ### Front-End
-
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ### Back-End
-
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ### QA Analytics
-
-### Design
+![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
