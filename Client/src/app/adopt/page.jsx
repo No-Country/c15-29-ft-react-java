@@ -1,6 +1,11 @@
 import React from "react";
 import Adopt from "@/components/PetComponents/adopt/Adopt";
 
+export const metadata = {
+  title: "Browse Pets",
+  description: "Adopt a pet",
+};
+
 export default function AdoptPage() {
   return (
     <>

@@ -1,8 +1,11 @@
-"use client"
-
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+
+export const metadata = {
+  title: "About",
+  description: "About Paw Finders",
+};
 
 export default function AboutPage() {
   const teamMembers = [
