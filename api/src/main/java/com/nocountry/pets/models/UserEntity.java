@@ -1,6 +1,7 @@
 package com.nocountry.pets.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.nocountry.pets.imgTesting.ImageEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,10 @@ public class UserEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Pet> pets;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
+    private List<ImageEntity> images;
 
     @Email
     @NotBlank

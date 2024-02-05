@@ -55,7 +55,7 @@ public class PetController {
     }
 
     @PostMapping()
-    public ResponseEntity<Pet> createPet(@Valid @ModelAttribute PetDTO petDto) {
+    public ResponseEntity<Pet> newImage(@Valid @ModelAttribute PetDTO petDto) {
         try {
             Pet createdPet = petService.createPet(petDto);
             System.out.println(createdPet.toString());

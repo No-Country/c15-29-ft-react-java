@@ -3,6 +3,7 @@ package com.nocountry.pets.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.nocountry.pets.imgTesting.ImageEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,9 +23,13 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_id;
+    @JsonIgnore
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private List<ImageEntity> imagess;
     @Size(min=2,max = 20, message = "Name must be between 2 and 20 characters.")
     private String name;
 
