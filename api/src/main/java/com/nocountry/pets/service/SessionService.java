@@ -14,7 +14,7 @@ public class SessionService {
 
     public UserEntity getUserLogged(){
         String authUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("USERNAME : " + authUsername );
+        System.out.println("SESSION ACTIVE USERNAME : " + authUsername );
         UserEntity userLogged = userRepository.findByUsername(authUsername)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 

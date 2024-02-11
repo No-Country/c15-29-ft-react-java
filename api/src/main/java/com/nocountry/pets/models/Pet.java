@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,12 +26,21 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_id;
-    @JsonIgnore
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private List<ImageEntity> imagess;
+
+
+
+    @OneToMany(
+            mappedBy = "pet_id",
+            cascade = CascadeType.ALL ,
+            orphanRemoval = true ,
+            fetch = FetchType.LAZY)
+    private List<ImageEntity> imagesEntity = new ArrayList<>();
+
+
     @Size(min=2,max = 20, message = "Name must be between 2 and 20 characters.")
     private String name;
 
@@ -43,7 +54,8 @@ public class Pet {
 
     private String size;
 
-    private List<String> images;
+
+    private List<String> images = new ArrayList<>();
 
     @Size(min=15,max=150, message = "generalDescription must be between 15 and 150 characters.")
     private String generalDescription;
@@ -68,7 +80,6 @@ public class Pet {
     public String toString() {
         return "Pet{" +
                 "id=" + id +
-                ", user=" + (user_id != null ? user_id.getId() : null) +
                 ", name='" + name + '\'' +
                 ", breed='" + breed + '\'' +
                 ", age=" + age +

@@ -55,9 +55,10 @@ public class PetController {
     }
 
     @PostMapping()
-    public ResponseEntity<Pet> newImage(@Valid @ModelAttribute PetDTO petDto) {
+    public ResponseEntity<Pet> newImage(@Valid @RequestBody PetDTO pet) {
+        System.out.println("entro");
         try {
-            Pet createdPet = petService.createPet(petDto);
+            Pet createdPet = petService.createPet(pet);
             System.out.println(createdPet.toString());
             return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);
         } catch (IllegalArgumentException e) {

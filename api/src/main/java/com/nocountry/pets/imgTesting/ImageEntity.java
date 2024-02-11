@@ -1,4 +1,5 @@
 package com.nocountry.pets.imgTesting;
+import com.nocountry.pets.models.Pet;
 import com.nocountry.pets.models.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,12 +26,14 @@ public class ImageEntity {
     private String name;
     private Long size;
 
-    @ManyToOne
+
+    @OneToOne
     @JoinColumn(name = "user_id")
     private UserEntity user_id = null;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
-    private UserEntity pet_id = null;
+    private Pet pet_id = null;
 
 }
 

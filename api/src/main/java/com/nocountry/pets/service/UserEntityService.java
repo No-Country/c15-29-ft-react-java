@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +38,7 @@ public class UserEntityService {
     private SessionService sessionService;
     @Autowired
     private S3ServiceImpl s3Service;
+
 
 
     //"transactional" causes all tasks in the function to be completed or none to be done
@@ -65,7 +67,6 @@ public class UserEntityService {
                 .name(createUserDTO.getName())
                 .lastName(createUserDTO.getLastName())
                 .dateOfBirth(createUserDTO.getDateOfBirth())
-                .avatar(uploadAvatar(createUserDTO.getAvatar(), createUserDTO.getUsername()))
                 .nationality(createUserDTO.getNationality())
                 .address(createUserDTO.getAddress())
                 .build();

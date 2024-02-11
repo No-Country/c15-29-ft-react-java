@@ -22,7 +22,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @Column(name="userId_id")
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = RoleEntity.class, cascade = CascadeType.PERSIST)
@@ -33,9 +33,8 @@ public class UserEntity {
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.ALL)
-    private List<ImageEntity> images;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user_id", orphanRemoval = true)
+    private ImageEntity image;
 
     @Email
     @NotBlank
@@ -57,9 +56,10 @@ public class UserEntity {
     private String nationality;
     @Size(max = 20, message = "Address cannot exceed 20 characters.")
     private String address;
-    private String avatar;
     @Size(min = 10 , max = 20, message = "WhatsApp number cannot exceed 20 characters.")
     private String whatsappNumber;
+    //not using
+    private String avatar;
 
     @Override
     public String toString() {
@@ -72,7 +72,6 @@ public class UserEntity {
                 ", dateOfBirth=" + dateOfBirth +
                 ", nationality='" + nationality + '\'' +
                 ", address='" + address + '\'' +
-                ", avatar='" + avatar + '\'' +
                 ", avatar='" + whatsappNumber + '\'' +
                 '}';
     }

@@ -56,15 +56,15 @@ public class PetService {
 
     @Transactional
     public Pet createPet(PetDTO petDto) {
-        List<byte[]> dataImages = petDto.getImages().stream()
-        .map( image -> {
-            try {
-                return image.getBytes();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        })
-        .toList();
+//        List<byte[]> dataImages = petDto.getImages().stream()
+//        .map( image -> {
+//            try {
+//                return image.getBytes();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        })
+//        .toList();
 
         Pet pet = Pet.builder()
                 .name(petDto.getName())
@@ -78,7 +78,6 @@ public class PetService {
                 .vaccinated(petDto.getVaccinated())
                 .generalDescription(petDto.getGeneralDescription())
                 .healthStatus(petDto.getHealthStatus())
-                .images(null)
                 .location(petDto.getLocation())
                 .build();
         //get user data from session
@@ -86,10 +85,10 @@ public class PetService {
         //set relations
         pet.setUser_id(userLogged);
         userLogged.getPets().add(pet);
-        Pet petSaved = petRepository.save(pet);
-        List<String> pathImages = s3Service.uploadMultipleObjects(dataImages, petSaved.getId());
-        petSaved.setImages(pathImages);
-        return petRepository.save(petSaved);
+        userRepository.save(userLogged);
+        //List<String> pathImages = s3Service.uploadMultipleObjects(dataImages, petSaved.getId());
+        //petSaved.setImages(pathImages);
+        return petRepository.save(pet);
     }
 
     public boolean deletePet(Long id) {
