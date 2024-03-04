@@ -1,6 +1,10 @@
 # About Paw Finder 🐶🖐
 Our mission is to provide a platform for users to make connections with their possible next furry friend! We aim to make both parts of the adoption process as smooth and accessible as possible, while also giving pets the chance of finding a loving and forever home.
 
+# Promotional Video 🎥📢
+
+[![](https://i.ibb.co/vcbwP35/Paw-Finder.jpg 'Promotional video')](https://youtu.be/OUkwgorDZKc)
+
 ## Our values 🚀🌐
 
 We strongly believe in providing animals with a safe and supportive environment where they can live their best lives, both by connecting users with pets in search of a home and by easing the process for those who are taking care of someone else's special pet!
@@ -34,10 +38,6 @@ npm run dev
 | **Juan Ubaldi**  | **Juan Ortega**  | **Valerie Ramos**  | **Camila Cancino**  | **Ariadna Menendez** |
 |Front-End Dev | Back-End Dev | Back-End Dev | QA Analyst | QA Analyst
 | [![](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white 'Github Link')](https://github.com/JuanUbaldi)</a>[ ![](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white 'LinkedIn Link')](https://www.linkedin.com/in/juanubaldi/) | [![](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white 'Github Link')](https://github.com/Full-Juan-Ortega)</a>[ ![](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white 'LinkedIn Link')](https://www.linkedin.com/in/juan0rtega/) | [![](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white 'Github Link')](https://github.com/valeday)</a>[ ![](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white 'LinkedIn Link')](https://www.linkedin.com/in/valeriedramosg/) | [![](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white 'Github Link')](https://github.com/camcancino)</a>[ ![](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white 'LinkedIn Link')](https://www.linkedin.com/in/cam-cancino/) | [![](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white 'Github Link')](https://github.com/ariadnamenendez)</a>[ ![](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white 'LinkedIn Link')](https://www.linkedin.com/in/ariadna-menendez) |||||
-
-# Promotional Video 🎥📢
-
-[![](https://i.ibb.co/vcbwP35/Paw-Finder.jpg 'Promotional video')](https://youtu.be/OUkwgorDZKc)
 
 ## Technology Stack ⚙️🖥️
 
